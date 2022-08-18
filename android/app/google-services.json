@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "687911898012",
+    "project_id": "upcycle-88be9",
+    "storage_bucket": "upcycle-88be9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687911898012:android:3e79d630074ce46c5ed659",
+        "android_client_info": {
+          "package_name": "com.example.frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687911898012-9ftqlqjing9858q6g4hae43ejng18g2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqNrN95Q1LZg4VY6Iz9tA5EdBaIYujAlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687911898012-9ftqlqjing9858q6g4hae43ejng18g2a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687911898012:android:f6a081604a207acc5ed659",
+        "android_client_info": {
+          "package_name": "com.upcycle.upcycle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687911898012-9ftqlqjing9858q6g4hae43ejng18g2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqNrN95Q1LZg4VY6Iz9tA5EdBaIYujAlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687911898012-9ftqlqjing9858q6g4hae43ejng18g2a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

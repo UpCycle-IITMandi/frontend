@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:frontend/screens/sign_in_button.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -10,38 +10,31 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue.shade400,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 16.0,
-            right: 16.0,
-            bottom: 20.0,
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      color: Colors.indigo,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text(
+            'UpCycle',
+            style: TextStyle(
+              color: Colors.orange.shade400,
+              fontSize: 20,
+            ),
           ),
-          child: Column(
-            children: [
-              Text(
-                'UpCycle',
-                style: TextStyle(
-                  color: Colors.orange.shade400,
-                  fontSize: 20,
-                ),
-              ),
-              SignInButton(Buttons.Google, onPressed: () {
-                var googleProvider = GoogleAuthProvider();
-                googleProvider.addScope(
-                    'https://www.googleapis.com/auth/contacts.readonly');
-                googleProvider
-                    .setCustomParameters({'login_hint': 'user@example.com'});
+          SignInButton(onPressed: () {
+            var googleProvider = GoogleAuthProvider();
+            googleProvider
+                .addScope('https://www.googleapis.com/auth/contacts.readonly');
+            googleProvider
+                .setCustomParameters({'login_hint': 'user@example.com'});
 
-                FirebaseAuth.instance
-                    .signInWithAuthProvider(googleProvider)
-                    .then((value) => print(value));
-              }),
-            ],
-          ),
-        ),
+            FirebaseAuth.instance
+                .signInWithAuthProvider(googleProvider)
+                .then((value) => print(value));
+          }),
+        ],
       ),
     );
   }

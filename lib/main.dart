@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:frontend/screens/home_page_screen.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/sign_in_screen.dart';
@@ -27,13 +28,11 @@ class MyApp extends StatelessWidget {
         body: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return SignInScreen();
-              }
+              // if (snapshot.hasData) {
+              //   return HomePageScreen();
+              // } else {
+              return SignInScreen();
+              // }
             }));
   }
 }

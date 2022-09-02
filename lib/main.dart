@@ -26,13 +26,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder<User?>(
-            stream: FirebaseAuth.instance.authStateChanges(),
+            stream: FirebaseAuth.instance.userChanges(),
             builder: (context, snapshot) {
-              // if (snapshot.hasData) {
-              //   return HomePageScreen();
-              // } else {
-              return SignInScreen();
-              // }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                    child: CircularProgressIndicator(
+                  backgroundColor: Colors.yellow,
+                ));
+              } else if (snapshot.hasData) {
+                return HomePageScreen();
+              } else {
+                return SignInScreen();
+              }
             }));
   }
 }

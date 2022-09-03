@@ -40,23 +40,31 @@ class _SignInScreenState extends State<SignInScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
-            SignInButton(onPressed: () async {
-              User? user =
-                  await Authentication.signInWithGoogle(context: context);
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 40,
+              child: Center(
+                child: SignInButton(onPressed: () async {
+                  User? user =
+                      await Authentication.signInWithGoogle(context: context);
 
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => SignUpScreen())));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => SignUpScreen())));
 
-              // var googleProvider = GoogleAuthProvider();
-              // googleProvider.addScope(
-              //     'https://www.googleapis.com/auth/contacts.readonly');
-              // googleProvider
-              //     .setCustomParameters({'login_hint': 'user@example.com'});
+                  // var googleProvider = GoogleAuthProvider();
+                  // googleProvider.addScope(
+                  //     'https://www.googleapis.com/auth/contacts.readonly');
+                  // googleProvider
+                  //     .setCustomParameters({'login_hint': 'user@example.com'});
 
-              // FirebaseAuth.instance
-              //     .signInWithAuthProvider(googleProvider)
-              //     .then((value) => print(value));
-            }),
+                  // FirebaseAuth.instance
+                  //     .signInWithAuthProvider(googleProvider)
+                  //     .then((value) => print(value));
+                }),
+              ),
+            ),
           ],
         ),
       ),

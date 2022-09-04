@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/vendor_list_screen.dart';
 import 'package:frontend/utils/authentication.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -14,16 +15,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
+    VendorList(),
     Text(
       'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
       style: optionStyle,
     ),
   ];
@@ -45,14 +39,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
       drawer: Drawer(
         child: ListView(
-          padding: EdgeInsets.fromLTRB(5, 40, 5, 40),
+          padding: const EdgeInsets.fromLTRB(5, 40, 5, 40),
           children: [
             ListTile(
               title: const Text('Logout'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Authentication.signOut(context: context);
               },
             ),
@@ -66,12 +57,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,

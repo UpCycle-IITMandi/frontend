@@ -15,7 +15,7 @@ Future<void> main() async {
     title: 'FlutterFire Samples',
     debugShowCheckedModeBanner: true,
     theme: ThemeData(
-      primarySwatch: Colors.indigo,
+      primaryColor: Colors.white,
       brightness: Brightness.dark,
     ),
   ));

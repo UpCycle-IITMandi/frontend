@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SignInButton extends StatelessWidget {
-  SignInButton({Key? key, required this.onPressed}) : super(key: key);
+  const SignInButton({Key? key, required this.onPressed}) : super(key: key);
 
   final void Function() onPressed;
 
@@ -9,13 +9,13 @@ class SignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
         onPressed: onPressed,
-        icon: Image(
+        icon: const Image(
           image: AssetImage("assets/images/google.png"),
           color: null,
           height: 20,
         ),
         style: ElevatedButton.styleFrom(
             primary: Colors.white, onPrimary: Colors.black),
-        label: Text("Sign in with Google"));
+        label: const Text("Sign in with Google"));
   }
 }

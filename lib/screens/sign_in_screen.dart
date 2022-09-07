@@ -22,7 +22,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigo,
+      backgroundColor: Colors.white,
       body: Center(
         child: Wrap(
           alignment: WrapAlignment.center,
@@ -47,6 +47,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: SignInButton(onPressed: () async {
                   User? user =
                       await Authentication.signInWithGoogle(context: context);
+
+                  if (!mounted) return;
 
                   Navigator.push(
                       context,

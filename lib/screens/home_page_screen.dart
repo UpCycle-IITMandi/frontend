@@ -30,19 +30,41 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var primaryColorSelector = Theme.of(context).primaryColor;
     return Scaffold(
+      backgroundColor: primaryColorSelector,
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            tooltip: 'Open shopping cart',
+            onPressed: () {
+              // handle the press
+            },
+          ),
+        ],
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: const Text('App',
+            style: TextStyle(
+              color: Colors.black,
+            )),
+        backgroundColor: primaryColorSelector,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       drawer: Drawer(
+        backgroundColor: primaryColorSelector,
         child: ListView(
           padding: const EdgeInsets.fromLTRB(5, 40, 5, 40),
           children: [
             ListTile(
-              title: const Text('Logout'),
+              title: const Text(
+                'Logout',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
               onTap: () {
                 Authentication.signOut(context: context);
               },
@@ -51,6 +73,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: primaryColorSelector,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -62,7 +85,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: const Color.fromARGB(255, 223, 73, 73),
+        unselectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
     );

@@ -15,29 +15,32 @@ class _VendorListItemState extends State<VendorListItem> {
   Widget build(BuildContext context) {
     final Vendor vendor = widget.vendor;
 
-    return Card(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: SizedBox(
-        height: 300,
-        width: 350,
+    return SizedBox(
+      height: 250,
+      child: Card(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          side:
+              const BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 50)),
+          borderRadius: BorderRadius.circular(5),
+        ),
         child: Column(
           children: [
-            Column(
-              children: [
-                SizedBox(height: 200, child: Image.network(vendor.images[0])),
-                SizedBox(
-                  child: Text(
-                    vendor.shopName,
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
+            Image.network(
+              height: 200,
+              vendor.images[0],
+              fit: BoxFit.fill,
             ),
+            Column(children: const [
+              Text(
+                "Chawla's",
+                style: TextStyle(color: Colors.black),
+              ),
+              Text(
+                "Test test",
+                style: TextStyle(color: Colors.black),
+              )
+            ]),
           ],
         ),
       ),

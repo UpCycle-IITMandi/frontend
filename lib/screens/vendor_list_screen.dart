@@ -26,15 +26,23 @@ class _VendorListState extends State<VendorList> {
         future: vendors,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1, crossAxisSpacing: 0, mainAxisSpacing: 0),
-                // padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                padding: const EdgeInsets.all(0),
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return VendorListItem(vendor: snapshot.data![index]);
-                });
+            return Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1),
+                  // padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                  padding: const EdgeInsets.all(0),
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (context, index) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: VendorListItem(vendor: snapshot.data![index]),
+                      ),
+                    );
+                  }),
+            );
           } else if (snapshot.hasError) {
             return const Text("Error");
           } else {

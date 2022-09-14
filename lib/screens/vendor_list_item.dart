@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/Vendor.dart';
 
@@ -11,36 +12,53 @@ class VendorListItem extends StatefulWidget {
 }
 
 class _VendorListItemState extends State<VendorListItem> {
+  final CarouselController _controller = CarouselController();
+
   @override
   Widget build(BuildContext context) {
     final Vendor vendor = widget.vendor;
 
-    return SizedBox(
-      height: 250,
-      child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          side:
-              const BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 50)),
+    final List<Widget> imageSliders = vendor.images
+        .map((item) => ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            child: Image.network(item, fit: BoxFit.cover)))
+        .toList();
+
+    return Center(
+      child: Container(
+        height: 260,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border:
+              Border.all(color: const Color.fromRGBO(0, 0, 0, 50), width: 0.5),
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
           children: [
-            Image.network(
-              height: 200,
-              vendor.images[0],
-              fit: BoxFit.fill,
+            CarouselSlider(
+              items: imageSliders,
+              options: CarouselOptions(enlargeCenterPage: true, height: 200),
+              carouselController: _controller,
             ),
-            Column(children: const [
-              Text(
-                "Chawla's",
-                style: TextStyle(color: Colors.black),
+            const SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(5, 1, 0, 1),
+                alignment: Alignment.centerLeft,
+                child: Column(children: const [
+                  Text(
+                    "Chawla's",
+                    style: TextStyle(color: Colors.black, fontSize: 14),
+                  ),
+                  Text(
+                    "Test test",
+                    style: TextStyle(color: Colors.black, fontSize: 9),
+                  )
+                ]),
               ),
-              Text(
-                "Test test",
-                style: TextStyle(color: Colors.black),
-              )
-            ]),
+            ),
           ],
         ),
       ),

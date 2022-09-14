@@ -37,6 +37,7 @@ dependencies:
     firebase_core: ^1.20.1
     google_sign_in: ^5.4.1
     http: ^0.13.5
+    carousel_slider: ^4.1.1
     # flutter_signin_button: ^2.0.0
 
 dev_dependencies:

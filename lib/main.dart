@@ -29,12 +29,12 @@ class MyApp extends StatelessWidget {
             stream: FirebaseAuth.instance.userChanges(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
+                return const Center(
                     child: CircularProgressIndicator(
                   backgroundColor: Colors.yellow,
                 ));
               } else if (snapshot.hasData) {
-                return HomePageScreen();
+                return const HomePageScreen();
               } else {
                 return SignInScreen();
               }

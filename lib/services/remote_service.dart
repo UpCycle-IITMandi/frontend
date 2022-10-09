@@ -7,8 +7,9 @@ import 'package:http/http.dart' as http;
 class RemoteService {
   static var client = http.Client();
 
+
   Future<List<Vendor>?> getVendors() async {
-    var uri = Uri.parse('http://192.168.43.67:3000/vendors');
+    var uri = Uri.parse('http://172.16.9.96:3000/vendors');
     print("hand >>");
     var response = await client.get(uri);
     print("<<< shake");

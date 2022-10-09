@@ -24,6 +24,8 @@ class _VendorListItemState extends State<VendorListItem> {
             child: Image.network(item, fit: BoxFit.cover)))
         .toList();
 
+    final String shop_name = vendor.shopName;
+
     return Center(
       child: Container(
         height: 260,
@@ -47,12 +49,12 @@ class _VendorListItemState extends State<VendorListItem> {
               child: Container(
                 margin: const EdgeInsets.fromLTRB(5, 1, 0, 1),
                 alignment: Alignment.centerLeft,
-                child: Column(children: const [
+                child: Column(children: [
                   Text(
-                    "Chawla's",
+                    shop_name,
                     style: TextStyle(color: Colors.black, fontSize: 14),
                   ),
-                  Text(
+                  const Text(
                     "Test test",
                     style: TextStyle(color: Colors.black, fontSize: 9),
                   )

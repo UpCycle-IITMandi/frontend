@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/sign_in_button.dart';
+import 'package:frontend/shared/sign_in_button.dart';
 import 'package:frontend/screens/sign_up_screen.dart';
 import 'package:frontend/utils/authentication.dart';
 
@@ -40,6 +40,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
+
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 40,
@@ -59,8 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   // googleProvider.addScope(
                   //     'https://www.googleapis.com/auth/contacts.readonly');
                   // googleProvider
-                  //     .setCustomParameters({'login_hint': 'user@example.com'});
-
+                  //     .setCustomParameters({'login_hint': 'user@example.com'})
                   // FirebaseAuth.instance
                   //     .signInWithAuthProvider(googleProvider)
                   //     .then((value) => print(value));

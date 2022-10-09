@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/my_account.dart';
 import 'package:frontend/screens/vendor_list_screen.dart';
 import 'package:frontend/utils/authentication.dart';
 
@@ -16,10 +17,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     VendorList(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    myAccount(),
   ];
 
   void _onItemTapped(int index) {
@@ -82,6 +80,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
+
           ),
         ],
         currentIndex: _selectedIndex,

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/Vendor.dart';
+import 'package:frontend/screens/product_screen.dart';
 
 class VendorListItem extends StatefulWidget {
   final Vendor vendor;
@@ -16,6 +17,7 @@ class _VendorListItemState extends State<VendorListItem> {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMaterial(context));
     final Vendor vendor = widget.vendor;
 
     final List<Widget> imageSliders = vendor.images
@@ -25,7 +27,9 @@ class _VendorListItemState extends State<VendorListItem> {
         .toList();
 
     return Center(
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(seconds: 2),
+        curve: Curves.easeIn,
         height: 260,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -33,33 +37,48 @@ class _VendorListItemState extends State<VendorListItem> {
               Border.all(color: const Color.fromRGBO(0, 0, 0, 50), width: 0.5),
           borderRadius: BorderRadius.circular(5),
         ),
-        child: Column(
-          children: [
-            CarouselSlider(
-              items: imageSliders,
-              options: CarouselOptions(enlargeCenterPage: true, height: 200),
-              carouselController: _controller,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(5, 1, 0, 1),
-                alignment: Alignment.centerLeft,
-                child: Column(children: const [
-                  Text(
-                    "Chawla's",
-                    style: TextStyle(color: Colors.black, fontSize: 14),
+        child: Material(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => ProductScreen(
+                            vendor: vendor,
+                          ))));
+            },
+            child: Column(
+              children: [
+                CarouselSlider(
+                  items: imageSliders,
+                  options:
+                      CarouselOptions(enlargeCenterPage: true, height: 200),
+                  carouselController: _controller,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(5, 1, 0, 1),
+                    alignment: Alignment.centerLeft,
+                    child: Column(children: const [
+                      Text(
+                        "Chawla's",
+                        style: TextStyle(color: Colors.black, fontSize: 14),
+                      ),
+                      Text(
+                        "Test test",
+                        style: TextStyle(color: Colors.black, fontSize: 9),
+                      )
+                    ]),
                   ),
-                  Text(
-                    "Test test",
-                    style: TextStyle(color: Colors.black, fontSize: 9),
-                  )
-                ]),
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -1,4 +1,7 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:frontend/models/app_state.dart';
 import 'package:frontend/screens/vendor_list_screen.dart';
 import 'package:frontend/utils/authentication.dart';
 
@@ -35,12 +38,22 @@ class _HomePageScreenState extends State<HomePageScreen> {
       backgroundColor: primaryColorSelector,
       appBar: AppBar(
         actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            tooltip: 'Open shopping cart',
-            onPressed: () {
-              // handle the press
-            },
+          Badge(
+            position: BadgePosition.topEnd(top: 0, end: 3),
+            animationDuration: const Duration(milliseconds: 300),
+            animationType: BadgeAnimationType.slide,
+            badgeContent: StoreConnector<AppState, String>(
+              converter: (store) => store.state.cartItems.length.toString(),
+              builder: ((context, vm) {
+                print("length ");
+                print(vm);
+                return Text(vm, style: const TextStyle(color: Colors.white));
+              }),
+            ),
+            child: IconButton(
+                icon: const Icon(Icons.shopping_cart),
+                tooltip: 'Open shopping cart',
+                onPressed: () {}),
           ),
         ],
         iconTheme: const IconThemeData(color: Colors.black),

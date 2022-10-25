@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:frontend/reducers/app_state_reducer.dart';
-import 'package:frontend/screens/home_page_screen.dart';
+import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/sign_in_screen.dart';

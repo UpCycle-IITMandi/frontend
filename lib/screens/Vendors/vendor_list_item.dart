@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/Vendor.dart';
-import 'package:frontend/screens/product_screen.dart';
+import 'package:frontend/screens/Products/product_screen.dart';
 
 class VendorListItem extends StatefulWidget {
   final Vendor vendor;

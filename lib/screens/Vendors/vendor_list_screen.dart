@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/Vendor.dart';
-import 'package:frontend/screens/vendor_list_item.dart';
+import './vendor_list_item.dart';
 import 'package:frontend/services/remote_service.dart';
 
 class VendorList extends StatefulWidget {

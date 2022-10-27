@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/actions/actions.dart';
 import 'package:frontend/models/Product.dart';
 import 'package:frontend/models/app_state.dart';
+import 'package:intl/intl.dart';
 
 class ProductListItem extends StatefulWidget {
   final Product product;
@@ -27,51 +28,91 @@ class _ProductListItemState extends State<ProductListItem> {
             child: Image.network(item, fit: BoxFit.cover)))
         .toList();
 
-    print("inside product item");
-    print(product.productName);
-    return Row(
-      children: [
-        Column(
+    final currency = NumberFormat.simpleCurrency(
+        locale: 'en_IN', name: 'INR', decimalDigits: 2);
+
+    return DefaultTextStyle(
+      style: TextStyle(color: Colors.black),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), color: Colors.white),
+        child: Row(
           children: [
             // CarouselSlider(
             //   items: imageSliders,
             //   options: CarouselOptions(enlargeCenterPage: true, height: 200),
             //   carouselController: _controller,
             // ),
-            Image.network(product.images[0]),
-            StoreConnector<AppState, void Function()>(builder: (context, vm) {
-              return ElevatedButton.icon(
-                  onPressed: vm,
-                  icon: Icon(Icons.plus_one),
-                  label: Text(
-                    "ADD",
-                    style: TextStyle(color: Colors.black),
-                  ));
-            }, converter: (store) {
-              return () {
-                store.dispatch(
-                    MyAction(CartItem(product, 1), CartActions.AddItemAction));
-              };
-            }),
-            Column(
-              children: [
-                Text(
-                  product.veg ? "Veg" : "Nonveg",
-                  style: TextStyle(color: Colors.black),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 150,
+                child: Column(
+                  children: [
+                    Image.network(product.images[0]),
+                    AddToCart(product: product),
+                  ],
                 ),
-                Text(
-                  product.productName,
-                  style: TextStyle(color: Colors.black),
-                ),
-                Text(
-                  product.price.toString(),
-                  style: TextStyle(color: Colors.black),
-                ),
-              ],
-            )
+              ),
+            ),
+            Flexible(
+              child: Column(
+                children: [
+                  // Text(
+                  //   product.veg ? "Veg" : "Nonveg",
+                  // ),
+                  Text(
+                    product.productName,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    currency.format(product.price),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orangeAccent.shade200),
+                  ),
+                  const Text(
+                    "Fried aloo patty topped with juicy tomatoes, crisp lettuce and creamy.",
+                    style: TextStyle(fontSize: 9),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
-      ],
+      ),
     );
+  }
+}
+
+class AddToCart extends StatelessWidget {
+  const AddToCart({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, void Function()>(builder: (context, vm) {
+      return TextButton(
+        child: Text(
+          "Add to Cart",
+          style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
+        ),
+        style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all(Colors.white),
+          backgroundColor:
+              MaterialStateProperty.all(Colors.orangeAccent.shade200),
+        ),
+        onPressed: vm,
+      );
+    }, converter: (store) {
+      return () {
+        store.dispatch(
+            MyAction(CartItem(product, 1), CartActions.AddItemAction));
+      };
+    });
   }
 }

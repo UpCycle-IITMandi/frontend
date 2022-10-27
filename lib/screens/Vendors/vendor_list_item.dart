@@ -51,12 +51,13 @@ class _VendorListItemState extends State<VendorListItem> {
             },
             child: Column(
               children: [
-                CarouselSlider(
-                  items: imageSliders,
-                  options:
-                      CarouselOptions(enlargeCenterPage: true, height: 200),
-                  carouselController: _controller,
-                ),
+                // CarouselSlider(
+                //   items: imageSliders,
+                //   options:
+                //       CarouselOptions(enlargeCenterPage: true, height: 200),
+                //   carouselController: _controller,
+                // ),
+                imageSliders[0],
                 const SizedBox(
                   height: 10,
                 ),
@@ -64,14 +65,15 @@ class _VendorListItemState extends State<VendorListItem> {
                   child: Container(
                     margin: const EdgeInsets.fromLTRB(5, 1, 0, 1),
                     alignment: Alignment.centerLeft,
-                    child: Column(children: const [
-                      Text(
-                        "Chawla's",
+                    child: Column(children: [
+                      const Text(
+                        "Noah's Bagels",
                         style: TextStyle(color: Colors.black, fontSize: 14),
                       ),
                       Text(
-                        "Test test",
-                        style: TextStyle(color: Colors.black, fontSize: 9),
+                        "Lunch | American",
+                        style:
+                            TextStyle(color: Colors.grey.shade400, fontSize: 9),
                       )
                     ]),
                   ),

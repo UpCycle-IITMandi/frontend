@@ -27,31 +27,41 @@ class _ProductScreenState extends State<ProductScreen> {
     final Vendor vendor = widget.vendor;
     var primaryColorSelector = Theme.of(context).primaryColor;
     return WillPopScope(
-      onWillPop: () async {
-        return await showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text("Warning"),
-                content:
-                    const Text("If you go back, the cart will be cleared."),
-                actions: [
-                  ElevatedButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    //return false when click on "NO"
-                    child: Text('No'),
+      onWillPop: () async => await showDialog(
+          context: context,
+          builder: (context) => Theme(
+                data: Theme.of(context)
+                    .copyWith(dialogBackgroundColor: Colors.white),
+                child: AlertDialog(
+                  title: const Text(
+                    "Warning",
+                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                   ),
-                  ElevatedButton(
-                    onPressed: () => Navigator.of(context).pop(true),
-                    //return true when click on "Yes"
-                    child: Text('Yes'),
-                  ),
-                ],
-              );
-            });
-      },
+                  content: const Text(
+                      "If you go back, the cart will be cleared.",
+                      style: TextStyle(fontSize: 10)),
+                  actions: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              Colors.orangeAccent.shade200)),
+                      onPressed: () => Navigator.of(context).pop(false),
+                      //return false when click on "NO"
+                      child: Text('No', style: TextStyle(fontSize: 10)),
+                    ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              Colors.orangeAccent.shade200)),
+                      onPressed: () => Navigator.of(context).pop(true),
+                      //return true when click on "Yes"
+                      child: Text('Yes', style: TextStyle(fontSize: 10)),
+                    ),
+                  ],
+                ),
+              )),
       child: Scaffold(
-        backgroundColor: primaryColorSelector,
+        backgroundColor: Colors.grey.shade300,
         appBar: AppBar(
           actions: const [
             CartAppBarWidget(),
@@ -65,16 +75,7 @@ class _ProductScreenState extends State<ProductScreen> {
         ),
         body: Column(
           children: [
-            SizedBox(
-                height: 100,
-                child: Column(
-                  children: [
-                    Text(
-                      vendor.shopName,
-                      style: TextStyle(color: Colors.black),
-                    )
-                  ],
-                )),
+            VendorDetails(vendor: vendor),
             const SizedBox(height: 10),
             Expanded(
               child: StreamBuilder<List<Product>?>(
@@ -105,6 +106,65 @@ class _ProductScreenState extends State<ProductScreen> {
                 }),
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ViewCart extends StatefulWidget {
+  const ViewCart({Key? key}) : super(key: key);
+
+  @override
+  State<ViewCart> createState() => _ViewCartState();
+}
+
+class _ViewCartState extends State<ViewCart> {
+  @override
+  Widget build(BuildContext context) {
+    return Text("View Cart");
+  }
+}
+
+class VendorDetails extends StatelessWidget {
+  const VendorDetails({
+    Key? key,
+    required this.vendor,
+  }) : super(key: key);
+
+  final Vendor vendor;
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTextStyle(
+      style: TextStyle(color: Colors.black),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      vendor.shopName.toUpperCase(),
+                    ),
+                    const Text("Pizza, Burger"),
+                  ],
+                ),
+                Column(
+                  children: [Text("Open Now"), Text("11:00 AM - 12:00 PM")],
+                )
+              ],
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "North Campus, IIT Mandi.",
+              ),
+            )
           ],
         ),
       ),

@@ -41,7 +41,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           CartAppBarWidget(),
         ],
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text('App',
+        title: const Text('Upcycle',
             style: TextStyle(
               color: Colors.black,
             )),
@@ -82,7 +82,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color.fromARGB(255, 223, 73, 73),
+        selectedItemColor: Colors.orangeAccent.shade200,
         unselectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
@@ -100,13 +100,14 @@ class CartAppBarWidget extends StatelessWidget {
     return Badge(
       position: BadgePosition.topEnd(top: 0, end: 3),
       animationDuration: const Duration(milliseconds: 300),
-      animationType: BadgeAnimationType.slide,
+      animationType: BadgeAnimationType.scale,
+      badgeColor: Colors.orangeAccent.shade200,
       badgeContent: StoreConnector<AppState, String>(
         converter: (store) => store.state.cartItems.length.toString(),
         builder: ((context, vm) {
-          print("length ");
-          print(vm);
-          return Text(vm, style: const TextStyle(color: Colors.white));
+          return Text(vm,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold));
         }),
       ),
       child: IconButton(

@@ -1,30 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:frontend/screens/home_page_screen.dart';
+import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/sign_in_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:frontend/models/app_state.dart';
+import 'package:frontend/reducers/app_state_reducer.dart';
+import 'package:frontend/screens/HomePage/home_page_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:redux_persist/redux_persist.dart';
+import 'package:redux_persist_flutter/redux_persist_flutter.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'screens/sign_in_screen.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MaterialApp(
-    home: MyApp(),
-    title: 'FlutterFire Samples',
-    debugShowCheckedModeBanner: true,
-    theme: ThemeData(
-      primaryColor: Colors.white,
-      brightness: Brightness.dark,
+  // final persistor = Persistor<AppState>(
+  //   storage: FlutterStorage(),
+  //   serializer: JsonSerializer<AppState>(AppState.fromJson),
+  // );
+  // final initialState = await persistor.load();
+  final store = Store<AppState>(
+    appReducer,
+    initialState: AppState(),
+    // middleware: [persistor.createMiddleware()],
+  );
+  runApp(StoreProvider<AppState>(
+    store: store,
+    child: MaterialApp(
+      home: MyApp(store: store),
+      title: 'Upcycle',
+      debugShowCheckedModeBanner: true,
+      theme: ThemeData(
+        textTheme: GoogleFonts.robotoTextTheme(),
+        primaryColor: Colors.white,
+        brightness: Brightness.dark,
+      ),
     ),
   ));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final Store<AppState> store;
+  const MyApp({Key? key, required this.store}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -48,18 +74,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Builder(builder: (BuildContext context)
-    {
-      print(_username);
-      if (_username != null) {
-        return HomePageScreen();
-      }
-      else {
-        return SignInScreen();
-      }
-    }
-        )
-    );
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.userChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+                child: CircularProgressIndicator(
+              backgroundColor: Colors.yellow,
+            ));
+          } else if (snapshot.hasData) {
+            return const HomePageScreen();
+          } else {
+            return SignInScreen();
+          }
+        });
   }
 }

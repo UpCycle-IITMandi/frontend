@@ -3,14 +3,13 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/screens/home_page_screen.dart';
+import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/shared/local_save.dart';
 import 'package:frontend/shared/sign_in_button.dart';
 import 'package:frontend/screens/sign_up_screen.dart';
 import 'package:frontend/utils/authentication.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';
-
 
 import '../services/remote_service.dart';
 
@@ -69,34 +68,33 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   if (!user_email.endsWith("iitmandi.ac.in")) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Please use Institute email')),
+                      const SnackBar(
+                          content: Text('Please use Institute email')),
                     );
-                  }
-
-                  else {
-                    Response res = await RemoteService().getUser(authToken, user_email);
+                  } else {
+                    Response res =
+                        await RemoteService().getUser(authToken, user_email);
                     print(res.body);
                     var user = json.decode(res.body);
                     bool userExists = user["userExists"];
-
 
                     if (!userExists) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: ((context) => SignUpScreen())));
-                    }
-
-                    else{
+                    } else {
                       localSave("username", user["name"]);
                       localSave("email", user_email);
 
                       localSave("campus", user["campus"]);
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                          builder: ((context) => HomePageScreen())), (route) => false);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => HomePageScreen())),
+                          (route) => false);
                     }
                   }
-
                 }),
               ),
             ),

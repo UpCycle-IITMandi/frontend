@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/Vendor.dart';
-import 'package:frontend/shared/vendor_list_item.dart';
+import './vendor_list_item.dart';
 import 'package:frontend/services/remote_service.dart';
 
 class VendorList extends StatefulWidget {
@@ -42,6 +42,7 @@ class _VendorListState extends State<VendorList> {
                   );
                 });
           } else if (snapshot.hasError) {
+            print(snapshot.error);
             return const Text("Error");
           } else {
             return const CircularProgressIndicator();

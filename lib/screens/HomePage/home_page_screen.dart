@@ -1,6 +1,11 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/my_account.dart';
-import 'package:frontend/screens/vendor_list_screen.dart';
+import 'package:frontend/screens/Vendors/vendor_list_screen.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:frontend/models/app_state.dart';
+import 'package:frontend/screens/Cart/cart_screen.dart';
+import 'package:frontend/screens/Vendors/vendor_list_screen.dart';
 import 'package:frontend/utils/authentication.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -32,17 +37,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
     return Scaffold(
       backgroundColor: primaryColorSelector,
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            tooltip: 'Open shopping cart',
-            onPressed: () {
-              // handle the press
-            },
-          ),
+        actions: const [
+          CartAppBarWidget(),
         ],
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text('App',
+        title: const Text('Upcycle',
             style: TextStyle(
               color: Colors.black,
             )),
@@ -80,14 +79,44 @@ class _HomePageScreenState extends State<HomePageScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
-
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color.fromARGB(255, 223, 73, 73),
+        selectedItemColor: Colors.orangeAccent.shade200,
         unselectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
+    );
+  }
+}
+
+class CartAppBarWidget extends StatelessWidget {
+  const CartAppBarWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Badge(
+      position: BadgePosition.topEnd(top: 0, end: 3),
+      animationDuration: const Duration(milliseconds: 300),
+      animationType: BadgeAnimationType.scale,
+      badgeColor: Colors.orangeAccent.shade200,
+      badgeContent: StoreConnector<AppState, String>(
+        converter: (store) => store.state.cartItems.length.toString(),
+        builder: ((context, vm) {
+          return Text(vm,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold));
+        }),
+      ),
+      child: IconButton(
+          icon: const Icon(Icons.shopping_cart),
+          tooltip: 'Open shopping cart',
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: ((context) => CartScreen())));
+          }),
     );
   }
 }

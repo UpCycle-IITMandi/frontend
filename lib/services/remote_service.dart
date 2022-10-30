@@ -9,7 +9,7 @@ class RemoteService {
   static var client = http.Client();
 
   Future<List<Vendor>?> getVendors() async {
-    var uri = Uri.parse('http://192.168.43.125:3000/api/v1/vendor/getAll');
+    var uri = Uri.parse('http://192.168.43.67:3000/api/v1/vendor/getAll');
     print("hand >>");
     var response = await client.get(uri);
     if (response.statusCode == 200) {
@@ -26,7 +26,7 @@ class RemoteService {
   Future<http.Response> createUser(String authToken, String name, String upiID,
       String campus, String hostel) async {
     return client.post(
-      Uri.parse('http://192.168.43.125:3000/api/v1/user/create'),
+      Uri.parse('http://192.168.43.67:3000/api/v1/user/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'authtoken': authToken,
@@ -42,11 +42,28 @@ class RemoteService {
 
   Future<http.Response> getUser(String authToken, String __email) async {
     return client.get(
-      Uri.parse('http://192.168.43.125:3000/api/v1/auth/authCheck'),
+      Uri.parse('http://192.168.43.67:3000/api/v1/auth/authCheck'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'authtoken': authToken,
       },
+    );
+  }
+
+  Future<http.Response> createOrder(String authToken, String vendorId,
+      String vendorName, String vendorUpiId, String vendorHostel) async {
+    return client.post(
+      Uri.parse('http://192.168.43.67:3000/api/v1/order/create'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authtoken': authToken,
+      },
+      body: jsonEncode(<String, String>{
+        'vendorId': vendorId,
+        'vendorName': vendorName,
+        'vendorUpiId': vendorUpiId,
+        'vendorHostel': vendorHostel,
+      }),
     );
   }
 }

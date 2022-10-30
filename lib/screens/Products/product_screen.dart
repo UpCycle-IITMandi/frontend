@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:frontend/actions/actions.dart';
 import 'package:frontend/models/Product.dart';
 import 'package:frontend/models/Vendor.dart';
+import 'package:frontend/models/app_state.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/screens/Products/product_item.dart';
 import 'package:frontend/services/remote_service.dart';
+import 'package:redux/redux.dart';
 
 class ProductScreen extends StatefulWidget {
   final Vendor vendor;
@@ -14,16 +18,14 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  Future<List<Product>?>? products;
-
   @override
   void initState() {
     super.initState();
-    products = RemoteService().getProducts();
   }
 
   @override
   Widget build(BuildContext context) {
+    final List<Inventory> products = widget.vendor.inventory;
     final Vendor vendor = widget.vendor;
     var primaryColorSelector = Theme.of(context).primaryColor;
     return WillPopScope(
@@ -53,7 +55,12 @@ class _ProductScreenState extends State<ProductScreen> {
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
                               Colors.orangeAccent.shade200)),
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () {
+                        Store<AppState> store = StoreProvider.of(context);
+                        store.dispatch(
+                            MyAction([], CartActions.ClearCartAction));
+                        Navigator.of(context).pop(true);
+                      },
                       //return true when click on "Yes"
                       child: Text('Yes', style: TextStyle(fontSize: 10)),
                     ),
@@ -73,41 +80,26 @@ class _ProductScreenState extends State<ProductScreen> {
               )),
           backgroundColor: primaryColorSelector,
         ),
-        body: Column(
-          children: [
-            VendorDetails(vendor: vendor),
-            const SizedBox(height: 10),
-            Expanded(
-              child: StreamBuilder<List<Product>?>(
-                stream: Stream.fromFuture(products!),
-                builder: ((context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        padding: const EdgeInsets.all(0),
-                        itemCount: snapshot.data?.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              const SizedBox(height: 5),
-                              Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 5),
-                                  child: ProductListItem(
-                                      product: snapshot.data![index])),
-                              const SizedBox(height: 5),
-                            ],
-                          );
-                        });
-                  } else if (snapshot.hasError) {
-                    return const Text("Error");
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                }),
-              ),
-            ),
-          ],
-        ),
+        body: Column(children: [
+          VendorDetails(vendor: vendor),
+          const SizedBox(height: 10),
+          Expanded(
+              child: ListView.builder(
+                  padding: const EdgeInsets.all(0),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        const SizedBox(height: 5),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 5),
+                            child: ProductListItem(product: products[index])),
+                        const SizedBox(height: 5),
+                      ],
+                    );
+                  })),
+        ]),
       ),
     );
   }

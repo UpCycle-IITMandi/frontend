@@ -1,5 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/my_account.dart';
+import 'package:frontend/screens/Vendors/vendor_list_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:frontend/screens/Cart/cart_screen.dart';
@@ -20,10 +22,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     VendorList(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    myAccount(),
   ];
 
   void _onItemTapped(int index) {

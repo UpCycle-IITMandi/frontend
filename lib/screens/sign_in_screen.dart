@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/screens/home_page_screen.dart';
 import 'package:frontend/shared/local_save.dart';
 import 'package:frontend/shared/sign_in_button.dart';
 import 'package:frontend/screens/sign_up_screen.dart';
@@ -57,11 +59,13 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   final GoogleSignInAccount? googleSignInAccount =
                       await Authentication.signInWithGoogle(context: context);
+                  FirebaseAuth auth = FirebaseAuth.instance;
+                  String? authToken = await auth.currentUser?.getIdToken();
+                  print(authToken);
 
-                  String? user_token = googleSignInAccount?.id;
                   String user_email = googleSignInAccount?.email ?? "No email";
 
-                  if (!mounted || user_token == null) return;
+                  if (!mounted || authToken == null) return;
 
                   if (!user_email.endsWith("iitmandi.ac.in")) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -70,10 +74,11 @@ class _SignInScreenState extends State<SignInScreen> {
                   }
 
                   else {
-                    Response res = await RemoteService().getUser(user_token);
+                    Response res = await RemoteService().getUser(authToken, user_email);
                     print(res.body);
                     var user = json.decode(res.body);
                     bool userExists = user["userExists"];
+
 
                     if (!userExists) {
                       Navigator.push(
@@ -85,9 +90,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     else{
                       localSave("username", user["name"]);
                       localSave("email", user_email);
-                      localSave("token", user_token);
+
                       localSave("campus", user["campus"]);
-                      return MyApp;
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                          builder: ((context) => HomePageScreen())), (route) => false);
                     }
                   }
 

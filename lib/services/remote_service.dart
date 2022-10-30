@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/rendering.dart';
 import 'package:frontend/models/Vendor.dart';
 import 'package:http/http.dart' as http;
@@ -8,7 +9,7 @@ class RemoteService {
   static var client = http.Client();
 
   Future<List<Vendor>?> getVendors() async {
-    var uri = Uri.parse('http://172.16.9.96:3000/vendors');
+    var uri = Uri.parse('http://192.164.43.125:3000/api/v1/vendor/getAll');
     print("hand >>");
     var response = await client.get(uri);
     print("<<< shake");
@@ -22,28 +23,29 @@ class RemoteService {
     }
   }
 
-  Future<http.Response> createUser(String name, String campus) async{
+  Future<http.Response> createUser(String authToken, String name, String upiID, String campus, String hostel) async{
     return client.post(
-        Uri.parse('http://172.16.9.96:3000/createUser'),
+        Uri.parse('http://192.168.43.125:3000/api/v1/user/create'),
         headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
+          'authtoken' : authToken,
     },
       body: jsonEncode(<String, String>{
         'name': name,
+        'hostel': hostel,
+        'upiId': upiID,
         'campus': campus,
       }),
     );
   }
 
-  Future<http.Response> getUser(String __email) async{
-    return client.post(
-      Uri.parse('http://172.16.9.96:3000/getUser'),
+  Future<http.Response> getUser(String authToken, String __email) async{
+    return client.get(
+      Uri.parse('http://192.168.43.125:3000/api/v1/auth/authCheck'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'authtoken' : authToken,
       },
-      body: jsonEncode(<String, String>{
-        'email': __email,
-      }),
     );
   }
 }

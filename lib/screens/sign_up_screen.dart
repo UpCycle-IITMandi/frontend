@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/main.dart';
@@ -5,6 +6,8 @@ import 'package:frontend/services/remote_service.dart';
 import 'package:frontend/shared/local_save.dart';
 
 import 'package:http/http.dart';
+
+import 'home_page_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -28,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  String name="", campus="";
+  String name="", campus="", upiID="", hostel="";
 
 
   Form SignUp_Form(BuildContext context) {
@@ -54,6 +57,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your name';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            onSaved: (val) => upiID = val!,
+            decoration: const InputDecoration(
+              labelText: 'UPI Id',
+              labelStyle: TextStyle(color: Colors.white),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.yellow),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.yellow),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your UPI ID';
               }
               return null;
             },
@@ -86,13 +108,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   selectedCampus = newValue!;
                 });
               }),
+          TextFormField(
+            onSaved: (val) => hostel = val!,
+            decoration: const InputDecoration(
+              labelText: 'Hostel',
+              labelStyle: TextStyle(color: Colors.white),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.yellow),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.yellow),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your Hostel';
+              }
+              return null;
+            },
+          ),
           ElevatedButton(
             onPressed: () async {
               if (formKey.currentState!.validate() &&
                   selectedCampus != null) {
                     formKey.currentState?.save();
-
-                   Response res =  await RemoteService().createUser(name, campus);
+                    FirebaseAuth auth = FirebaseAuth.instance;
+                    String? authToken = await auth.currentUser?.getIdToken();
+                   Response res =  await RemoteService().createUser(authToken!, name, upiID, campus, hostel);
 
                    if (res.statusCode == 200) {
                      ScaffoldMessenger.of(context).showSnackBar(
@@ -101,7 +143,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                      localSave('username', name);
                      localSave('campus', campus);
-                     return MyApp;
+                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                         builder: ((context) => HomePageScreen())), (route) => false);
                    }
 
                    // Else will never work, res response await hi karta reh jayega if server is offline

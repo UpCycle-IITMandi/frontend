@@ -55,23 +55,22 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Center(
                 child: SignInButton(onPressed: () async {
                   await Authentication.signOut(context: context);
-
                   final GoogleSignInAccount? googleSignInAccount =
                       await Authentication.signInWithGoogle(context: context);
                   FirebaseAuth auth = FirebaseAuth.instance;
                   String? authToken = await auth.currentUser?.getIdToken();
-                  print(authToken);
 
                   String user_email = googleSignInAccount?.email ?? "No email";
 
-                  if (!mounted || authToken == null) return;
-
-                  if (!user_email.endsWith("iitmandi.ac.in")) {
+                  if (!mounted || authToken == null || googleSignInAccount==null ) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                           content: Text('Please use Institute email')),
                     );
-                  } else {
+                    return;
+                  }
+
+                  if (googleSignInAccount != null) {
                     Response res =
                         await RemoteService().getUser(authToken, user_email);
                     print(res.body);

@@ -37,6 +37,12 @@ class Authentication {
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
+  print(googleSignInAccount.email);
+      if (!googleSignInAccount.email.endsWith("iitmandi.ac.in")) {
+
+        await googleSignIn.signOut();
+        return null;
+      }
 
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,

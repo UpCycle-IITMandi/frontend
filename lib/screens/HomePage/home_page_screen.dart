@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/models/app_state.dart';
+import 'package:frontend/screens/Cart/cart_screen.dart';
 import 'package:frontend/screens/Vendors/vendor_list_screen.dart';
 import 'package:frontend/utils/authentication.dart';
 
@@ -113,7 +114,10 @@ class CartAppBarWidget extends StatelessWidget {
       child: IconButton(
           icon: const Icon(Icons.shopping_cart),
           tooltip: 'Open shopping cart',
-          onPressed: () {}),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: ((context) => CartScreen())));
+          }),
     );
   }
 }

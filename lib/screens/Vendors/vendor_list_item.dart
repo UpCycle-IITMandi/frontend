@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/Vendor.dart';
 import 'package:frontend/screens/Products/product_screen.dart';
+import 'package:flutter/src/widgets/image.dart' as ImageModule;
 
 class VendorListItem extends StatefulWidget {
   final Vendor vendor;
@@ -23,7 +24,8 @@ class _VendorListItemState extends State<VendorListItem> {
     final List<Widget> imageSliders = vendor.images
         .map((item) => ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-            child: Image.network(item, fit: BoxFit.cover)))
+            child:
+                ImageModule.Image.network(item.pictureUrl, fit: BoxFit.cover)))
         .toList();
 
     return Center(
@@ -66,8 +68,8 @@ class _VendorListItemState extends State<VendorListItem> {
                     margin: const EdgeInsets.fromLTRB(5, 1, 0, 1),
                     alignment: Alignment.centerLeft,
                     child: Column(children: [
-                      const Text(
-                        "Noah's Bagels",
+                      Text(
+                        vendor.shopName,
                         style: TextStyle(color: Colors.black, fontSize: 14),
                       ),
                       Text(

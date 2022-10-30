@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/actions/actions.dart';
 import 'package:frontend/models/Product.dart';
+import 'package:frontend/models/Vendor.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/src/widgets/image.dart' as ImageModule;
 
 class ProductListItem extends StatefulWidget {
-  final Product product;
+  final Inventory product;
   const ProductListItem({Key? key, required this.product}) : super(key: key);
 
   @override
@@ -19,14 +21,14 @@ class _ProductListItemState extends State<ProductListItem> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
-    final Product product = widget.product;
+    final Inventory product = widget.product;
     final CarouselController _controller = CarouselController();
 
-    final List<Widget> imageSliders = product.images
-        .map((item) => ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-            child: Image.network(item, fit: BoxFit.cover)))
-        .toList();
+    // final List<Widget> imageSliders = product.imageUrl
+    //     .map((item) => ClipRRect(
+    //         borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+    //         child: Image.network(item, fit: BoxFit.cover)))
+    //     .toList();
 
     final currency = NumberFormat.simpleCurrency(
         locale: 'en_IN', name: 'INR', decimalDigits: 2);
@@ -49,8 +51,25 @@ class _ProductListItemState extends State<ProductListItem> {
                 width: 150,
                 child: Column(
                   children: [
-                    Image.network(product.images[0]),
-                    AddToCart(product: product),
+                    Container(
+                      height: 125,
+                      width: 125,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: NetworkImage(product.imageUrl),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    AddToCart(
+                        product: Product(
+                            productId: product.id,
+                            productName: product.name,
+                            price: product.cost,
+                            veg: true,
+                            stars: 4,
+                            images: [product.imageUrl])),
                   ],
                 ),
               ),
@@ -62,18 +81,20 @@ class _ProductListItemState extends State<ProductListItem> {
                   //   product.veg ? "Veg" : "Nonveg",
                   // ),
                   Text(
-                    product.productName,
+                    product.name,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    currency.format(product.price),
+                    currency.format(product.cost),
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.orangeAccent.shade200),
                   ),
-                  const Text(
-                    "Fried aloo patty topped with juicy tomatoes, crisp lettuce and creamy.",
+                  Text(
+                    product.description,
                     style: TextStyle(fontSize: 9),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   )
                 ],
               ),

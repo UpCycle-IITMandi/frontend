@@ -11,7 +11,7 @@ class Product {
     required this.images,
   });
 
-  int productId;
+  String productId;
   String productName;
   int price;
   bool veg;

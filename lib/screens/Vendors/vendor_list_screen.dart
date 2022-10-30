@@ -42,6 +42,7 @@ class _VendorListState extends State<VendorList> {
                   );
                 });
           } else if (snapshot.hasError) {
+            print(snapshot.error);
             return const Text("Error");
           } else {
             return const CircularProgressIndicator();

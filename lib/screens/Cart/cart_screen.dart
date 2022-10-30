@@ -38,7 +38,6 @@ class _CartScreenState extends State<CartScreen> {
               builder: (context, cartItems) {
                 final currency = NumberFormat.simpleCurrency(
                     locale: 'en_IN', name: 'INR', decimalDigits: 2);
-
                 return Expanded(
                     child: ListView.builder(
                         itemCount: cartItems.length,
@@ -96,8 +95,8 @@ class _CartScreenState extends State<CartScreen> {
                                     children: [
                                       IconButton(
                                         onPressed: () {
-                                          StoreProvider.of(context).dispatch(
-                                              MyAction(
+                                          StoreProvider.of<AppState>(context)
+                                              .dispatch(MyAction(
                                                   CartItem(
                                                       cartItems[index].product,
                                                       cartItems[index]
@@ -105,7 +104,10 @@ class _CartScreenState extends State<CartScreen> {
                                                           1),
                                                   CartActions.EditCartAction));
                                         },
-                                        icon: const Icon(Icons.add),
+                                        icon: const Icon(
+                                          Icons.add,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                       Text(
                                         cartItems[index].quantity.toString(),
@@ -116,8 +118,8 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          StoreProvider.of(context).dispatch(
-                                              MyAction(
+                                          StoreProvider.of<AppState>(context)
+                                              .dispatch(MyAction(
                                                   CartItem(
                                                       cartItems[index].product,
                                                       cartItems[index]
@@ -125,7 +127,10 @@ class _CartScreenState extends State<CartScreen> {
                                                           1),
                                                   CartActions.EditCartAction));
                                         },
-                                        icon: const Icon(Icons.remove),
+                                        icon: const Icon(
+                                          Icons.remove,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ],
                                   )

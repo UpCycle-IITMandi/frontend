@@ -56,9 +56,8 @@ class _ProductScreenState extends State<ProductScreen> {
                           backgroundColor: MaterialStateProperty.all(
                               Colors.orangeAccent.shade200)),
                       onPressed: () {
-                        Store<AppState> store = StoreProvider.of(context);
-                        store.dispatch(
-                            MyAction([], CartActions.ClearCartAction));
+                        StoreProvider.of<AppState>(context).dispatch(
+                            MyAction(null, CartActions.ClearCartAction));
                         Navigator.of(context).pop(true);
                       },
                       //return true when click on "Yes"

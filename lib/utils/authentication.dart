@@ -22,7 +22,7 @@ class Authentication {
     );
   }
 
-  static Future<User?> signInWithGoogle({required BuildContext context}) async {
+  static Future<GoogleSignInAccount?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
@@ -31,9 +31,18 @@ class Authentication {
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
 
+    print(googleSignInAccount);
+    // print(googleSignInAccount?.getServerAuthCode());
+
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
+  print(googleSignInAccount.email);
+      if (!googleSignInAccount.email.endsWith("iitmandi.ac.in")) {
+
+        await googleSignIn.signOut();
+        return null;
+      }
 
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
@@ -68,7 +77,7 @@ class Authentication {
       }
     }
 
-    return user;
+    return googleSignInAccount;
   }
 
   static Future<void> signOut({required BuildContext context}) async {

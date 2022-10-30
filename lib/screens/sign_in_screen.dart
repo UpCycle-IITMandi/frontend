@@ -1,8 +1,16 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/main.dart';
+import 'package:frontend/shared/local_save.dart';
 import 'package:frontend/shared/sign_in_button.dart';
 import 'package:frontend/screens/sign_up_screen.dart';
 import 'package:frontend/utils/authentication.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart';
+
+
+import '../services/remote_service.dart';
 
 class CenterHorizontal extends StatelessWidget {
   CenterHorizontal({required this.child});
@@ -40,30 +48,49 @@ class _SignInScreenState extends State<SignInScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
-
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 40,
               child: Center(
                 child: SignInButton(onPressed: () async {
-                  User? user =
+                  await Authentication.signOut(context: context);
+
+                  final GoogleSignInAccount? googleSignInAccount =
                       await Authentication.signInWithGoogle(context: context);
 
-                  if (!mounted) return;
+                  String? user_token = googleSignInAccount?.id;
+                  String user_email = googleSignInAccount?.email ?? "No email";
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => SignUpScreen())));
+                  if (!mounted || user_token == null) return;
 
-                  // var googleProvider = GoogleAuthProvider();
-                  // googleProvider.addScope(
-                  //     'https://www.googleapis.com/auth/contacts.readonly');
-                  // googleProvider
-                  //     .setCustomParameters({'login_hint': 'user@example.com'})
-                  // FirebaseAuth.instance
-                  //     .signInWithAuthProvider(googleProvider)
-                  //     .then((value) => print(value));
+                  if (!user_email.endsWith("iitmandi.ac.in")) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please use Institute email')),
+                    );
+                  }
+
+                  else {
+                    Response res = await RemoteService().getUser(user_token);
+                    print(res.body);
+                    var user = json.decode(res.body);
+                    bool userExists = user["userExists"];
+
+                    if (!userExists) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => SignUpScreen())));
+                    }
+
+                    else{
+                      localSave("username", user["name"]);
+                      localSave("email", user_email);
+                      localSave("token", user_token);
+                      localSave("campus", user["campus"]);
+                      return MyApp;
+                    }
+                  }
+
                 }),
               ),
             ),

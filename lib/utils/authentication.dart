@@ -22,7 +22,7 @@ class Authentication {
     );
   }
 
-  static Future<User?> signInWithGoogle({required BuildContext context}) async {
+  static Future<GoogleSignInAccount?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
@@ -31,44 +31,46 @@ class Authentication {
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
 
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
+    print(googleSignInAccount);
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
+    // if (googleSignInAccount != null) {
+    //   final GoogleSignInAuthentication googleSignInAuthentication =
+    //       await googleSignInAccount.authentication;
+    //
+    //   final AuthCredential credential = GoogleAuthProvider.credential(
+    //     accessToken: googleSignInAuthentication.accessToken,
+    //     idToken: googleSignInAuthentication.idToken,
+    //   );
+    //
+    //   try {
+    //     final UserCredential userCredential =
+    //         await auth.signInWithCredential(credential);
+    //
+    //     user = userCredential.user;
+    //   } on FirebaseAuthException catch (e) {
+    //     if (e.code == 'account-exists-with-different-credential') {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         Authentication.customSnackBar(
+    //           content: 'The account already exists with a different credential',
+    //         ),
+    //       );
+    //     } else if (e.code == 'invalid-credential') {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         Authentication.customSnackBar(
+    //           content: 'Error occurred while accessing credentials. Try again.',
+    //         ),
+    //       );
+    //     }
+    //   } catch (e) {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       Authentication.customSnackBar(
+    //         content: 'Error occurred using Google Sign In. Try again.',
+    //       ),
+    //     );
+    //   }
+    // }
 
-      try {
-        final UserCredential userCredential =
-            await auth.signInWithCredential(credential);
-
-        user = userCredential.user;
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'account-exists-with-different-credential') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            Authentication.customSnackBar(
-              content: 'The account already exists with a different credential',
-            ),
-          );
-        } else if (e.code == 'invalid-credential') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            Authentication.customSnackBar(
-              content: 'Error occurred while accessing credentials. Try again.',
-            ),
-          );
-        }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          Authentication.customSnackBar(
-            content: 'Error occurred using Google Sign In. Try again.',
-          ),
-        );
-      }
-    }
-
-    return user;
+    return googleSignInAccount;
   }
 
   static Future<void> signOut({required BuildContext context}) async {

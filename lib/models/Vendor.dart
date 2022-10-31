@@ -5,7 +5,7 @@ class Vendor {
   Vendor({
     required this.id,
     required this.shopName,
-    required this.shopUniqueId,
+    required this.vendorId,
     required this.ownerName,
     required this.upiId,
     required this.address,
@@ -26,7 +26,7 @@ class Vendor {
 
   String id;
   String shopName;
-  String shopUniqueId;
+  String vendorId;
   String ownerName;
   String upiId;
   String address;
@@ -51,7 +51,7 @@ class Vendor {
   factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
         id: json["_id"],
         shopName: json["shopName"],
-        shopUniqueId: json["shopUniqueId"],
+        vendorId: json["vendorId"],
         ownerName: json["ownerName"],
         upiId: json["upiId"],
         address: json["address"],
@@ -74,7 +74,7 @@ class Vendor {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "shopName": shopName,
-        "shopUniqueId": shopUniqueId,
+        "vendorId": vendorId,
         "ownerName": ownerName,
         "upiId": upiId,
         "address": address,

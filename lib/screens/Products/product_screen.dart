@@ -29,43 +29,49 @@ class _ProductScreenState extends State<ProductScreen> {
     final Vendor vendor = widget.vendor;
     var primaryColorSelector = Theme.of(context).primaryColor;
     return WillPopScope(
-      onWillPop: () async => await showDialog(
-          context: context,
-          builder: (context) => Theme(
-                data: Theme.of(context)
-                    .copyWith(dialogBackgroundColor: Colors.white),
-                child: AlertDialog(
-                  title: const Text(
-                    "Warning",
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+      onWillPop: () async {
+        if (StoreProvider.of<AppState>(context).state.cartItems.isEmpty) {
+          return true;
+        }
+        return await showDialog(
+            context: context,
+            builder: (context) => Theme(
+                  data: Theme.of(context)
+                      .copyWith(dialogBackgroundColor: Colors.white),
+                  child: AlertDialog(
+                    title: const Text(
+                      "Warning",
+                      style:
+                          TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                    ),
+                    content: const Text(
+                        "If you go back, the cart will be cleared.",
+                        style: TextStyle(fontSize: 10)),
+                    actions: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Colors.orangeAccent.shade200)),
+                        onPressed: () => Navigator.of(context).pop(false),
+                        //return false when click on "NO"
+                        child: Text('No', style: TextStyle(fontSize: 10)),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Colors.orangeAccent.shade200)),
+                        onPressed: () {
+                          StoreProvider.of<AppState>(context).dispatch(
+                              MyAction(null, CartActions.ClearCartAction));
+                          Navigator.of(context).pop(true);
+                        },
+                        //return true when click on "Yes"
+                        child: Text('Yes', style: TextStyle(fontSize: 10)),
+                      ),
+                    ],
                   ),
-                  content: const Text(
-                      "If you go back, the cart will be cleared.",
-                      style: TextStyle(fontSize: 10)),
-                  actions: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Colors.orangeAccent.shade200)),
-                      onPressed: () => Navigator.of(context).pop(false),
-                      //return false when click on "NO"
-                      child: Text('No', style: TextStyle(fontSize: 10)),
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Colors.orangeAccent.shade200)),
-                      onPressed: () {
-                        StoreProvider.of<AppState>(context).dispatch(
-                            MyAction(null, CartActions.ClearCartAction));
-                        Navigator.of(context).pop(true);
-                      },
-                      //return true when click on "Yes"
-                      child: Text('Yes', style: TextStyle(fontSize: 10)),
-                    ),
-                  ],
-                ),
-              )),
+                ));
+      },
       child: Scaffold(
         backgroundColor: Colors.grey.shade300,
         appBar: AppBar(
@@ -129,34 +135,43 @@ class VendorDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      style: TextStyle(color: Colors.black),
+      style: TextStyle(
+        color: Colors.black,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      vendor.shopName.toUpperCase(),
-                    ),
-                    const Text("Pizza, Burger"),
-                  ],
-                ),
-                Column(
-                  children: [Text("Open Now"), Text("11:00 AM - 12:00 PM")],
-                )
-              ],
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                "North Campus, IIT Mandi.",
+        child: Container(
+          padding: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10), color: Colors.white),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        vendor.shopName.toUpperCase(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "${vendor.category} | Open Now | 11:00 AM - 12:00 PM",
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            )
-          ],
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(vendor.address, style: TextStyle(fontSize: 10)),
+              )
+            ],
+          ),
         ),
       ),
     );

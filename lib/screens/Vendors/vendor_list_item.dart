@@ -67,17 +67,20 @@ class _VendorListItemState extends State<VendorListItem> {
                   child: Container(
                     margin: const EdgeInsets.fromLTRB(5, 1, 0, 1),
                     alignment: Alignment.centerLeft,
-                    child: Column(children: [
-                      Text(
-                        vendor.shopName,
-                        style: TextStyle(color: Colors.black, fontSize: 14),
-                      ),
-                      Text(
-                        "Lunch | American",
-                        style:
-                            TextStyle(color: Colors.grey.shade400, fontSize: 9),
-                      )
-                    ]),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            vendor.shopName,
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                          ),
+                          Text(
+                            vendor.category,
+                            style: TextStyle(
+                                color: Colors.grey.shade400, fontSize: 9),
+                          )
+                        ]),
                   ),
                 ),
               ],

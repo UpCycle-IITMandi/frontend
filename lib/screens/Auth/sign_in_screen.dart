@@ -6,12 +6,12 @@ import 'package:frontend/main.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/shared/local_save.dart';
 import 'package:frontend/shared/sign_in_button.dart';
-import 'package:frontend/screens/sign_up_screen.dart';
+import 'package:frontend/screens/Auth/sign_up_screen.dart';
 import 'package:frontend/utils/authentication.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';
 
-import '../services/remote_service.dart';
+import '../../services/remote_service.dart';
 
 class CenterHorizontal extends StatelessWidget {
   CenterHorizontal({required this.child});

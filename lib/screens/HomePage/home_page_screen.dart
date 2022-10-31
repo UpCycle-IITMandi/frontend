@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/my_account.dart';
+import 'package:frontend/screens/Auth/my_account.dart';
 import 'package:frontend/screens/Vendors/vendor_list_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/models/app_state.dart';

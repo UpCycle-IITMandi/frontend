@@ -62,7 +62,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   String user_email = googleSignInAccount?.email ?? "No email";
 
-                  if (!mounted || authToken == null || googleSignInAccount==null ) {
+                  if (!mounted ||
+                      authToken == null ||
+                      googleSignInAccount == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                           content: Text('Please use Institute email')),

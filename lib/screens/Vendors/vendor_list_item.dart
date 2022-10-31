@@ -24,8 +24,8 @@ class _VendorListItemState extends State<VendorListItem> {
     final List<Widget> imageSliders = vendor.images
         .map((item) => ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-            child:
-                ImageModule.Image.network(item.pictureUrl, fit: BoxFit.cover)))
+            child: ImageModule.Image.network(item.pictureUrl,
+                height: 200, width: double.infinity, fit: BoxFit.cover)))
         .toList();
 
     return Center(

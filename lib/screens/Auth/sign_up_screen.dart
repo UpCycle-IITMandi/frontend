@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/services/remote_service.dart';
-import 'package:frontend/shared/local_save.dart';
+import 'package:frontend/models/local_save.dart';
 
 import 'package:http/http.dart';
 
@@ -22,7 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: Padding(
             padding: const EdgeInsets.fromLTRB(20, 75, 20, 20),
             child: SignUp_Form(context)));
@@ -42,12 +42,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onSaved: (val) => name = val!,
           decoration: const InputDecoration(
             labelText: 'Name',
-            labelStyle: TextStyle(color: Colors.white),
+            labelStyle: TextStyle(color: Colors.black),
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.yellow),
+              borderSide: BorderSide(color: Colors.black),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.yellow),
+              borderSide: BorderSide(color: Colors.black),
             ),
           ),
           validator: (value) {
@@ -61,12 +61,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onSaved: (val) => upiID = val!,
           decoration: const InputDecoration(
             labelText: 'UPI Id',
-            labelStyle: TextStyle(color: Colors.white),
+            labelStyle: TextStyle(color: Colors.black),
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.yellow),
+              borderSide: BorderSide(color: Colors.black),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.yellow),
+              borderSide: BorderSide(color: Colors.black),
             ),
           ),
           validator: (value) {
@@ -80,12 +80,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             onSaved: (val) => campus = val.toString(),
             decoration: const InputDecoration(
               labelText: 'Campus',
-              labelStyle: TextStyle(color: Colors.white),
+              labelStyle: TextStyle(color: Colors.black),
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.yellow),
+                borderSide: BorderSide(color: Colors.white),
               ),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.yellow),
+                borderSide: BorderSide(color: Colors.black),
               ),
             ),
             hint: const Text("Select option", maxLines: 1),
@@ -108,12 +108,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onSaved: (val) => hostel = val!,
           decoration: const InputDecoration(
             labelText: 'Hostel',
-            labelStyle: TextStyle(color: Colors.white),
+            labelStyle: TextStyle(color: Colors.black),
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.yellow),
+              borderSide: BorderSide(color: Colors.black),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.yellow),
+              borderSide: BorderSide(color: Colors.black),
             ),
           ),
           validator: (value) {
@@ -136,9 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('User successfully registered')),
                 );
-
-                localSave('username', name);
-                localSave('campus', campus);
+                saveUser(name, (auth.currentUser?.email)!, upiID, campus, hostel);
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: ((context) => HomePageScreen())),

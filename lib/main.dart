@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'utils/firebase_options.dart';
+import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/Auth/sign_in_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +12,7 @@ import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
-import 'utils/firebase_options.dart';
+import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/Auth/sign_in_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -75,14 +75,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.userChanges(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-                child: CircularProgressIndicator(
-              backgroundColor: Colors.yellow,
-            ));
-          } else if (snapshot.hasData) {
+          if (_username != null) {
             return const HomePageScreen();
           } else {
             return SignInScreen();

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:frontend/services/local_save.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'firebase_options.dart';
+import 'utils/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/Auth/sign_in_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +13,7 @@ import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
-import 'firebase_options.dart';
+import 'utils/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/Auth/sign_in_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -23,15 +24,11 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // final persistor = Persistor<AppState>(
-  //   storage: FlutterStorage(),
-  //   serializer: JsonSerializer<AppState>(AppState.fromJson),
-  // );
-  // final initialState = await persistor.load();
+
   final store = Store<AppState>(
     appReducer,
     initialState: AppState(),
-    // middleware: [persistor.createMiddleware()],
+
   );
   runApp(StoreProvider<AppState>(
     store: store,
@@ -56,31 +53,19 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String? _username;
+class _MyAppState extends State<MyApp>{
+  final Future<String?> _username = localGet('username');
 
   @override
-  void initState() {
-    super.initState();
-    _loadUser();
-  }
-
-  Future<void> _loadUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _username = prefs.getString('username');
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
+  Widget build(BuildContext context){
+    return FutureBuilder<String?>(
+        future: _username,
         builder: (context, snapshot) {
-          if (_username != null) {
-            return const HomePageScreen();
-          } else {
-            return SignInScreen();
-          }
+            if (snapshot.data != null) {
+              return const HomePageScreen();
+            } else {
+              return SignInScreen();
+            }
         });
   }
 }

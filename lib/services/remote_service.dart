@@ -10,7 +10,6 @@ class RemoteService {
 
   Future<List<Vendor>?> getVendors() async {
     var uri = Uri.parse('$baseUrl/api/v1/vendor/getAll');
-    print("hand >>");
     var response = await client.get(uri);
     if (response.statusCode == 200) {
       var res = response.body;
@@ -41,7 +40,6 @@ class RemoteService {
   }
 
   Future<http.Response> getUser(String authToken, String __email) async {
-    print("calling getUser");
     return client.get(
       Uri.parse('$baseUrl/api/v1/auth/authCheck'),
       headers: <String, String>{

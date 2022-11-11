@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/services/remote_service.dart';
-import 'package:frontend/models/local_save.dart';
+import 'package:frontend/services/local_save.dart';
 
 import 'package:http/http.dart';
 
@@ -136,7 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('User successfully registered')),
                 );
-                saveUser(name, (auth.currentUser?.email)!, upiID, campus, hostel);
+                saveUser(name, (auth.currentUser?.email)!, upiID, campus, hostel, (auth.currentUser?.photoURL)!);
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: ((context) => HomePageScreen())),

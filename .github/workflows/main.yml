@@ -8,7 +8,7 @@ on:
 jobs:
   apk:
     name: Build Android App
-    uses: sparkfabrik/android-build-action/action.yml@master
+    uses: sparkfabrik/android-build-action@v1.2.0
     with:
       project-path: android
       output-path: my-app.apk

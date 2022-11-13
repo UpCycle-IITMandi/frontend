@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/profile/edit_profile.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/services/remote_service.dart';
-import 'package:frontend/shared/local_save.dart';
+import 'package:frontend/services/local_save.dart';
 import 'package:frontend/utils/authentication.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';

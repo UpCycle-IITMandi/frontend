@@ -21,6 +21,7 @@ import 'package:redux/redux.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: 'UpCycle',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // final persistor = Persistor<AppState>(

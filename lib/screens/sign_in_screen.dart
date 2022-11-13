@@ -3,10 +3,17 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
+<<<<<<< Updated upstream
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/shared/local_save.dart';
 import 'package:frontend/shared/sign_in_button.dart';
 import 'package:frontend/screens/sign_up_screen.dart';
+=======
+import 'package:frontend/screens/Auth/sign_up_screen.dart';
+import 'package:frontend/screens/HomePage/home_page_screen.dart';
+import 'package:frontend/shared/local_save.dart';
+import 'package:frontend/shared/sign_in_button.dart';
+>>>>>>> Stashed changes
 import 'package:frontend/utils/authentication.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';
@@ -62,9 +69,14 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   String user_email = googleSignInAccount?.email ?? "No email";
 
-                  if (!mounted ||
-                      authToken == null ||
-                      googleSignInAccount == null) {
+                  // if (!mounted || authToken == null || googleSignInAccount==null ) {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     const SnackBar(
+                  //         content: Text('Please use Institute email')),
+                  //   );
+                  //   return;
+                  // }
+                  if (authToken == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                           content: Text('Please use Institute email')),
@@ -85,10 +97,27 @@ class _SignInScreenState extends State<SignInScreen> {
                           MaterialPageRoute(
                               builder: ((context) => SignUpScreen())));
                     } else {
+<<<<<<< Updated upstream
+<<<<<<<< Updated upstream:lib/screens/sign_in_screen.dart
+=======
+>>>>>>> Stashed changes
                       localSave("username", user["name"]);
                       localSave("email", user_email);
 
                       localSave("campus", user["campus"]);
+<<<<<<< Updated upstream
+========
+                      user = user["user"];
+                      saveUser(
+                          user["firstName"] + ' ' + user["lastName"],
+                          userEmail,
+                          user["upiId"],
+                          user["campus"],
+                          user["hostel"],
+                          user["profilePicture"]);
+>>>>>>>> Stashed changes:lib/screens/Auth/sign_in_screen.dart
+=======
+>>>>>>> Stashed changes
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(

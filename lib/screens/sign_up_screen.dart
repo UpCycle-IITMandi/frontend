@@ -130,7 +130,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               FirebaseAuth auth = FirebaseAuth.instance;
               String? authToken = await auth.currentUser?.getIdToken();
               Response res = await RemoteService()
-                  .createUser(authToken!, name, upiID, campus, hostel);
+                  .updateUser(authToken!, name, upiID, campus, hostel);
 
               if (res.statusCode == 200) {
                 ScaffoldMessenger.of(context).showSnackBar(

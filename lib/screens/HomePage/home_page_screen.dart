@@ -1,6 +1,12 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 import 'package:frontend/screens/my_account.dart';
+=======
+import 'package:frontend/screens/profile/my_account.dart';
+import 'package:frontend/services/local_save.dart';
+import 'package:frontend/screens/Auth/sign_in_screen.dart';
+>>>>>>> Stashed changes
 import 'package:frontend/screens/Vendors/vendor_list_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/models/app_state.dart';
@@ -64,6 +70,25 @@ class _HomePageScreenState extends State<HomePageScreen> {
               ),
               onTap: () {
                 Authentication.signOut(context: context);
+<<<<<<< Updated upstream
+=======
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: ((context) => SignInScreen())),
+                    (route) => false);
+              },
+            ),
+            ListTile(
+              title: const Text(
+                'Print userDetails in console',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () async {
+                var user = await getUser();
+                print(user);
+>>>>>>> Stashed changes
               },
             ),
           ],

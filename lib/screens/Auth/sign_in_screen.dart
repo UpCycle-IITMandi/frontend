@@ -4,14 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
-import 'package:frontend/shared/local_save.dart';
+import 'package:frontend/services/local_save.dart';
 import 'package:frontend/shared/sign_in_button.dart';
-import 'package:frontend/screens/sign_up_screen.dart';
+import 'package:frontend/screens/Auth/sign_up_screen.dart';
 import 'package:frontend/utils/authentication.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';
 
-import '../services/remote_service.dart';
+import '../../services/remote_service.dart';
 
 class CenterHorizontal extends StatelessWidget {
   CenterHorizontal({required this.child});
@@ -60,7 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   FirebaseAuth auth = FirebaseAuth.instance;
                   String? authToken = await auth.currentUser?.getIdToken();
 
-                  String user_email = googleSignInAccount?.email ?? "No email";
+                  String userEmail = googleSignInAccount?.email ?? "No email";
 
                   if (!mounted ||
                       authToken == null ||
@@ -74,7 +74,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   if (googleSignInAccount != null) {
                     Response res =
-                        await RemoteService().getUser(authToken, user_email);
+                        await RemoteService().getUser(authToken, userEmail);
                     print(res.body);
                     var user = json.decode(res.body);
                     bool userExists = user["userExists"];
@@ -85,10 +85,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           MaterialPageRoute(
                               builder: ((context) => SignUpScreen())));
                     } else {
-                      localSave("username", user["name"]);
-                      localSave("email", user_email);
-
-                      localSave("campus", user["campus"]);
+                      user = user["user"];
+                      saveUser(user["firstName"] + ' ' + user["lastName"], userEmail,
+                          user["upiId"], user["campus"], user["hostel"], user["profilePicture"]);
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(

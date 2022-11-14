@@ -5,6 +5,7 @@ import 'package:frontend/main.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/services/remote_service.dart';
 import 'package:frontend/services/local_save.dart';
+
 import 'package:http/http.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -24,12 +25,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         backgroundColor: Colors.white,
         body: Padding(
             padding: const EdgeInsets.fromLTRB(20, 75, 20, 20),
-            child: signUpForm(context)));
+            child: SignUp_Form(context)));
   }
 
   String name = "", campus = "", upiID = "", hostel = "";
 
-  Form signUpForm(BuildContext context) {
+  Form SignUp_Form(BuildContext context) {
     return Form(
       key: formKey,
       child: Column(children: [
@@ -41,12 +42,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onSaved: (val) => name = val!,
           decoration: const InputDecoration(
             labelText: 'Name',
-            labelStyle: TextStyle(color: Colors.grey),
+            labelStyle: TextStyle(color: Colors.black),
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(color: Colors.black),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(color: Colors.black),
             ),
           ),
           validator: (value) {
@@ -60,12 +61,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onSaved: (val) => upiID = val!,
           decoration: const InputDecoration(
             labelText: 'UPI Id',
-            labelStyle: TextStyle(color: Colors.grey),
+            labelStyle: TextStyle(color: Colors.black),
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(color: Colors.black),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(color: Colors.black),
             ),
           ),
           validator: (value) {
@@ -76,32 +77,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
           },
         ),
         DropdownButtonFormField(
-            icon: null,
-            dropdownColor: Colors.white,
-            style:
-                TextStyle(color: Colors.black, backgroundColor: Colors.white),
             onSaved: (val) => campus = val.toString(),
             decoration: const InputDecoration(
               labelText: 'Campus',
-              labelStyle: TextStyle(color: Colors.grey),
+              labelStyle: TextStyle(color: Colors.black),
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
+                borderSide: BorderSide(color: Colors.white),
               ),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
+                borderSide: BorderSide(color: Colors.black),
               ),
             ),
-            hint: const Text("Select option",
-                style: TextStyle(color: Colors.grey), maxLines: 1),
-            items: ['North Campus', 'South Campus']
-                .map((String value) => DropdownMenuItem(
-                      value: value,
-                      child: Text(
-                        value,
-                        textAlign: TextAlign.left,
-                      ),
-                    ))
-                .toList(),
+            hint: const Text("Select option", maxLines: 1),
+            items: <String>['North Campus', 'South Campus']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  textAlign: TextAlign.left,
+                ),
+              );
+            }).toList(),
             onChanged: (String? newValue) {
               setState(() {
                 selectedCampus = newValue!;
@@ -111,12 +108,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onSaved: (val) => hostel = val!,
           decoration: const InputDecoration(
             labelText: 'Hostel',
-            labelStyle: TextStyle(color: Colors.grey),
+            labelStyle: TextStyle(color: Colors.black),
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(color: Colors.black),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(color: Colors.black),
             ),
           ),
           validator: (value) {

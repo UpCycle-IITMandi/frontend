@@ -48,7 +48,11 @@ class _myAccountState extends State<myAccount> {
       physics: BouncingScrollPhysics(),
       child: Container(
         height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.only(top: 30, right: 15, left: 15, bottom: 70),
+        padding: EdgeInsets.only(
+          top: 30,
+          right: 15,
+          left: 15,
+        ),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -63,8 +67,8 @@ class _myAccountState extends State<myAccount> {
                           child: Stack(
                             children: [
                               CircleAvatar(
-                                radius: 75,
-                                backgroundColor: Color(0xFF1976D2),
+                                radius: 76,
+                                backgroundColor: Colors.black54,
                                 child: CircleAvatar(
                                   radius: 72,
                                   backgroundColor: Colors.white,
@@ -120,7 +124,7 @@ class _myAccountState extends State<myAccount> {
                   ),
                   margin:
                       EdgeInsets.only(left: 0, right: 0, bottom: 10, top: 5),
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   height: 35,
                   child: Center(
                     child: const Text(
@@ -138,7 +142,7 @@ class _myAccountState extends State<myAccount> {
                 height: 20,
               ),
               Divider(
-                color: Colors.black,
+                color: Colors.grey,
               ),
               ListTile(
                 leading: GestureDetector(
@@ -262,7 +266,7 @@ class _myAccountState extends State<myAccount> {
                 dense: false,
               ),
               Divider(
-                color: Colors.black,
+                color: Colors.grey,
               ),
               ListTile(
                 leading: GestureDetector(

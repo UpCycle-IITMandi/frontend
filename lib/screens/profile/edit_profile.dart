@@ -66,252 +66,203 @@ class _EditProfileState extends State<EditProfile> {
             FutureBuilder(
                 future: getData(),
                 builder: (context, snapshot) {
-                  return SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          top: 20, right: 15, left: 15, bottom: 70),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Stack(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 75,
-                                    backgroundColor:
-                                        Color.fromARGB(255, 108, 108, 108),
-                                    child: CircleAvatar(
-                                      radius: 71,
-                                      backgroundColor: Colors.white,
+                  if (snapshot.hasData) {
+                    return SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: 20, right: 15, left: 15, bottom: 70),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Stack(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 75,
+                                      backgroundColor:
+                                          Color.fromARGB(255, 108, 108, 108),
                                       child: CircleAvatar(
-                                        radius: 69,
-                                        backgroundImage: NetworkImage(photoUrl),
+                                        radius: 71,
+                                        backgroundColor: Colors.white,
+                                        child: CircleAvatar(
+                                          radius: 69,
+                                          backgroundImage:
+                                              NetworkImage(photoUrl),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 10,
+                                      right: 10,
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          FilePickerResult? result =
+                                              await FilePicker.platform
+                                                  .pickFiles();
+
+                                          if (result != null) {
+                                            file = File(
+                                                result.files.single.path ?? "");
+                                          } else {
+                                            // User canceled the picker
+                                          }
+                                        },
+                                        child: CircleAvatar(
+                                            radius: 15,
+                                            backgroundImage: NetworkImage(
+                                                "https://t4.ftcdn.net/jpg/02/83/72/41/360_F_283724163_kIWm6DfeFN0zhm8Pc0xelROcxxbAiEFI.jpg")),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5, bottom: 5),
+                                    child: Text(
+                                      "USER NAME",
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
-                                  Positioned(
-                                    bottom: 10,
-                                    right: 10,
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        FilePickerResult? result =
-                                            await FilePicker.platform
-                                                .pickFiles();
-
-                                        if (result != null) {
-                                          file = File(
-                                              result.files.single.path ?? "");
-                                        } else {
-                                          // User canceled the picker
-                                        }
-                                      },
-                                      child: CircleAvatar(
-                                          radius: 15,
-                                          backgroundImage: NetworkImage(
-                                              "https://t4.ftcdn.net/jpg/02/83/72/41/360_F_283724163_kIWm6DfeFN0zhm8Pc0xelROcxxbAiEFI.jpg")),
+                                  SizedBox(
+                                    height: 47,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    child: TextField(
+                                      controller: firstname,
+                                      cursorHeight: 18,
+                                      cursorColor: Colors.blue,
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF1976D2),
+                                            width: 2,
+                                          ),
+                                        ),
+                                        hintStyle: GoogleFonts.openSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.grey,
+                                        ),
+                                        hintText: 'Enter User name',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, bottom: 5),
-                                  child: Text(
-                                    "USER NAME",
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 47,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                  child: TextField(
-                                    controller: firstname,
-                                    cursorHeight: 18,
-                                    cursorColor: Colors.blue,
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF1976D2),
-                                          width: 2,
-                                        ),
-                                      ),
-                                      hintStyle: GoogleFonts.openSans(
-                                        fontSize: 12,
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5, bottom: 5),
+                                    child: Text(
+                                      "UPI ID",
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w700,
-                                        color: Colors.grey,
-                                      ),
-                                      hintText: 'Enter User name',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: const BorderSide(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, bottom: 5),
-                                  child: Text(
-                                    "UPI ID",
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 47,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                  child: TextField(
-                                    controller: upiId,
-                                    cursorHeight: 18,
-                                    cursorColor: Colors.blue,
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF1976D2),
-                                          width: 2,
-                                        ),
-                                      ),
-                                      hintStyle: GoogleFonts.openSans(
+                                  SizedBox(
+                                    height: 47,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    child: TextField(
+                                      controller: upiId,
+                                      cursorHeight: 18,
+                                      cursorColor: Colors.blue,
+                                      style: GoogleFonts.openSans(
                                         fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF1976D2),
+                                            width: 2,
+                                          ),
+                                        ),
+                                        hintStyle: GoogleFonts.openSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.grey,
+                                        ),
+                                        hintText: 'Enter Default UPI id',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5, bottom: 5),
+                                    child: Text(
+                                      "EMAIL",
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w700,
-                                        color: Colors.grey,
-                                      ),
-                                      hintText: 'Enter Default UPI id',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: const BorderSide(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, bottom: 5),
-                                  child: Text(
-                                    "EMAIL",
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 47,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                  child: TextField(
-                                    readOnly: true,
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),
-                                      ),
-                                      hintStyle: GoogleFonts.openSans(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.grey,
-                                      ),
-                                      hintText: email.text,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: const BorderSide(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, bottom: 5),
-                                  child: Text(
-                                    "ROLL NUMBER",
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 47,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                  child: TextField(
+                                  SizedBox(
+                                    height: 47,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    child: TextField(
                                       readOnly: true,
                                       decoration: InputDecoration(
                                         fillColor: Colors.white,
@@ -329,7 +280,7 @@ class _EditProfileState extends State<EditProfile> {
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
                                         ),
-                                        hintText: rollno.text,
+                                        hintText: email.text,
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10.0),
@@ -338,189 +289,249 @@ class _EditProfileState extends State<EditProfile> {
                                             width: 1,
                                           ),
                                         ),
-                                      )),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, bottom: 5),
-                                  child: Text(
-                                    "PROGRAM",
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 47,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                  child: TextField(
-                                    readOnly: true,
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),
-                                      ),
-                                      hintStyle: GoogleFonts.openSans(
-                                        fontSize: 12,
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5, bottom: 5),
+                                    child: Text(
+                                      "ROLL NUMBER",
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w700,
-                                        color: Colors.grey,
-                                      ),
-                                      hintText: program.text,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: const BorderSide(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, bottom: 5),
-                                  child: Text(
-                                    "CAMPUS",
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
+                                  SizedBox(
+                                    height: 47,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    child: TextField(
+                                        readOnly: true,
+                                        decoration: InputDecoration(
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                              color: Colors.grey,
+                                              width: 1,
+                                            ),
+                                          ),
+                                          hintStyle: GoogleFonts.openSans(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.grey,
+                                          ),
+                                          hintText: rollno.text,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.grey,
+                                              width: 1,
+                                            ),
+                                          ),
+                                        )),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 47,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                  child: TextField(
-                                    controller: campus,
-                                    cursorHeight: 18,
-                                    cursorColor: Colors.blue,
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF1976D2),
-                                          width: 2,
-                                        ),
-                                      ),
-                                      hintStyle: GoogleFonts.openSans(
-                                        fontSize: 12,
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5, bottom: 5),
+                                    child: Text(
+                                      "PROGRAM",
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w700,
-                                        color: Colors.grey,
+                                        color: Colors.black,
                                       ),
-                                      hintText: 'Campus Name',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: const BorderSide(
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 47,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    child: TextField(
+                                      readOnly: true,
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        hintStyle: GoogleFonts.openSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
                                           color: Colors.grey,
-                                          width: 1,
+                                        ),
+                                        hintText: program.text,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, bottom: 5),
-                                  child: Text(
-                                    "HOSTEL",
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 47,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                  child: TextField(
-                                    controller: hostel,
-                                    cursorHeight: 18,
-                                    cursorColor: Colors.blue,
-                                    style: GoogleFonts.openSans(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF1976D2),
-                                          width: 2,
-                                        ),
-                                      ),
-                                      hintStyle: GoogleFonts.openSans(
-                                        fontSize: 12,
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5, bottom: 5),
+                                    child: Text(
+                                      "CAMPUS",
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w700,
-                                        color: Colors.grey,
+                                        color: Colors.black,
                                       ),
-                                      hintText: 'Hostel Name',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: const BorderSide(
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 47,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    child: TextField(
+                                      controller: campus,
+                                      cursorHeight: 18,
+                                      cursorColor: Colors.blue,
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF1976D2),
+                                            width: 2,
+                                          ),
+                                        ),
+                                        hintStyle: GoogleFonts.openSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
                                           color: Colors.grey,
-                                          width: 1,
+                                        ),
+                                        hintText: 'Campus Name',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                          ]),
-                    ),
-                  );
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5, bottom: 5),
+                                    child: Text(
+                                      "HOSTEL",
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 47,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    child: TextField(
+                                      controller: hostel,
+                                      cursorHeight: 18,
+                                      cursorColor: Colors.blue,
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF1976D2),
+                                            width: 2,
+                                          ),
+                                        ),
+                                        hintStyle: GoogleFonts.openSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.grey,
+                                        ),
+                                        hintText: 'Hostel Name',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                            ]),
+                      ),
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
                 }),
             // Align(
             //   alignment: Alignment.bottomCenter,

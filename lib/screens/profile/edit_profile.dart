@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/profile/my_account.dart';
 import 'package:frontend/services/local_save.dart';
+import 'package:frontend/services/remote_service.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
@@ -9,9 +13,7 @@ import 'package:rounded_modal/rounded_modal.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-File file = File("your initial file");
-List<int> imageBytes = file.readAsBytesSync();
-String base64Image = base64Encode(imageBytes);
+File file = File("");
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -32,12 +34,13 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController campus = TextEditingController();
 
   Future<bool> getData() async {
-    firstname.text = await localGet("username") ?? "none";
-    email.text = await localGet("email") ?? "none";
-    photoUrl = await localGet("photoUrl") ?? "none";
-    campus.text = await localGet("campus") ?? "none";
-    hostel.text = await localGet("hostel") ?? "none";
-    upiId.text = await localGet("upi") ?? "none";
+    Map user = await getUser();
+    firstname.text = user['username'];
+    email.text = user["email"];
+    photoUrl = user["photoUrl"];
+    campus.text = user["campus"];
+    hostel.text = user["hostel"];
+    upiId.text = user["upi"];
     return true;
   }
 
@@ -106,7 +109,7 @@ class _EditProfileState extends State<EditProfile> {
                                             file = File(
                                                 result.files.single.path ?? "");
                                           } else {
-                                            // User canceled the picker
+                                            file = File("");
                                           }
                                         },
                                         child: CircleAvatar(
@@ -304,113 +307,6 @@ class _EditProfileState extends State<EditProfile> {
                                     padding: const EdgeInsets.only(
                                         left: 5, bottom: 5),
                                     child: Text(
-                                      "ROLL NUMBER",
-                                      style: GoogleFonts.openSans(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 47,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.85,
-                                    child: TextField(
-                                        readOnly: true,
-                                        decoration: InputDecoration(
-                                          fillColor: Colors.white,
-                                          filled: true,
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            borderSide: const BorderSide(
-                                              color: Colors.grey,
-                                              width: 1,
-                                            ),
-                                          ),
-                                          hintStyle: GoogleFonts.openSans(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.grey,
-                                          ),
-                                          hintText: rollno.text,
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            borderSide: const BorderSide(
-                                              color: Colors.grey,
-                                              width: 1,
-                                            ),
-                                          ),
-                                        )),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5, bottom: 5),
-                                    child: Text(
-                                      "PROGRAM",
-                                      style: GoogleFonts.openSans(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 47,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.85,
-                                    child: TextField(
-                                      readOnly: true,
-                                      decoration: InputDecoration(
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: Colors.grey,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        hintStyle: GoogleFonts.openSans(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.grey,
-                                        ),
-                                        hintText: program.text,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          borderSide: const BorderSide(
-                                            color: Colors.grey,
-                                            width: 1,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5, bottom: 5),
-                                    child: Text(
                                       "CAMPUS",
                                       style: GoogleFonts.openSans(
                                         fontSize: 13,
@@ -426,12 +322,168 @@ class _EditProfileState extends State<EditProfile> {
                                     child: TextField(
                                       controller: campus,
                                       cursorHeight: 18,
-                                      cursorColor: Colors.blue,
+                                      readOnly: true,
                                       style: GoogleFonts.openSans(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
+                                      onTap: () {
+                                        showRoundedModalBottomSheet(
+                                            context: context,
+                                            radius: 20,
+                                            builder: (context) {
+                                              List<String> options = [
+                                                "North Campus",
+                                                "South Campus"
+                                              ];
+                                              var selectedIndex;
+                                              return Container(
+                                                height: 300,
+                                                child: Stack(
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  150.0,
+                                                                  10.0,
+                                                                  150.0,
+                                                                  20.0),
+                                                          child: Container(
+                                                            height: 8.0,
+                                                            width: 80.0,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .grey[300],
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            8))),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 20),
+                                                          child: Text(
+                                                            "Select Campus",
+                                                            style: GoogleFonts
+                                                                .openSans(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Divider(
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    StatefulBuilder(builder:
+                                                        (BuildContext context,
+                                                            StateSetter
+                                                                mystate) {
+                                                      return Container(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 75,
+                                                                bottom: 50),
+                                                        child: ListView.builder(
+                                                          itemCount:
+                                                              options.length,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return Column(
+                                                              children: [
+                                                                ListTile(
+                                                                  title: Text(
+                                                                      options[
+                                                                          index]),
+                                                                  leading: (selectedIndex ==
+                                                                          index)
+                                                                      ? Icon(
+                                                                          Icons
+                                                                              .check_circle,
+                                                                          color:
+                                                                              Color(0xFF0D47A1),
+                                                                        )
+                                                                      : Icon(
+                                                                          Icons
+                                                                              .circle_outlined,
+                                                                          color:
+                                                                              Colors.grey),
+                                                                  onTap: () {
+                                                                    selectedIndex =
+                                                                        index;
+                                                                    mystate(() {
+                                                                      selectedIndex =
+                                                                          index;
+                                                                    });
+                                                                  },
+                                                                ),
+                                                                Divider()
+                                                              ],
+                                                            );
+                                                          },
+                                                        ),
+                                                      );
+                                                    }),
+                                                    Align(
+                                                      alignment: Alignment
+                                                          .bottomCenter,
+                                                      child: FlatButton(
+                                                          onPressed: () {
+                                                            campus.text = options[
+                                                                selectedIndex];
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: Container(
+                                                            height: 45,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.9,
+                                                            decoration: BoxDecoration(
+                                                                color: Color(
+                                                                    0xFF0D47A1),
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10))),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "Save",
+                                                                style: GoogleFonts
+                                                                    .openSans(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            });
+                                      },
                                       decoration: InputDecoration(
                                         fillColor: Colors.white,
                                         filled: true,
@@ -443,19 +495,21 @@ class _EditProfileState extends State<EditProfile> {
                                             width: 2,
                                           ),
                                         ),
+                                        suffixIcon: Icon(
+                                          Icons.arrow_drop_down_rounded,
+                                          color: Colors.black,
+                                        ),
                                         hintStyle: GoogleFonts.openSans(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
                                         ),
-                                        hintText: 'Campus Name',
+                                        hintText: 'Select Campus',
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          borderSide: const BorderSide(
-                                            color: Colors.grey,
-                                            width: 1,
-                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide: BorderSide(
+                                              color: Colors.grey, width: 1),
                                         ),
                                       ),
                                     ),
@@ -548,9 +602,31 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
           child: FlatButton(
-            onPressed: () {
-              // Navigator.of(context)
-              //     .push(MaterialPageRoute(builder: (context) => MyRegister2()));
+            onPressed: () async {
+              String? authToken =
+                  await FirebaseAuth.instance.currentUser?.getIdToken();
+              String base64Image = "";
+              if (file.path != "") {
+                List<int> imageBytes = file.readAsBytesSync();
+                base64Image = base64Encode(imageBytes);
+              }
+
+              if (authToken != null) {
+                Response res = await RemoteService().updateUser(
+                    authToken,
+                    base64Image,
+                    firstname.text,
+                    upiId.text,
+                    campus.text,
+                    hostel.text);
+                print(res.body);
+                // Navigator.of(context)
+                //     .push(MaterialPageRoute(builder: (context) => myAccount()));
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pop();
+              } else {
+                print("object");
+              }
             },
             child: Container(
               decoration: BoxDecoration(

@@ -60,48 +60,54 @@ class _myAccountState extends State<myAccount> {
               FutureBuilder(
                   future: getData(),
                   builder: (context, snapshot) {
-                    return Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Stack(
-                            children: [
-                              CircleAvatar(
-                                radius: 76,
-                                backgroundColor: Colors.black54,
-                                child: CircleAvatar(
-                                  radius: 72,
-                                  backgroundColor: Colors.white,
+                    if (snapshot.hasData) {
+                      return Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 76,
+                                  backgroundColor: Colors.black54,
                                   child: CircleAvatar(
-                                    radius: 69,
-                                    backgroundImage: NetworkImage(photoUrl),
+                                    radius: 72,
+                                    backgroundColor: Colors.white,
+                                    child: CircleAvatar(
+                                      radius: 69,
+                                      backgroundImage: NetworkImage(photoUrl),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          username,
-                          style: GoogleFonts.openSans(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black,
+                          SizedBox(
+                            height: 5,
                           ),
-                        ),
-                        Text(
-                          email,
-                          style: GoogleFonts.openSans(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black54,
+                          Text(
+                            username,
+                            style: GoogleFonts.openSans(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                      ],
-                    );
+                          Text(
+                            email,
+                            style: GoogleFonts.openSans(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
                   }),
               SizedBox(
                 height: 5,

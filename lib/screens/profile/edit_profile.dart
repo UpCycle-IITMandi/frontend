@@ -1,13 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/screens/profile/my_account.dart';
 import 'package:frontend/services/local_save.dart';
-<<<<<<< Updated upstream:lib/screens/Auth/sign_up_screen.dart
-=======
 import 'package:frontend/services/remote_service.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
->>>>>>> Stashed changes:lib/screens/sign_up_screen.dart
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
@@ -20,40 +15,33 @@ import 'package:google_fonts/google_fonts.dart';
 
 File file = File("");
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class EditProfile extends StatefulWidget {
+  const EditProfile({Key? key}) : super(key: key);
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _EditProfileState createState() => _EditProfileState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _EditProfileState extends State<EditProfile> {
   late String photoUrl;
   TextEditingController firstname = TextEditingController();
-  TextEditingController phno = TextEditingController();
+  TextEditingController lastname = TextEditingController();
   TextEditingController rollno = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController program = TextEditingController();
   TextEditingController upiId = TextEditingController();
   TextEditingController hostel = TextEditingController();
   TextEditingController campus = TextEditingController();
-  TextEditingController roomNo = TextEditingController();
 
-<<<<<<< Updated upstream:lib/screens/Auth/sign_up_screen.dart
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 75, 20, 20),
-            child: signUpForm(context)));
-=======
   Future<bool> getData() async {
-    photoUrl = FirebaseAuth.instance.currentUser!.photoURL ??
-        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
-    email.text = FirebaseAuth.instance.currentUser!.email ?? "";
+    Map user = await getUser();
+    firstname.text = user['username'];
+    email.text = user["email"];
+    photoUrl = user["photoUrl"];
+    campus.text = user["campus"];
+    hostel.text = user["hostel"];
+    upiId.text = user["upi"];
     return true;
->>>>>>> Stashed changes:lib/screens/sign_up_screen.dart
   }
 
   @override
@@ -61,108 +49,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
   }
 
-<<<<<<< Updated upstream:lib/screens/Auth/sign_up_screen.dart
-  Form signUpForm(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(children: [
-        const Text(
-          "Sign up for Village Square",
-          textScaleFactor: 2.0,
-        ),
-        TextFormField(
-          onSaved: (val) => name = val!,
-          decoration: const InputDecoration(
-            labelText: 'Name',
-            labelStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-=======
   @override
   Widget build(BuildContext context) {
-    final bool isLecturer =
-        RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@iitmandi.ac.in")
-            .hasMatch(FirebaseAuth.instance.currentUser!.email ?? "");
     return Container(
       color: Color.fromARGB(255, 244, 242, 242),
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Create Profile",
+            "Edit Profile",
             style: TextStyle(color: Colors.black),
->>>>>>> Stashed changes:lib/screens/sign_up_screen.dart
           ),
           backgroundColor: Colors.transparent,
           iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
         ),
-<<<<<<< Updated upstream:lib/screens/Auth/sign_up_screen.dart
-        TextFormField(
-          onSaved: (val) => upiID = val!,
-          decoration: const InputDecoration(
-            labelText: 'UPI Id',
-            labelStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter your UPI ID';
-            }
-            return null;
-          },
-        ),
-        DropdownButtonFormField(
-            icon: null,
-            dropdownColor: Colors.white,
-            style:
-                TextStyle(color: Colors.black, backgroundColor: Colors.white),
-            onSaved: (val) => campus = val.toString(),
-            decoration: const InputDecoration(
-              labelText: 'Campus',
-              labelStyle: TextStyle(color: Colors.grey),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
-              ),
-            ),
-            hint: const Text("Select option",
-                style: TextStyle(color: Colors.grey), maxLines: 1),
-            items: ['North Campus', 'South Campus']
-                .map((String value) => DropdownMenuItem(
-                      value: value,
-                      child: Text(
-                        value,
-                        textAlign: TextAlign.left,
-                      ),
-                    ))
-                .toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedCampus = newValue!;
-              });
-            }),
-        TextFormField(
-          onSaved: (val) => hostel = val!,
-          decoration: const InputDecoration(
-            labelText: 'Hostel',
-            labelStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-=======
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
@@ -252,19 +152,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
-                                      onChanged: (value) {
-                                        setState(() {});
-                                      },
                                       decoration: InputDecoration(
-                                        fillColor: (firstname.text == "")
-                                            ? Colors.white
-                                            : Color(0xFFB5ECB5),
+                                        fillColor: Colors.white,
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                            color: Color(0xFF77DD77),
+                                            color: Color(0xFF1976D2),
                                             width: 2,
                                           ),
                                         ),
@@ -274,72 +169,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           color: Colors.grey,
                                         ),
                                         hintText: 'Enter User name',
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          borderSide: const BorderSide(
-                                            color: Colors.grey,
-                                            width: 1,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5, bottom: 5),
-                                    child: Text(
-                                      "PHONE NUMBER",
-                                      style: GoogleFonts.openSans(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 47,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.85,
-                                    child: TextField(
-                                      controller: phno,
-                                      cursorHeight: 18,
-                                      cursorColor: Colors.blue,
-                                      style: GoogleFonts.openSans(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                      onChanged: (value) {
-                                        setState(() {});
-                                      },
-                                      decoration: InputDecoration(
-                                        fillColor: (phno.text == "")
-                                            ? Colors.white
-                                            : Color(0xFFB5ECB5),
-                                        filled: true,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFF77DD77),
-                                            width: 2,
-                                          ),
-                                        ),
-                                        hintStyle: GoogleFonts.openSans(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.grey,
-                                        ),
-                                        hintText: 'Enter Phone Number',
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10.0),
@@ -384,19 +213,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
-                                      onChanged: (value) {
-                                        setState(() {});
-                                      },
                                       decoration: InputDecoration(
-                                        fillColor: (upiId.text == "")
-                                            ? Colors.white
-                                            : Color(0xFFB5ECB5),
+                                        fillColor: Colors.white,
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                            color: Color(0xFF77DD77),
+                                            color: Color(0xFF1976D2),
                                             width: 2,
                                           ),
                                         ),
@@ -443,9 +267,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         0.85,
                                     child: TextField(
                                       readOnly: true,
-                                      onChanged: (value) {
-                                        setState(() {});
-                                      },
                                       decoration: InputDecoration(
                                         fillColor: Colors.white,
                                         filled: true,
@@ -627,7 +448,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                 selectedIndex];
                                                             Navigator.pop(
                                                                 context);
-                                                            setState(() {});
                                                           },
                                                           child: Container(
                                                             height: 45,
@@ -665,15 +485,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             });
                                       },
                                       decoration: InputDecoration(
-                                        fillColor: (campus.text == "")
-                                            ? Colors.white
-                                            : Color(0xFFB5ECB5),
+                                        fillColor: Colors.white,
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                            color: Color(0xFF77DD77),
+                                            color: Color(0xFF1976D2),
                                             width: 2,
                                           ),
                                         ),
@@ -708,7 +526,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     padding: const EdgeInsets.only(
                                         left: 5, bottom: 5),
                                     child: Text(
-                                      isLecturer ? "BUILDING" : "HOSTEL",
+                                      "HOSTEL",
                                       style: GoogleFonts.openSans(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
@@ -723,264 +541,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     child: TextField(
                                       controller: hostel,
                                       cursorHeight: 18,
-                                      readOnly: true,
-                                      style: GoogleFonts.openSans(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                      onTap: () {
-                                        showRoundedModalBottomSheet(
-                                            context: context,
-                                            radius: 20,
-                                            builder: (context) {
-                                              List<String> hostelOptions = [
-                                                "Hostel A",
-                                                "Hostel B",
-                                                "Hostel c"
-                                              ];
-                                              List<String> buildingOptions = [
-                                                "Building A",
-                                                "Building B",
-                                              ];
-                                              var selectedIndex;
-                                              return Container(
-                                                height: 300,
-                                                child: Stack(
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  150.0,
-                                                                  10.0,
-                                                                  150.0,
-                                                                  20.0),
-                                                          child: Container(
-                                                            height: 8.0,
-                                                            width: 80.0,
-                                                            decoration: BoxDecoration(
-                                                                color: Colors
-                                                                    .grey[300],
-                                                                borderRadius: BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            8))),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 20),
-                                                          child: Text(
-                                                            isLecturer
-                                                                ? "Select Building"
-                                                                : "Select Hostel",
-                                                            style: GoogleFonts
-                                                                .openSans(
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color:
-                                                                  Colors.black,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Divider(
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    StatefulBuilder(builder:
-                                                        (BuildContext context,
-                                                            StateSetter
-                                                                mystate) {
-                                                      return Container(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 75,
-                                                                bottom: 50),
-                                                        child: ListView.builder(
-                                                          itemCount: isLecturer
-                                                              ? buildingOptions
-                                                                  .length
-                                                              : hostelOptions
-                                                                  .length,
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            return Column(
-                                                              children: [
-                                                                ListTile(
-                                                                  title: Text(isLecturer
-                                                                      ? buildingOptions[
-                                                                          index]
-                                                                      : hostelOptions[
-                                                                          index]),
-                                                                  leading: (selectedIndex ==
-                                                                          index)
-                                                                      ? Icon(
-                                                                          Icons
-                                                                              .check_circle,
-                                                                          color:
-                                                                              Color(0xFF0D47A1),
-                                                                        )
-                                                                      : Icon(
-                                                                          Icons
-                                                                              .circle_outlined,
-                                                                          color:
-                                                                              Colors.grey),
-                                                                  onTap: () {
-                                                                    selectedIndex =
-                                                                        index;
-                                                                    mystate(() {
-                                                                      selectedIndex =
-                                                                          index;
-                                                                    });
-                                                                  },
-                                                                ),
-                                                                Divider()
-                                                              ],
-                                                            );
-                                                          },
-                                                        ),
-                                                      );
-                                                    }),
-                                                    Align(
-                                                      alignment: Alignment
-                                                          .bottomCenter,
-                                                      child: FlatButton(
-                                                          onPressed: () {
-                                                            hostel.text = isLecturer
-                                                                ? buildingOptions[
-                                                                    selectedIndex]
-                                                                : hostelOptions[
-                                                                    selectedIndex];
-                                                            Navigator.pop(
-                                                                context);
-                                                            setState(() {});
-                                                          },
-                                                          child: Container(
-                                                            height: 45,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.9,
-                                                            decoration: BoxDecoration(
-                                                                color: Color(
-                                                                    0xFF0D47A1),
-                                                                borderRadius: BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
-                                                            child: Center(
-                                                              child: Text(
-                                                                "Save",
-                                                                style: GoogleFonts
-                                                                    .openSans(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          )),
-                                                    )
-                                                  ],
-                                                ),
-                                              );
-                                            });
-                                      },
-                                      decoration: InputDecoration(
-                                        fillColor: (hostel.text == "")
-                                            ? Colors.white
-                                            : Color(0xFFB5ECB5),
-                                        filled: true,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFF77DD77),
-                                            width: 2,
-                                          ),
-                                        ),
-                                        suffixIcon: Icon(
-                                          Icons.arrow_drop_down_rounded,
-                                          color: Colors.black,
-                                        ),
-                                        hintStyle: GoogleFonts.openSans(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.grey,
-                                        ),
-                                        hintText: 'Select Campus',
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide: BorderSide(
-                                              color: Colors.grey, width: 1),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5, bottom: 5),
-                                    child: Text(
-                                      isLecturer
-                                          ? "HOUSE NUMBER"
-                                          : "ROOM NUMBER",
-                                      style: GoogleFonts.openSans(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 47,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.85,
-                                    child: TextField(
-                                      controller: roomNo,
-                                      cursorHeight: 18,
                                       cursorColor: Colors.blue,
                                       style: GoogleFonts.openSans(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
-                                      onChanged: (value) {
-                                        setState(() {});
-                                      },
                                       decoration: InputDecoration(
-                                        fillColor: (roomNo.text == "")
-                                            ? Colors.white
-                                            : Color(0xFFB5ECB5),
+                                        fillColor: Colors.white,
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                            color: Color(0xFF77DD77),
+                                            color: Color(0xFF1976D2),
                                             width: 2,
                                           ),
                                         ),
@@ -989,9 +563,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
                                         ),
-                                        hintText: isLecturer
-                                            ? "House Number"
-                                            : "Room Number",
+                                        hintText: 'Hostel Name',
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10.0),
@@ -1004,6 +576,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ),
                                   ),
                                 ],
+                              ),
+                              const SizedBox(
+                                height: 30,
                               ),
                             ]),
                       ),
@@ -1024,34 +599,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(color: Colors.grey),
->>>>>>> Stashed changes:lib/screens/sign_up_screen.dart
             ),
           ),
           child: FlatButton(
             onPressed: () async {
-              FirebaseAuth auth = FirebaseAuth.instance;
-              String? authToken = await auth.currentUser?.getIdToken();
-              Response res = await RemoteService().createUser(authToken!,
-                  firstname.text, upiId.text, upiId.text, hostel.text);
-
-              if (res.statusCode == 200) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('User successfully registered')),
-                );
-                saveUser(firstname.text, (auth.currentUser?.email)!, upiId.text,
-                    upiId.text, hostel.text, (auth.currentUser?.photoURL)!);
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: ((context) => HomePageScreen())),
-                    (route) => false);
+              String? authToken =
+                  await FirebaseAuth.instance.currentUser?.getIdToken();
+              String base64Image = "";
+              if (file.path != "") {
+                List<int> imageBytes = file.readAsBytesSync();
+                base64Image = base64Encode(imageBytes);
               }
 
-              // Else will never work, res response await hi karta reh jayega if server is offline
-
-              else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('An error occurred')),
-                );
+              if (authToken != null) {
+                Response res = await RemoteService().updateUser(
+                    authToken,
+                    base64Image,
+                    firstname.text,
+                    upiId.text,
+                    campus.text,
+                    hostel.text);
+                print(res.body);
+                // Navigator.of(context)
+                //     .push(MaterialPageRoute(builder: (context) => myAccount()));
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pop();
+              } else {
+                print("object");
               }
             },
             child: Container(

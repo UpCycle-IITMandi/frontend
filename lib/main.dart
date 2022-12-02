@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
+import 'package:frontend/screens/sign_up_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'utils/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,11 +62,24 @@ class _MyAppState extends State<MyApp>{
     return FutureBuilder<String?>(
         future: _username,
         builder: (context, snapshot) {
+<<<<<<< Updated upstream
             if (snapshot.data != null) {
               return const HomePageScreen();
             } else {
               return SignInScreen();
             }
+=======
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+                child: CircularProgressIndicator(
+              backgroundColor: Colors.yellow,
+            ));
+          } else if (snapshot.hasData) {
+            return const SignUpScreen();
+          } else {
+            return SignInScreen();
+          }
+>>>>>>> Stashed changes
         });
   }
 }

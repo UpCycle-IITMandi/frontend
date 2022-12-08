@@ -49,6 +49,10 @@ dependencies:
 
     # State Management
     provider: ^6.0.4
+    get: ^4.6.5
+    rounded_modal: ^1.0.1
+    file_picker: ^5.2.2
+    positioned_tap_detector: ^1.0.3
 
 dev_dependencies:
     flutter_test:

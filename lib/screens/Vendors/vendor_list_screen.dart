@@ -27,7 +27,7 @@ class _VendorListState extends State<VendorList> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-                padding: const EdgeInsets.all(0),
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 itemCount: snapshot.data?.length,
                 itemBuilder: (context, index) {
                   return Column(
@@ -45,7 +45,8 @@ class _VendorListState extends State<VendorList> {
             print(snapshot.error);
             return const Text("Error");
           } else {
-            return const CircularProgressIndicator();
+            return ListView(
+                children: [ListTile(leading: CircularProgressIndicator())]);
           }
         });
   }

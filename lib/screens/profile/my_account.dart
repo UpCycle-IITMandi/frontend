@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/profile/edit_profile.dart';
+import 'package:frontend/screens/profile/orders_screen.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/services/remote_service.dart';
 import 'package:frontend/services/local_save.dart';
@@ -206,11 +207,13 @@ class _myAccountState extends State<myAccount> {
                   ),
                   dense: false,
                 ),
-                ListTile(
-                  leading: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {},
-                    child: Container(
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => OrdersScreen()));
+                  },
+                  child: ListTile(
+                    leading: Container(
                       width: 48,
                       height: 48,
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -223,11 +226,7 @@ class _myAccountState extends State<myAccount> {
                         ),
                       ),
                     ),
-                  ),
-                  trailing: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {},
-                    child: Container(
+                    trailing: Container(
                       width: 48,
                       height: 48,
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -238,15 +237,15 @@ class _myAccountState extends State<myAccount> {
                         size: 20,
                       ),
                     ),
-                  ),
-                  title: const Text(
-                    "Previous Orders",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
+                    title: const Text(
+                      "Previous Orders",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
+                    dense: false,
                   ),
-                  dense: false,
                 ),
                 ListTile(
                   leading: GestureDetector(

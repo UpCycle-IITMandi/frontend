@@ -77,7 +77,6 @@ class _EditProfileState extends State<EditProfile> {
           iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
         ),
-        backgroundColor: Colors.transparent,
         body: Stack(
           children: [
             FutureBuilder(

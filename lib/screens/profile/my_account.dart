@@ -18,7 +18,7 @@ class _MyAccountState extends State<MyAccount> {
   Future<bool> getData() async {
     username = await localGet("username") ?? "none";
     email = await localGet("email") ?? "none";
-    photoUrl = await localGet("photoUrl") ?? "none";
+    photoUrl = await localGet("photoUrl") ?? "";
     return true;
   }
 
@@ -113,8 +113,8 @@ class _MyAccountState extends State<MyAccount> {
                       ],
                     ),
                   ),
-                  margin:
-                      const EdgeInsets.only(left: 0, right: 0, bottom: 10, top: 5),
+                  margin: const EdgeInsets.only(
+                      left: 0, right: 0, bottom: 10, top: 5),
                   width: MediaQuery.of(context).size.width * 0.5,
                   height: 35,
                   child: const Center(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
+import 'package:frontend/screens/sign_up_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -77,7 +78,7 @@ class _MyAppState extends State<MyApp> {
               backgroundColor: Colors.yellow,
             ));
           } else if (snapshot.hasData) {
-            return const HomePageScreen();
+            return const SignUpScreen();
           } else {
             return SignInScreen();
           }

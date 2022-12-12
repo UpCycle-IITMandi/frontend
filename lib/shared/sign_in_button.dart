@@ -15,7 +15,7 @@ class SignInButton extends StatelessWidget {
           height: 20,
         ),
         style: ElevatedButton.styleFrom(
-            primary: Colors.white, onPrimary: Colors.black),
+            foregroundColor: Colors.black, backgroundColor: Colors.white),
         label: const Text("Sign in with Google"));
   }
 }

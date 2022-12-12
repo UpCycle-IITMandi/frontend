@@ -7,7 +7,6 @@ import 'package:frontend/models/Product.dart';
 import 'package:frontend/models/Vendor.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/src/widgets/image.dart' as ImageModule;
 
 class ProductListItem extends StatefulWidget {
   final Inventory product;
@@ -22,7 +21,7 @@ class _ProductListItemState extends State<ProductListItem> {
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
     final Inventory product = widget.product;
-    final CarouselController _controller = CarouselController();
+    final CarouselController controller = CarouselController();
 
     // final List<Widget> imageSliders = product.imageUrl
     //     .map((item) => ClipRRect(
@@ -34,7 +33,7 @@ class _ProductListItemState extends State<ProductListItem> {
         locale: 'en_IN', name: 'INR', decimalDigits: 2);
 
     return DefaultTextStyle(
-      style: TextStyle(color: Colors.black),
+      style: const TextStyle(color: Colors.black),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: Colors.white),
@@ -82,7 +81,7 @@ class _ProductListItemState extends State<ProductListItem> {
                   // ),
                   Text(
                     product.name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
                     currency.format(product.cost),
@@ -92,7 +91,7 @@ class _ProductListItemState extends State<ProductListItem> {
                   ),
                   Text(
                     product.description,
-                    style: TextStyle(fontSize: 9),
+                    style: const TextStyle(fontSize: 9),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   )
@@ -118,16 +117,16 @@ class AddToCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, void Function()>(builder: (context, vm) {
       return TextButton(
-        child: Text(
-          "Add to Cart",
-          style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
-        ),
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all(Colors.white),
           backgroundColor:
               MaterialStateProperty.all(Colors.orangeAccent.shade200),
         ),
         onPressed: vm,
+        child: const Text(
+          "Add to Cart",
+          style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
+        ),
       );
     }, converter: (store) {
       return () {

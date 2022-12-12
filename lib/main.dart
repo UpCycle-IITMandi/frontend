@@ -5,16 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/sign_in_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:frontend/reducers/app_state_reducer.dart';
-import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:redux_persist/redux_persist.dart';
-import 'package:redux_persist_flutter/redux_persist_flutter.dart';
-import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'screens/sign_in_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
@@ -31,7 +24,7 @@ Future<void> main() async {
   // final initialState = await persistor.load();
   final store = Store<AppState>(
     appReducer,
-    initialState: AppState(),
+    initialState: const AppState(),
     // middleware: [persistor.createMiddleware()],
   );
   runApp(StoreProvider<AppState>(

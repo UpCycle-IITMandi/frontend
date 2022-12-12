@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/actions/actions.dart';
-import 'package:frontend/models/Vendor.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:intl/intl.dart';
 
@@ -38,7 +37,7 @@ class _CartScreenState extends State<CartScreen> {
               builder: (context, cartItems) {
                 if (cartItems.isEmpty) {
                   // empty cart message
-                  return Align(
+                  return const Align(
                     alignment: Alignment.center,
                     child: Text(
                       "Empty Cart.",
@@ -183,7 +182,7 @@ class _CartScreenState extends State<CartScreen> {
                             onPressed: () {},
                             child: Text(
                                 "${currency.format(cartItems.fold<int>(0, (previousValue, element) => previousValue + element.product.price * element.quantity))} | Proceed to Checkout",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white)),

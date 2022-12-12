@@ -21,7 +21,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     VendorList(),
-    myAccount(),
+    MyAccount(),
   ];
 
   void _onItemTapped(int index) {
@@ -114,7 +114,7 @@ class CartAppBarWidget extends StatelessWidget {
           tooltip: 'Open shopping cart',
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: ((context) => CartScreen())));
+                MaterialPageRoute(builder: ((context) => const CartScreen())));
           }),
     );
   }

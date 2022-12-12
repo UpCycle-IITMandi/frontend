@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:frontend/main.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/services/remote_service.dart';
 import 'package:frontend/services/local_save.dart';
@@ -125,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         ElevatedButton(
           onPressed: () async {
-            if (formKey.currentState!.validate() && selectedCampus != null) {
+            if (formKey.currentState!.validate()) {
               formKey.currentState?.save();
               FirebaseAuth auth = FirebaseAuth.instance;
               String? authToken = await auth.currentUser?.getIdToken();
@@ -140,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hostel, (auth.currentUser?.photoURL)!);
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: ((context) => HomePageScreen())),
+                    MaterialPageRoute(builder: ((context) => const HomePageScreen())),
                     (route) => false);
               }
 

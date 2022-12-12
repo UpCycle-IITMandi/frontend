@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/models/Product.dart';
 

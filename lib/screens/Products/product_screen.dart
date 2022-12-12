@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/actions/actions.dart';
-import 'package:frontend/models/Product.dart';
 import 'package:frontend/models/Vendor.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/screens/Products/product_item.dart';
-import 'package:frontend/services/remote_service.dart';
-import 'package:redux/redux.dart';
 
 class ProductScreen extends StatefulWidget {
   final Vendor vendor;
@@ -54,7 +51,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 Colors.orangeAccent.shade200)),
                         onPressed: () => Navigator.of(context).pop(false),
                         //return false when click on "NO"
-                        child: Text('No', style: TextStyle(fontSize: 10)),
+                        child: const Text('No', style: TextStyle(fontSize: 10)),
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
@@ -66,7 +63,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           Navigator.of(context).pop(true);
                         },
                         //return true when click on "Yes"
-                        child: Text('Yes', style: TextStyle(fontSize: 10)),
+                        child: const Text('Yes', style: TextStyle(fontSize: 10)),
                       ),
                     ],
                   ),
@@ -120,7 +117,7 @@ class ViewCart extends StatefulWidget {
 class _ViewCartState extends State<ViewCart> {
   @override
   Widget build(BuildContext context) {
-    return Text("View Cart");
+    return const Text("View Cart");
   }
 }
 
@@ -135,13 +132,13 @@ class VendorDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10), color: Colors.white),
           child: Column(
@@ -154,13 +151,13 @@ class VendorDetails extends StatelessWidget {
                       Text(
                         vendor.shopName.toUpperCase(),
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "${vendor.category} | Open Now | 11:00 AM - 12:00 PM",
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 10),
+                        style: const TextStyle(fontSize: 10),
                       ),
                     ],
                   ),
@@ -168,7 +165,7 @@ class VendorDetails extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.topLeft,
-                child: Text(vendor.address, style: TextStyle(fontSize: 10)),
+                child: Text(vendor.address, style: const TextStyle(fontSize: 10)),
               )
             ],
           ),

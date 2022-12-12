@@ -73,7 +73,7 @@ class _VendorListItemState extends State<VendorListItem> {
                         children: [
                           Text(
                             vendor.shopName,
-                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            style: const TextStyle(color: Colors.black, fontSize: 14),
                           ),
                           Text(
                             vendor.category,

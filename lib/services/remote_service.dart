@@ -57,7 +57,7 @@ class RemoteService {
     );
   }
 
-  Future<http.Response> getUser(String authToken, String __email) async {
+  Future<http.Response> getUser(String authToken, String email) async {
     return client.get(
       Uri.parse('$baseUrl/api/v1/auth/authCheck'),
       headers: <String, String>{

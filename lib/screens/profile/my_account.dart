@@ -1,23 +1,11 @@
-import 'dart:ffi';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/profile/edit_profile.dart';
 import 'package:frontend/screens/profile/orders_screen.dart';
 import 'package:frontend/services/local_save.dart';
-import 'package:frontend/services/remote_service.dart';
-import 'package:frontend/services/local_save.dart';
 import 'package:frontend/utils/authentication.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart';
-import 'dart:io';
-import 'dart:convert';
-import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
-import 'package:rounded_modal/rounded_modal.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class myAccount extends StatefulWidget {
   const myAccount({Key? key}) : super(key: key);
@@ -49,7 +37,7 @@ class _myAccountState extends State<myAccount> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
         ),
         title: const Text('Upcycle',
@@ -59,10 +47,10 @@ class _myAccountState extends State<myAccount> {
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 30,
             right: 15,
             left: 15,
@@ -96,7 +84,7 @@ class _myAccountState extends State<myAccount> {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
@@ -123,18 +111,18 @@ class _myAccountState extends State<myAccount> {
                         );
                       }
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
-                FlatButton(
+                ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => EditProfile()));
+                        MaterialPageRoute(builder: (context) => const EditProfile()));
                   },
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         colors: <Color>[
                           Color(0xFF0D47A1),
                           Color(0xFF1976D2),
@@ -143,11 +131,11 @@ class _myAccountState extends State<myAccount> {
                       ),
                     ),
                     margin:
-                        EdgeInsets.only(left: 0, right: 0, bottom: 10, top: 5),
+                        const EdgeInsets.only(left: 0, right: 0, bottom: 10, top: 5),
                     width: MediaQuery.of(context).size.width * 0.5,
                     height: 35,
-                    child: Center(
-                      child: const Text(
+                    child: const Center(
+                      child: Text(
                         'Edit Profile',
                         style: TextStyle(
                           color: Colors.white,
@@ -158,10 +146,10 @@ class _myAccountState extends State<myAccount> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Divider(
+                const Divider(
                   color: Colors.grey,
                 ),
                 ListTile(
@@ -173,9 +161,9 @@ class _myAccountState extends State<myAccount> {
                       height: 48,
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       alignment: Alignment.center,
-                      child: CircleAvatar(
+                      child: const CircleAvatar(
                         backgroundColor: Color(0xFF0D47A1),
-                        child: const Icon(
+                        child: Icon(
                           Icons.settings,
                           color: Colors.white,
                           size: 30,
@@ -191,7 +179,7 @@ class _myAccountState extends State<myAccount> {
                       height: 48,
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       alignment: Alignment.center,
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_forward_ios,
                         color: Colors.black,
                         size: 20,
@@ -210,7 +198,7 @@ class _myAccountState extends State<myAccount> {
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => OrdersScreen()));
+                        builder: (context) => const OrdersScreen()));
                   },
                   child: ListTile(
                     leading: Container(
@@ -231,7 +219,7 @@ class _myAccountState extends State<myAccount> {
                       height: 48,
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       alignment: Alignment.center,
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_forward_ios,
                         color: Colors.black,
                         size: 20,
@@ -267,7 +255,7 @@ class _myAccountState extends State<myAccount> {
                       height: 48,
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       alignment: Alignment.center,
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_forward_ios,
                         color: Colors.black,
                         size: 20,
@@ -283,7 +271,7 @@ class _myAccountState extends State<myAccount> {
                   ),
                   dense: false,
                 ),
-                Divider(
+                const Divider(
                   color: Colors.grey,
                 ),
                 ListTile(
@@ -306,7 +294,7 @@ class _myAccountState extends State<myAccount> {
                       height: 48,
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       alignment: Alignment.center,
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_forward_ios,
                         color: Colors.black,
                         size: 20,
@@ -332,9 +320,9 @@ class _myAccountState extends State<myAccount> {
                     height: 48,
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     alignment: Alignment.center,
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       backgroundColor: Color(0xFF0D47A1),
-                      child: const Icon(
+                      child: Icon(
                         Icons.logout_rounded,
                         color: Colors.white,
                       ),
@@ -345,7 +333,7 @@ class _myAccountState extends State<myAccount> {
                     height: 48,
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     alignment: Alignment.center,
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_forward_ios,
                       color: Colors.black,
                       size: 20,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/orders.dart';
 import 'package:frontend/services/remote_service.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -27,17 +26,17 @@ class _OrdersScreenState extends State<OrdersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Orders",
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         elevation: 0,
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: FutureBuilder(
             future: getData(),
             builder: (context, snapshot) {
@@ -47,21 +46,21 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   child: ListView.builder(
                       // padding:
                       //     EdgeInsets.only(top: 15, left: 15, right: 15),
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: order_details.vendors.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: EdgeInsets.only(bottom: 10),
+                          margin: const EdgeInsets.only(bottom: 10),
                           padding:
-                              EdgeInsets.only(bottom: 5, right: 5, left: 5),
+                              const EdgeInsets.only(bottom: 5, right: 5, left: 5),
                           height: 190 +
                               (order_details.vendors[index].orderDescription
                                           .length -
                                       1) *
                                   85,
                           decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 190, 190, 190),
+                              color: const Color.fromARGB(255, 190, 190, 190),
                               borderRadius: BorderRadius.circular(10)),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +71,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 child: Row(
                                   children: [
                                     Text(order_details.vendors[index].status),
-                                    Spacer(),
+                                    const Spacer(),
                                     Text(
                                       DateFormat().format(order_details
                                           .vendors[index].createdAt),
@@ -89,10 +88,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 padding: const EdgeInsets.only(
                                     left: 10, right: 10, top: 5, bottom: 5),
                                 child: Text(
-                                  "Total Cost: " +
-                                      order_details.vendors[index].cost
-                                          .toString() +
-                                      "₹",
+                                  "Total Cost: ${order_details.vendors[index].cost}₹",
                                   style: GoogleFonts.openSans(
                                     fontSize: 14,
                                     color: Colors.black,
@@ -104,7 +100,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(left: 5, right: 5),
+                                    margin: const EdgeInsets.only(left: 5, right: 5),
                                     height: 25,
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
@@ -125,11 +121,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: order_details.vendors[index]
                                           .orderDescription.length,
@@ -141,7 +137,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(5)),
                                           child: Container(
-                                            margin: EdgeInsets.only(right: 10),
+                                            margin: const EdgeInsets.only(right: 10),
                                             height: 80,
                                             child: Row(
                                               children: [
@@ -159,14 +155,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(5),
-                                                        image: DecorationImage(
+                                                        image: const DecorationImage(
                                                           image: NetworkImage(
                                                               "cart.get_item(index).image"),
                                                           fit: BoxFit.fill,
                                                         )),
                                                   ),
                                                 ),
-                                                Container(
+                                                SizedBox(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width -
@@ -178,7 +174,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
-                                                      Spacer(),
+                                                      const Spacer(),
                                                       Text(
                                                         order_details
                                                             .vendors[index]
@@ -210,13 +206,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                       // ),
                                                       // Spacer(),
                                                       Text(
-                                                        "Quantity: " +
-                                                            order_details
+                                                        "Quantity: ${order_details
                                                                 .vendors[index]
                                                                 .orderDescription[
                                                                     index]
-                                                                .quantity
-                                                                .toString(),
+                                                                .quantity}",
                                                         style: GoogleFonts
                                                             .openSans(
                                                           fontSize: 12,
@@ -227,10 +221,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                       ),
                                                       // Spacer(),
                                                       Text(
-                                                        "Instruction: " +
-                                                            order_details
+                                                        "Instruction: ${order_details
                                                                 .vendors[index]
-                                                                .buyerMessage,
+                                                                .buyerMessage}",
                                                         style: GoogleFonts
                                                             .openSans(
                                                           fontSize: 12,
@@ -239,7 +232,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                           color: Colors.black,
                                                         ),
                                                       ),
-                                                      Spacer(),
+                                                      const Spacer(),
                                                     ],
                                                   ),
                                                 ),
@@ -281,7 +274,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       }),
                 );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             }),
       ),

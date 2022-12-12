@@ -46,7 +46,7 @@ class _VendorListState extends State<VendorList> {
             return const Text("Error");
           } else {
             return ListView(
-                children: [ListTile(leading: CircularProgressIndicator())]);
+                children: const [ListTile(leading: CircularProgressIndicator())]);
           }
         });
   }

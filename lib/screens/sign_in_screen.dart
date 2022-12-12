@@ -7,7 +7,6 @@ import 'package:frontend/screens/sign_up_screen.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/shared/sign_in_button.dart';
 import 'package:frontend/utils/authentication.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';
 

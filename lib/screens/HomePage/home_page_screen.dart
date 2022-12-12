@@ -7,8 +7,6 @@ import 'package:frontend/models/app_state.dart';
 import 'package:frontend/screens/Cart/cart_screen.dart';
 import 'package:frontend/screens/profile/my_account.dart';
 import 'package:frontend/services/local_save.dart';
-import 'package:frontend/utils/authentication.dart';
-import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -19,7 +17,7 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  TextEditingController search_controller = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 
   // int _selectedIndex = 0;
 
@@ -53,12 +51,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
         centerTitle: false,
         title: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.location_on,
               size: 50,
               color: Color(0xFF77DD77),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             FutureBuilder(
@@ -70,19 +68,19 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(campus,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black)),
                         Text(roomNo,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF5F5F5F))),
                       ],
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                 }),
           ],
@@ -95,7 +93,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => myAccount(),
+                    builder: (context) => const myAccount(),
                   ),
                 );
               },
@@ -121,57 +119,45 @@ class _HomePageScreenState extends State<HomePageScreen> {
           children: [
             Container(
               height: 35,
-              margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+              margin: const EdgeInsets.only(left: 15, right: 15, top: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Color(0xFFF5F5F5),
+                color: const Color(0xFFF5F5F5),
               ),
               child: Stack(
                 children: <Widget>[
                   TextField(
-                    controller: search_controller,
+                    controller: searchController,
                     style: GoogleFonts.openSans(
                         fontSize: 12,
                         color: Colors.black,
                         fontWeight: FontWeight.w600),
                     decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.only(left: 10, right: 50, bottom: 15),
+                        contentPadding: const EdgeInsets.only(
+                            left: 10, right: 50, bottom: 15),
                         border: InputBorder.none,
                         hintText: 'Search for restaurant..',
                         hintStyle: GoogleFonts.openSans(
                           fontSize: 13,
-                          color: Color(0xFF5F5F5F),
+                          color: const Color(0xFF5F5F5F),
                           fontWeight: FontWeight.w600,
                         )),
                   ),
-                  Positioned(
+                  const Positioned(
                     top: 5,
                     right: 5,
-                    child: PositionedTapDetector(
-                      onTap: (position) {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //       builder: ((context) => ItemList(
-                        //             keyword:
-                        //                 search_controller.text,
-                        //             search_type: "tag",
-                        //           ))),
-                        // );
-                      },
-                      child: Icon(
-                        Icons.search_outlined,
-                        color: Color(0xFF5F5F5F),
-                      ),
+                    child: Icon(
+                      Icons.search_outlined,
+                      color: Color(0xFF5F5F5F),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Expanded(child: VendorList()),
+            const Expanded(child: VendorList()),
           ],
         ),
       ),

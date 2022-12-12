@@ -6,15 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/sign_in_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:frontend/reducers/app_state_reducer.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:redux_persist/redux_persist.dart';
-import 'package:redux_persist_flutter/redux_persist_flutter.dart';
-import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'screens/sign_in_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
@@ -58,20 +52,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String? _username;
-
   @override
   void initState() {
     super.initState();
     _loadUser();
   }
 
-  Future<void> _loadUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _username = prefs.getString('username');
-    });
-  }
+  Future<void> _loadUser() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +71,7 @@ class _MyAppState extends State<MyApp> {
               backgroundColor: Colors.yellow,
             ));
           } else if (snapshot.hasData) {
-            return const SignUpScreen();
+            return const HomePageScreen();
           } else {
             return SignInScreen();
           }

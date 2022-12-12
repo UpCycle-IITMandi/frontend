@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
-import 'package:frontend/screens/sign_up_screen.dart';
+import 'package:frontend/screens/Auth/sign_up_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'utils/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +29,6 @@ Future<void> main() async {
   final store = Store<AppState>(
     appReducer,
     initialState: AppState(),
-
   );
   runApp(StoreProvider<AppState>(
     store: store,
@@ -54,21 +53,14 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp>{
+class _MyAppState extends State<MyApp> {
   final Future<String?> _username = localGet('username');
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return FutureBuilder<String?>(
         future: _username,
         builder: (context, snapshot) {
-<<<<<<< Updated upstream
-            if (snapshot.data != null) {
-              return const HomePageScreen();
-            } else {
-              return SignInScreen();
-            }
-=======
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
                 child: CircularProgressIndicator(
@@ -79,7 +71,6 @@ class _MyAppState extends State<MyApp>{
           } else {
             return SignInScreen();
           }
->>>>>>> Stashed changes
         });
   }
 }

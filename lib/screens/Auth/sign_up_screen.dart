@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
 import 'package:frontend/screens/profile/my_account.dart';
 import 'package:frontend/services/local_save.dart';
-<<<<<<< Updated upstream:lib/screens/Auth/sign_up_screen.dart
-=======
 import 'package:frontend/services/remote_service.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
->>>>>>> Stashed changes:lib/screens/sign_up_screen.dart
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
@@ -39,7 +36,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController campus = TextEditingController();
   TextEditingController roomNo = TextEditingController();
 
-<<<<<<< Updated upstream:lib/screens/Auth/sign_up_screen.dart
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,13 +43,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         body: Padding(
             padding: const EdgeInsets.fromLTRB(20, 75, 20, 20),
             child: signUpForm(context)));
-=======
+  }
+
   Future<bool> getData() async {
     photoUrl = FirebaseAuth.instance.currentUser!.photoURL ??
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
     email.text = FirebaseAuth.instance.currentUser!.email ?? "";
     return true;
->>>>>>> Stashed changes:lib/screens/sign_up_screen.dart
   }
 
   @override
@@ -61,27 +57,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
   }
 
-<<<<<<< Updated upstream:lib/screens/Auth/sign_up_screen.dart
-  Form signUpForm(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(children: [
-        const Text(
-          "Sign up for Village Square",
-          textScaleFactor: 2.0,
-        ),
-        TextFormField(
-          onSaved: (val) => name = val!,
-          decoration: const InputDecoration(
-            labelText: 'Name',
-            labelStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-=======
   @override
   Widget build(BuildContext context) {
     final bool isLecturer =
@@ -94,75 +69,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           title: Text(
             "Create Profile",
             style: TextStyle(color: Colors.black),
->>>>>>> Stashed changes:lib/screens/sign_up_screen.dart
           ),
           backgroundColor: Colors.transparent,
           iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
         ),
-<<<<<<< Updated upstream:lib/screens/Auth/sign_up_screen.dart
-        TextFormField(
-          onSaved: (val) => upiID = val!,
-          decoration: const InputDecoration(
-            labelText: 'UPI Id',
-            labelStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter your UPI ID';
-            }
-            return null;
-          },
-        ),
-        DropdownButtonFormField(
-            icon: null,
-            dropdownColor: Colors.white,
-            style:
-                TextStyle(color: Colors.black, backgroundColor: Colors.white),
-            onSaved: (val) => campus = val.toString(),
-            decoration: const InputDecoration(
-              labelText: 'Campus',
-              labelStyle: TextStyle(color: Colors.grey),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
-              ),
-            ),
-            hint: const Text("Select option",
-                style: TextStyle(color: Colors.grey), maxLines: 1),
-            items: ['North Campus', 'South Campus']
-                .map((String value) => DropdownMenuItem(
-                      value: value,
-                      child: Text(
-                        value,
-                        textAlign: TextAlign.left,
-                      ),
-                    ))
-                .toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedCampus = newValue!;
-              });
-            }),
-        TextFormField(
-          onSaved: (val) => hostel = val!,
-          decoration: const InputDecoration(
-            labelText: 'Hostel',
-            labelStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-=======
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
@@ -1024,7 +935,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(color: Colors.grey),
->>>>>>> Stashed changes:lib/screens/sign_up_screen.dart
             ),
           ),
           child: FlatButton(

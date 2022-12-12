@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> localSave(String key, String value) async {
   final prefs = await SharedPreferences.getInstance();
-  prefs.setString(key,value);
+  prefs.setString(key, value);
 }
 
 Future<String?> localGet(String key) async {
@@ -16,7 +16,8 @@ Future<void> localDelete(String key) async {
   prefs.remove(key);
 }
 
-Future<void> saveUser(String name, String email, String upiID, String campus, String hostel, String photoUrl) async {
+Future<void> saveUser(String name, String email, String upiID, String campus,
+    String hostel, String photoUrl) async {
   localSave("username", name);
   localSave("email", email);
   localSave("upi", upiID);
@@ -25,17 +26,17 @@ Future<void> saveUser(String name, String email, String upiID, String campus, St
   localSave("photoUrl", photoUrl);
 }
 
-var userAttrs = [ "photoUrl", "email", "username", "upi", "campus", "hostel"];
+var userAttrs = ["photoUrl", "email", "username", "upi", "campus", "hostel"];
 
 Future<void> deleteUser() async {
-  for (var attr in userAttrs) {localDelete(attr);}
+  for (var attr in userAttrs) {
+    localDelete(attr);
+  }
 }
 
 Future<Map<dynamic, dynamic>> getUser() async {
   final prefs = await SharedPreferences.getInstance();
   var userDetails = Map.fromIterable(userAttrs,
-      key: (attr) => attr,
-      value: (attr) => prefs.getString(attr)
-  );
+      key: (attr) => attr, value: (attr) => prefs.getString(attr));
   return userDetails;
 }

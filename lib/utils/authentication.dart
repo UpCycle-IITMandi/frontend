@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/services/local_save.dart';
-import 'package:frontend/screens/Auth/sign_in_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart';
 
 class Authentication {
   static Future<FirebaseApp> initializeFirebase() async {
@@ -25,7 +22,8 @@ class Authentication {
     );
   }
 
-  static Future<GoogleSignInAccount?> signInWithGoogle({required BuildContext context}) async {
+  static Future<GoogleSignInAccount?> signInWithGoogle(
+      {required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
@@ -40,12 +38,12 @@ class Authentication {
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
-  print(googleSignInAccount.email);
-      if (!googleSignInAccount.email.endsWith("iitmandi.ac.in")) {
+      print(googleSignInAccount.email);
+      // if (!googleSignInAccount.email.endsWith("iitmandi.ac.in")) {
 
-        await googleSignIn.signOut();
-        return null;
-      }
+      //   await googleSignIn.signOut();
+      //   return null;
+      // }
 
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
@@ -89,7 +87,6 @@ class Authentication {
     try {
       await googleSignIn.signOut();
       await FirebaseAuth.instance.signOut();
-      deleteUser();
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         Authentication.customSnackBar(

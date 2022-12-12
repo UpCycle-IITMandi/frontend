@@ -29,8 +29,26 @@ class RemoteService {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'authtoken': authToken,
-        },
+      },
       body: jsonEncode(<String, String>{
+        'name': name,
+        'hostel': hostel,
+        'upiId': upiID,
+        'campus': campus,
+      }),
+    );
+  }
+
+  Future<http.Response> updateUser(String authToken, String photo, String name,
+      String upiID, String campus, String hostel) async {
+    return client.post(
+      Uri.parse('$baseUrl/api/v1/user/update'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authtoken': authToken,
+      },
+      body: jsonEncode(<String, String>{
+        'photo': photo,
         'name': name,
         'hostel': hostel,
         'upiId': upiID,

@@ -4,9 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
+import 'package:frontend/screens/sign_up_screen.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/shared/sign_in_button.dart';
-import 'package:frontend/screens/Auth/sign_up_screen.dart';
 import 'package:frontend/utils/authentication.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';
@@ -86,8 +86,13 @@ class _SignInScreenState extends State<SignInScreen> {
                               builder: ((context) => SignUpScreen())));
                     } else {
                       user = user["user"];
-                      saveUser(user["firstName"] + ' ' + user["lastName"], userEmail,
-                          user["upiId"], user["campus"], user["hostel"], user["profilePicture"]);
+                      saveUser(
+                          user["firstName"] + ' ' + user["lastName"],
+                          userEmail,
+                          user["upiId"],
+                          user["campus"],
+                          user["hostel"],
+                          user["profilePicture"]);
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(

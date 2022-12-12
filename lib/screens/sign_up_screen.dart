@@ -1,11 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
+import 'package:frontend/screens/profile/my_account.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/services/remote_service.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:intl/intl.dart';
+import 'dart:convert';
+import 'package:rounded_modal/rounded_modal.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,15 +36,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController campus = TextEditingController();
   TextEditingController roomNo = TextEditingController();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 75, 20, 20),
-            child: SignUpForm(context)));
-  }
-
   Future<bool> getData() async {
     photoUrl = FirebaseAuth.instance.currentUser!.photoURL ??
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -51,20 +48,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
   }
 
-  Widget SignUpForm(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     final bool isLecturer =
         RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@iitmandi.ac.in")
             .hasMatch(FirebaseAuth.instance.currentUser!.email ?? "");
     return Container(
-      color: const Color.fromARGB(255, 244, 242, 242),
+      color: Color.fromARGB(255, 244, 242, 242),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             "Create Profile",
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.transparent,
-          iconTheme: const IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
         ),
         backgroundColor: Colors.transparent,
@@ -75,9 +73,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       child: Container(
-                        padding: const EdgeInsets.only(
+                        padding: EdgeInsets.only(
                             top: 20, right: 15, left: 15, bottom: 70),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     CircleAvatar(
                                       radius: 75,
                                       backgroundColor:
-                                          const Color.fromARGB(255, 108, 108, 108),
+                                          Color.fromARGB(255, 108, 108, 108),
                                       child: CircleAvatar(
                                         radius: 71,
                                         backgroundColor: Colors.white,
@@ -116,10 +114,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             file = File("");
                                           }
                                         },
-                                        child: const CircleAvatar(
+                                        child: CircleAvatar(
                                             radius: 15,
                                             backgroundImage: NetworkImage(
-                                                "https://t4.ftcdn.net/jpg/02/83/72/41/360_F_283724163_kIWm6DfeFN0zhm8Pc0xelROcxxbAiEFI.jpg")),
+                                                FirebaseAuth
+                                                        .instance
+                                                        .currentUser!
+                                                        .photoURL ??
+                                                    "")),
                                       ),
                                     ),
                                   ],
@@ -162,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       decoration: InputDecoration(
                                         fillColor: (firstname.text == "")
                                             ? Colors.white
-                                            : const Color(0xFFB5ECB5),
+                                            : Color(0xFFB5ECB5),
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
@@ -228,7 +230,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       decoration: InputDecoration(
                                         fillColor: (phno.text == "")
                                             ? Colors.white
-                                            : const Color(0xFFB5ECB5),
+                                            : Color(0xFFB5ECB5),
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
@@ -294,7 +296,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       decoration: InputDecoration(
                                         fillColor: (upiId.text == "")
                                             ? Colors.white
-                                            : const Color(0xFFB5ECB5),
+                                            : Color(0xFFB5ECB5),
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
@@ -412,16 +414,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         color: Colors.black,
                                       ),
                                       onTap: () {
-                                        showModalBottomSheet(
+                                        showRoundedModalBottomSheet(
                                             context: context,
-                                            // radius: 20,
+                                            radius: 20,
                                             builder: (context) {
                                               List<String> options = [
                                                 "North Campus",
                                                 "South Campus"
                                               ];
-                                              int selectedIndex;
-                                              return SizedBox(
+                                              var selectedIndex;
+                                              return Container(
                                                 height: 300,
                                                 child: Stack(
                                                   children: [
@@ -444,7 +446,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             decoration: BoxDecoration(
                                                                 color: Colors
                                                                     .grey[300],
-                                                                borderRadius: const BorderRadius
+                                                                borderRadius: BorderRadius
                                                                     .all(Radius
                                                                         .circular(
                                                                             8))),
@@ -468,7 +470,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             ),
                                                           ),
                                                         ),
-                                                        const Divider(
+                                                        Divider(
                                                           color: Colors.grey,
                                                         ),
                                                       ],
@@ -479,7 +481,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                 mystate) {
                                                       return Container(
                                                         padding:
-                                                            const EdgeInsets.only(
+                                                            EdgeInsets.only(
                                                                 top: 75,
                                                                 bottom: 50),
                                                         child: ListView.builder(
@@ -495,13 +497,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                           index]),
                                                                   leading: (selectedIndex ==
                                                                           index)
-                                                                      ? const Icon(
+                                                                      ? Icon(
                                                                           Icons
                                                                               .check_circle,
                                                                           color:
                                                                               Color(0xFF0D47A1),
                                                                         )
-                                                                      : const Icon(
+                                                                      : Icon(
                                                                           Icons
                                                                               .circle_outlined,
                                                                           color:
@@ -515,7 +517,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                     });
                                                                   },
                                                                 ),
-                                                                const Divider()
+                                                                Divider()
                                                               ],
                                                             );
                                                           },
@@ -525,7 +527,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     Align(
                                                       alignment: Alignment
                                                           .bottomCenter,
-                                                      child: ElevatedButton(
+                                                      child: FlatButton(
                                                           onPressed: () {
                                                             campus.text = options[
                                                                 selectedIndex];
@@ -540,7 +542,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                     .size
                                                                     .width *
                                                                 0.9,
-                                                            decoration: const BoxDecoration(
+                                                            decoration: BoxDecoration(
                                                                 color: Color(
                                                                     0xFF0D47A1),
                                                                 borderRadius: BorderRadius
@@ -571,7 +573,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       decoration: InputDecoration(
                                         fillColor: (campus.text == "")
                                             ? Colors.white
-                                            : const Color(0xFFB5ECB5),
+                                            : Color(0xFFB5ECB5),
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
@@ -581,7 +583,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 2,
                                           ),
                                         ),
-                                        suffixIcon: const Icon(
+                                        suffixIcon: Icon(
                                           Icons.arrow_drop_down_rounded,
                                           color: Colors.black,
                                         ),
@@ -591,7 +593,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           color: Colors.grey,
                                         ),
                                         hintText: 'Select Campus',
-                                        enabledBorder: const OutlineInputBorder(
+                                        enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
                                           borderSide: BorderSide(
@@ -634,9 +636,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         color: Colors.black,
                                       ),
                                       onTap: () {
-                                        showModalBottomSheet(
+                                        showRoundedModalBottomSheet(
                                             context: context,
-                                            // radius: 20,
+                                            radius: 20,
                                             builder: (context) {
                                               List<String> hostelOptions = [
                                                 "Hostel A",
@@ -647,8 +649,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 "Building A",
                                                 "Building B",
                                               ];
-                                              int selectedIndex;
-                                              return SizedBox(
+                                              var selectedIndex;
+                                              return Container(
                                                 height: 300,
                                                 child: Stack(
                                                   children: [
@@ -671,7 +673,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             decoration: BoxDecoration(
                                                                 color: Colors
                                                                     .grey[300],
-                                                                borderRadius: const BorderRadius
+                                                                borderRadius: BorderRadius
                                                                     .all(Radius
                                                                         .circular(
                                                                             8))),
@@ -697,7 +699,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             ),
                                                           ),
                                                         ),
-                                                        const Divider(
+                                                        Divider(
                                                           color: Colors.grey,
                                                         ),
                                                       ],
@@ -708,7 +710,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                 mystate) {
                                                       return Container(
                                                         padding:
-                                                            const EdgeInsets.only(
+                                                            EdgeInsets.only(
                                                                 top: 75,
                                                                 bottom: 50),
                                                         child: ListView.builder(
@@ -729,13 +731,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                           index]),
                                                                   leading: (selectedIndex ==
                                                                           index)
-                                                                      ? const Icon(
+                                                                      ? Icon(
                                                                           Icons
                                                                               .check_circle,
                                                                           color:
                                                                               Color(0xFF0D47A1),
                                                                         )
-                                                                      : const Icon(
+                                                                      : Icon(
                                                                           Icons
                                                                               .circle_outlined,
                                                                           color:
@@ -749,7 +751,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                     });
                                                                   },
                                                                 ),
-                                                                const Divider()
+                                                                Divider()
                                                               ],
                                                             );
                                                           },
@@ -759,7 +761,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     Align(
                                                       alignment: Alignment
                                                           .bottomCenter,
-                                                      child: ElevatedButton(
+                                                      child: FlatButton(
                                                           onPressed: () {
                                                             hostel.text = isLecturer
                                                                 ? buildingOptions[
@@ -777,7 +779,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                     .size
                                                                     .width *
                                                                 0.9,
-                                                            decoration: const BoxDecoration(
+                                                            decoration: BoxDecoration(
                                                                 color: Color(
                                                                     0xFF0D47A1),
                                                                 borderRadius: BorderRadius
@@ -808,7 +810,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       decoration: InputDecoration(
                                         fillColor: (hostel.text == "")
                                             ? Colors.white
-                                            : const Color(0xFFB5ECB5),
+                                            : Color(0xFFB5ECB5),
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
@@ -818,7 +820,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 2,
                                           ),
                                         ),
-                                        suffixIcon: const Icon(
+                                        suffixIcon: Icon(
                                           Icons.arrow_drop_down_rounded,
                                           color: Colors.black,
                                         ),
@@ -828,7 +830,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           color: Colors.grey,
                                         ),
                                         hintText: 'Select Campus',
-                                        enabledBorder: const OutlineInputBorder(
+                                        enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
                                           borderSide: BorderSide(
@@ -878,7 +880,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       decoration: InputDecoration(
                                         fillColor: (roomNo.text == "")
                                             ? Colors.white
-                                            : const Color(0xFFB5ECB5),
+                                            : Color(0xFFB5ECB5),
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
@@ -913,7 +915,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     );
                   } else {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator());
                   }
                 }),
             // Align(
@@ -925,12 +927,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         bottomNavigationBar: Container(
           width: MediaQuery.of(context).size.width,
           height: 70,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             border: Border(
               top: BorderSide(color: Colors.grey),
             ),
           ),
-          child: ElevatedButton(
+          child: FlatButton(
             onPressed: () async {
               FirebaseAuth auth = FirebaseAuth.instance;
               String? authToken = await auth.currentUser?.getIdToken();
@@ -945,8 +947,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     upiId.text, hostel.text, (auth.currentUser?.photoURL)!);
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(
-                        builder: ((context) => const HomePageScreen())),
+                    MaterialPageRoute(builder: ((context) => HomePageScreen())),
                     (route) => false);
               }
 
@@ -961,7 +962,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   colors: <Color>[
                     Color(0xFF0D47A1),
                     Color(0xFF1976D2),
@@ -969,11 +970,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
               ),
-              margin: const EdgeInsets.only(left: 0, right: 0, bottom: 10, top: 5),
+              margin: EdgeInsets.only(left: 0, right: 0, bottom: 10, top: 5),
               width: MediaQuery.of(context).size.width * 0.85,
               height: 50,
-              child: const Center(
-                child: Text(
+              child: Center(
+                child: const Text(
                   'Continue',
                   style: TextStyle(
                     color: Colors.white,

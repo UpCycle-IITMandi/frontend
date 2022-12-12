@@ -1,11 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/profile/my_account.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/services/remote_service.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:intl/intl.dart';
 import 'dart:convert';
+import 'package:rounded_modal/rounded_modal.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,7 +23,10 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  late String photoUrl;
+  final bool isLecturer =
+      RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@iitmandi.ac.in")
+          .hasMatch(FirebaseAuth.instance.currentUser!.email ?? "");
+  String photoUrl = '';
   TextEditingController firstname = TextEditingController();
   TextEditingController lastname = TextEditingController();
   TextEditingController rollno = TextEditingController();
@@ -28,6 +35,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController upiId = TextEditingController();
   TextEditingController hostel = TextEditingController();
   TextEditingController campus = TextEditingController();
+  TextEditingController roomNo = TextEditingController();
 
   Future<bool> getData() async {
     Map user = await getUser();
@@ -37,39 +45,48 @@ class _EditProfileState extends State<EditProfile> {
     campus.text = user["campus"];
     hostel.text = user["hostel"];
     upiId.text = user["upi"];
+
+    return true;
+  }
+
+  bool isLoaded = false;
+
+  Future<bool> isAvailable() async {
+    while (!isLoaded) {}
     return true;
   }
 
   @override
   void initState() {
     super.initState();
+    getData();
+    isLoaded = true;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromARGB(255, 244, 242, 242),
+      color: Color.fromARGB(255, 244, 242, 242),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             "Edit Profile",
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.transparent,
-          iconTheme: const IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
         ),
-        backgroundColor: Colors.transparent,
         body: Stack(
           children: [
             FutureBuilder(
-                future: getData(),
+                future: isAvailable(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       child: Container(
-                        padding: const EdgeInsets.only(
+                        padding: EdgeInsets.only(
                             top: 20, right: 15, left: 15, bottom: 70),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,8 +97,8 @@ class _EditProfileState extends State<EditProfile> {
                                   children: [
                                     CircleAvatar(
                                       radius: 75,
-                                      backgroundColor: const Color.fromARGB(
-                                          255, 108, 108, 108),
+                                      backgroundColor:
+                                          Color.fromARGB(255, 108, 108, 108),
                                       child: CircleAvatar(
                                         radius: 71,
                                         backgroundColor: Colors.white,
@@ -108,7 +125,7 @@ class _EditProfileState extends State<EditProfile> {
                                             file = File("");
                                           }
                                         },
-                                        child: const CircleAvatar(
+                                        child: CircleAvatar(
                                             radius: 15,
                                             backgroundImage: NetworkImage(
                                                 "https://t4.ftcdn.net/jpg/02/83/72/41/360_F_283724163_kIWm6DfeFN0zhm8Pc0xelROcxxbAiEFI.jpg")),
@@ -148,14 +165,19 @@ class _EditProfileState extends State<EditProfile> {
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
+                                      onChanged: (value) {
+                                        setState(() {});
+                                      },
                                       decoration: InputDecoration(
-                                        fillColor: Colors.white,
+                                        fillColor: (firstname.text == "")
+                                            ? Colors.white
+                                            : Color(0xFFB5ECB5),
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                            color: Color(0xFF1976D2),
+                                            color: Color(0xFF77DD77),
                                             width: 2,
                                           ),
                                         ),
@@ -209,14 +231,19 @@ class _EditProfileState extends State<EditProfile> {
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
+                                      onChanged: (value) {
+                                        setState(() {});
+                                      },
                                       decoration: InputDecoration(
-                                        fillColor: Colors.white,
+                                        fillColor: (upiId.text == "")
+                                            ? Colors.white
+                                            : Color(0xFFB5ECB5),
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                            color: Color(0xFF1976D2),
+                                            color: Color(0xFF77DD77),
                                             width: 2,
                                           ),
                                         ),
@@ -325,16 +352,16 @@ class _EditProfileState extends State<EditProfile> {
                                         color: Colors.black,
                                       ),
                                       onTap: () {
-                                        showModalBottomSheet(
+                                        showRoundedModalBottomSheet(
                                             context: context,
-                                            // radius: 20,
+                                            radius: 20,
                                             builder: (context) {
                                               List<String> options = [
                                                 "North Campus",
                                                 "South Campus"
                                               ];
-                                              int selectedIndex = 0;
-                                              return SizedBox(
+                                              var selectedIndex;
+                                              return Container(
                                                 height: 300,
                                                 child: Stack(
                                                   children: [
@@ -357,10 +384,9 @@ class _EditProfileState extends State<EditProfile> {
                                                             decoration: BoxDecoration(
                                                                 color: Colors
                                                                     .grey[300],
-                                                                borderRadius:
-                                                                    const BorderRadius
-                                                                            .all(
-                                                                        Radius.circular(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
                                                                             8))),
                                                           ),
                                                         ),
@@ -382,7 +408,7 @@ class _EditProfileState extends State<EditProfile> {
                                                             ),
                                                           ),
                                                         ),
-                                                        const Divider(
+                                                        Divider(
                                                           color: Colors.grey,
                                                         ),
                                                       ],
@@ -393,8 +419,7 @@ class _EditProfileState extends State<EditProfile> {
                                                                 mystate) {
                                                       return Container(
                                                         padding:
-                                                            const EdgeInsets
-                                                                    .only(
+                                                            EdgeInsets.only(
                                                                 top: 75,
                                                                 bottom: 50),
                                                         child: ListView.builder(
@@ -410,13 +435,13 @@ class _EditProfileState extends State<EditProfile> {
                                                                           index]),
                                                                   leading: (selectedIndex ==
                                                                           index)
-                                                                      ? const Icon(
+                                                                      ? Icon(
                                                                           Icons
                                                                               .check_circle,
                                                                           color:
                                                                               Color(0xFF0D47A1),
                                                                         )
-                                                                      : const Icon(
+                                                                      : Icon(
                                                                           Icons
                                                                               .circle_outlined,
                                                                           color:
@@ -430,7 +455,7 @@ class _EditProfileState extends State<EditProfile> {
                                                                     });
                                                                   },
                                                                 ),
-                                                                const Divider()
+                                                                Divider()
                                                               ],
                                                             );
                                                           },
@@ -440,12 +465,13 @@ class _EditProfileState extends State<EditProfile> {
                                                     Align(
                                                       alignment: Alignment
                                                           .bottomCenter,
-                                                      child: ElevatedButton(
+                                                      child: FlatButton(
                                                           onPressed: () {
                                                             campus.text = options[
                                                                 selectedIndex];
                                                             Navigator.pop(
                                                                 context);
+                                                            setState(() {});
                                                           },
                                                           child: Container(
                                                             height: 45,
@@ -454,7 +480,7 @@ class _EditProfileState extends State<EditProfile> {
                                                                     .size
                                                                     .width *
                                                                 0.9,
-                                                            decoration: const BoxDecoration(
+                                                            decoration: BoxDecoration(
                                                                 color: Color(
                                                                     0xFF0D47A1),
                                                                 borderRadius: BorderRadius
@@ -483,17 +509,19 @@ class _EditProfileState extends State<EditProfile> {
                                             });
                                       },
                                       decoration: InputDecoration(
-                                        fillColor: Colors.white,
+                                        fillColor: (campus.text == "")
+                                            ? Colors.white
+                                            : Color(0xFFB5ECB5),
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                            color: Color(0xFF1976D2),
+                                            color: Color(0xFF77DD77),
                                             width: 2,
                                           ),
                                         ),
-                                        suffixIcon: const Icon(
+                                        suffixIcon: Icon(
                                           Icons.arrow_drop_down_rounded,
                                           color: Colors.black,
                                         ),
@@ -503,7 +531,7 @@ class _EditProfileState extends State<EditProfile> {
                                           color: Colors.grey,
                                         ),
                                         hintText: 'Select Campus',
-                                        enabledBorder: const OutlineInputBorder(
+                                        enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
                                           borderSide: BorderSide(
@@ -524,7 +552,7 @@ class _EditProfileState extends State<EditProfile> {
                                     padding: const EdgeInsets.only(
                                         left: 5, bottom: 5),
                                     child: Text(
-                                      "HOSTEL",
+                                      isLecturer ? "BUILDING" : "HOSTEL",
                                       style: GoogleFonts.openSans(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
@@ -539,20 +567,264 @@ class _EditProfileState extends State<EditProfile> {
                                     child: TextField(
                                       controller: hostel,
                                       cursorHeight: 18,
+                                      readOnly: true,
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                      onTap: () {
+                                        showRoundedModalBottomSheet(
+                                            context: context,
+                                            radius: 20,
+                                            builder: (context) {
+                                              List<String> hostelOptions = [
+                                                "Hostel A",
+                                                "Hostel B",
+                                                "Hostel c"
+                                              ];
+                                              List<String> buildingOptions = [
+                                                "Building A",
+                                                "Building B",
+                                              ];
+                                              var selectedIndex;
+                                              return Container(
+                                                height: 300,
+                                                child: Stack(
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  150.0,
+                                                                  10.0,
+                                                                  150.0,
+                                                                  20.0),
+                                                          child: Container(
+                                                            height: 8.0,
+                                                            width: 80.0,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .grey[300],
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            8))),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 20),
+                                                          child: Text(
+                                                            isLecturer
+                                                                ? "Select Building"
+                                                                : "Select Hostel",
+                                                            style: GoogleFonts
+                                                                .openSans(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Divider(
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    StatefulBuilder(builder:
+                                                        (BuildContext context,
+                                                            StateSetter
+                                                                mystate) {
+                                                      return Container(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 75,
+                                                                bottom: 50),
+                                                        child: ListView.builder(
+                                                          itemCount: isLecturer
+                                                              ? buildingOptions
+                                                                  .length
+                                                              : hostelOptions
+                                                                  .length,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return Column(
+                                                              children: [
+                                                                ListTile(
+                                                                  title: Text(isLecturer
+                                                                      ? buildingOptions[
+                                                                          index]
+                                                                      : hostelOptions[
+                                                                          index]),
+                                                                  leading: (selectedIndex ==
+                                                                          index)
+                                                                      ? Icon(
+                                                                          Icons
+                                                                              .check_circle,
+                                                                          color:
+                                                                              Color(0xFF0D47A1),
+                                                                        )
+                                                                      : Icon(
+                                                                          Icons
+                                                                              .circle_outlined,
+                                                                          color:
+                                                                              Colors.grey),
+                                                                  onTap: () {
+                                                                    selectedIndex =
+                                                                        index;
+                                                                    mystate(() {
+                                                                      selectedIndex =
+                                                                          index;
+                                                                    });
+                                                                  },
+                                                                ),
+                                                                Divider()
+                                                              ],
+                                                            );
+                                                          },
+                                                        ),
+                                                      );
+                                                    }),
+                                                    Align(
+                                                      alignment: Alignment
+                                                          .bottomCenter,
+                                                      child: FlatButton(
+                                                          onPressed: () {
+                                                            hostel.text = isLecturer
+                                                                ? buildingOptions[
+                                                                    selectedIndex]
+                                                                : hostelOptions[
+                                                                    selectedIndex];
+                                                            Navigator.pop(
+                                                                context);
+                                                            setState(() {});
+                                                          },
+                                                          child: Container(
+                                                            height: 45,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.9,
+                                                            decoration: BoxDecoration(
+                                                                color: Color(
+                                                                    0xFF0D47A1),
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            10))),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "Save",
+                                                                style: GoogleFonts
+                                                                    .openSans(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            });
+                                      },
+                                      decoration: InputDecoration(
+                                        fillColor: (hostel.text == "")
+                                            ? Colors.white
+                                            : Color(0xFFB5ECB5),
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF77DD77),
+                                            width: 2,
+                                          ),
+                                        ),
+                                        suffixIcon: Icon(
+                                          Icons.arrow_drop_down_rounded,
+                                          color: Colors.black,
+                                        ),
+                                        hintStyle: GoogleFonts.openSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.grey,
+                                        ),
+                                        hintText: 'Select Campus',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide: BorderSide(
+                                              color: Colors.grey, width: 1),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5, bottom: 5),
+                                    child: Text(
+                                      isLecturer
+                                          ? "HOUSE NUMBER"
+                                          : "ROOM NUMBER",
+                                      style: GoogleFonts.openSans(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 47,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    child: TextField(
+                                      controller: roomNo,
+                                      cursorHeight: 18,
                                       cursorColor: Colors.blue,
                                       style: GoogleFonts.openSans(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
+                                      onChanged: (value) {
+                                        setState(() {});
+                                      },
                                       decoration: InputDecoration(
-                                        fillColor: Colors.white,
+                                        fillColor: (roomNo.text == "")
+                                            ? Colors.white
+                                            : Color(0xFFB5ECB5),
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                            color: Color(0xFF1976D2),
+                                            color: Color(0xFF77DD77),
                                             width: 2,
                                           ),
                                         ),
@@ -561,7 +833,9 @@ class _EditProfileState extends State<EditProfile> {
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
                                         ),
-                                        hintText: 'Hostel Name',
+                                        hintText: isLecturer
+                                            ? "House Number"
+                                            : "Room Number",
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10.0),
@@ -575,14 +849,11 @@ class _EditProfileState extends State<EditProfile> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 30,
-                              ),
                             ]),
                       ),
                     );
                   } else {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator());
                   }
                 }),
             // Align(
@@ -594,12 +865,12 @@ class _EditProfileState extends State<EditProfile> {
         bottomNavigationBar: Container(
           width: MediaQuery.of(context).size.width,
           height: 70,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             border: Border(
               top: BorderSide(color: Colors.grey),
             ),
           ),
-          child: ElevatedButton(
+          child: FlatButton(
             onPressed: () async {
               String? authToken =
                   await FirebaseAuth.instance.currentUser?.getIdToken();
@@ -629,7 +900,7 @@ class _EditProfileState extends State<EditProfile> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   colors: <Color>[
                     Color(0xFF0D47A1),
                     Color(0xFF1976D2),
@@ -637,12 +908,11 @@ class _EditProfileState extends State<EditProfile> {
                   ],
                 ),
               ),
-              margin:
-                  const EdgeInsets.only(left: 0, right: 0, bottom: 10, top: 5),
+              margin: EdgeInsets.only(left: 0, right: 0, bottom: 10, top: 5),
               width: MediaQuery.of(context).size.width * 0.85,
               height: 50,
-              child: const Center(
-                child: Text(
+              child: Center(
+                child: const Text(
                   'Continue',
                   style: TextStyle(
                     color: Colors.white,

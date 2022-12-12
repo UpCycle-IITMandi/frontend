@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignInButton extends StatelessWidget {
   const SignInButton({Key? key, required this.onPressed}) : super(key: key);
@@ -18,9 +19,11 @@ class SignInButton extends StatelessWidget {
             height: 20,
           ),
           style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.black, shape: RoundedRectangleBorder(
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-              ), backgroundColor: const Color(0xFF77DD77)),
+              ),
+              primary: Color(0xFF77DD77),
+              onPrimary: Colors.black),
           label: const Text(
             "Sign in with Google",
             style: TextStyle(

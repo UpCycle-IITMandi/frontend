@@ -35,6 +35,7 @@ Future<void> deleteUser() async {
 
 Future<Map<dynamic, dynamic>> getUser() async {
   final prefs = await SharedPreferences.getInstance();
-  var userDetails = { for (var attr in userAttrs) attr : prefs.getString(attr) };
+  var userDetails = Map.fromIterable(userAttrs,
+      key: (attr) => attr, value: (attr) => prefs.getString(attr));
   return userDetails;
 }

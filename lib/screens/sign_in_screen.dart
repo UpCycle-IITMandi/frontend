@@ -7,7 +7,6 @@ import 'package:frontend/screens/sign_up_screen.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/shared/sign_in_button.dart';
 import 'package:frontend/utils/authentication.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';
 
@@ -40,21 +39,21 @@ class _SignInScreenState extends State<SignInScreen> {
                   top: MediaQuery.of(context).size.height * 0.14),
               width: MediaQuery.of(context).size.width,
               child: Image(
-                image: AssetImage("assets/images/logo.png"),
+                image: const AssetImage("assets/images/logo.png"),
                 color: null,
                 height: MediaQuery.of(context).size.height * 0.14,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Image(
-                image: AssetImage("assets/images/Vector.png"),
+                image: const AssetImage("assets/images/Vector.png"),
                 color: null,
                 height: MediaQuery.of(context).size.height * 0.45,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Container(
               margin: EdgeInsets.only(
                   bottom: MediaQuery.of(context).size.height * 0.12),

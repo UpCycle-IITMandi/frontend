@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/profile/edit_profile.dart';
 import 'package:frontend/screens/profile/orders_screen.dart';
@@ -7,14 +6,14 @@ import 'package:frontend/utils/authentication.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-class myAccount extends StatefulWidget {
-  const myAccount({Key? key}) : super(key: key);
+class MyAccount extends StatefulWidget {
+  const MyAccount({Key? key}) : super(key: key);
 
   @override
-  _myAccountState createState() => _myAccountState();
+  _MyAccountState createState() => _MyAccountState();
 }
 
-class _myAccountState extends State<myAccount> {
+class _MyAccountState extends State<MyAccount> {
   late String username;
   late String email;
   late String photoUrl;
@@ -40,21 +39,15 @@ class _myAccountState extends State<myAccount> {
         iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
         ),
-        title: const Text('Upcycle',
-            style: TextStyle(
-              color: Colors.black,
-            )),
+        title:
+            const Text('Village Square', style: TextStyle(color: Colors.black)),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.only(
-            top: 30,
-            right: 15,
-            left: 15,
-          ),
+          padding: const EdgeInsets.all(30),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -71,7 +64,8 @@ class _myAccountState extends State<myAccount> {
                                 children: [
                                   CircleAvatar(
                                     radius: 76,
-                                    backgroundColor: Colors.black54,
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 119, 221, 119),
                                     child: CircleAvatar(
                                       radius: 72,
                                       backgroundColor: Colors.white,
@@ -85,22 +79,22 @@ class _myAccountState extends State<myAccount> {
                               ),
                             ),
                             const SizedBox(
-                              height: 5,
+                              height: 20,
                             ),
                             Text(
                               username,
                               style: GoogleFonts.openSans(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                                 color: Colors.black,
                               ),
                             ),
                             Text(
                               email,
                               style: GoogleFonts.openSans(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black54,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.grey.shade500,
                               ),
                             ),
                           ],
@@ -116,28 +110,25 @@ class _myAccountState extends State<myAccount> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const EditProfile()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const EditProfile()));
                   },
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 119, 221, 119)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ))),
                   child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      gradient: const LinearGradient(
-                        colors: <Color>[
-                          Color(0xFF0D47A1),
-                          Color(0xFF1976D2),
-                          Color(0xFF42A5F5),
-                        ],
-                      ),
-                    ),
-                    margin:
-                        const EdgeInsets.only(left: 0, right: 0, bottom: 10, top: 5),
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    height: 35,
-                    child: const Center(
+                    margin: const EdgeInsets.only(
+                        left: 0, right: 0, bottom: 10, top: 5),
+                    width: 150,
+                    height: 30,
+                    child: Center(
                       child: Text(
                         'Edit Profile',
-                        style: TextStyle(
+                        style: GoogleFonts.openSans(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -150,207 +141,90 @@ class _myAccountState extends State<myAccount> {
                   height: 20,
                 ),
                 const Divider(
-                  color: Colors.grey,
+                  color: Color.fromARGB(255, 95, 95, 95),
+                  height: 1,
                 ),
-                ListTile(
-                  leading: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {},
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      alignment: Alignment.center,
-                      child: const CircleAvatar(
-                        backgroundColor: Color(0xFF0D47A1),
-                        child: Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
+                ListItem(
+                    name: "Settings",
+                    icon: Icon(Icons.settings, color: Colors.white),
+                    onTap: () {}),
+                ListItem(
+                    name: "Previous Orders",
+                    icon: Icon(
+                      Icons.fast_rewind,
+                      color: Colors.white,
                     ),
-                  ),
-                  trailing: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {},
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      alignment: Alignment.center,
-                      child: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                  title: const Text(
-                    "Settings",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  dense: false,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const OrdersScreen()));
-                  },
-                  child: ListTile(
-                    leading: Container(
-                      width: 48,
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      alignment: Alignment.center,
-                      child: const CircleAvatar(
-                        backgroundColor: Color(0xFF0D47A1),
-                        child: Icon(
-                          Icons.rotate_left_rounded,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    trailing: Container(
-                      width: 48,
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      alignment: Alignment.center,
-                      child: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                    ),
-                    title: const Text(
-                      "Previous Orders",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    dense: false,
-                  ),
-                ),
-                ListTile(
-                  leading: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {},
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      alignment: Alignment.center,
-                      child: const CircleAvatar(),
-                    ),
-                  ),
-                  trailing: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {},
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      alignment: Alignment.center,
-                      child: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                  title: const Text(
-                    "User Mangement",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  dense: false,
-                ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const OrdersScreen()));
+                    }),
                 const Divider(
-                  color: Colors.grey,
+                  color: Color.fromARGB(255, 95, 95, 95),
+                  height: 1,
                 ),
-                ListTile(
-                  leading: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {},
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      alignment: Alignment.center,
-                      child: const CircleAvatar(),
-                    ),
-                  ),
-                  trailing: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {},
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      alignment: Alignment.center,
-                      child: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                  title: const Text(
-                    "About Us",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  dense: false,
-                ),
-                ListTile(
-                  onTap: (() {
-                    Authentication.signOut(context: context);
-                    Navigator.of(context).pop();
-                  }),
-                  leading: Container(
-                    width: 48,
-                    height: 48,
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    alignment: Alignment.center,
-                    child: const CircleAvatar(
-                      backgroundColor: Color(0xFF0D47A1),
-                      child: Icon(
-                        Icons.logout_rounded,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  trailing: Container(
-                    width: 48,
-                    height: 48,
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    alignment: Alignment.center,
-                    child: const Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.black,
-                      size: 20,
-                    ),
-                  ),
-                  title: const Text(
-                    "Logout",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  dense: false,
-                ),
+                ListItem(
+                    name: "About Us",
+                    icon: Icon(Icons.info, color: Colors.white),
+                    onTap: () {}),
+                ListItem(
+                    name: "Logout",
+                    icon: Icon(Icons.logout_rounded, color: Colors.white),
+                    onTap: () async {
+                      await Authentication.signOut(context: context);
+                      Navigator.of(context).pop();
+                    }),
               ]),
         ),
       ),
+    );
+  }
+}
+
+class ListItem extends StatefulWidget {
+  final Icon icon;
+  final String name;
+  final void Function() onTap;
+  const ListItem(
+      {super.key, required this.name, required this.icon, required this.onTap});
+
+  @override
+  State<ListItem> createState() => _ListItemState();
+}
+
+class _ListItemState extends State<ListItem> {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: widget.onTap,
+      leading: Container(
+        width: 48,
+        height: 48,
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        alignment: Alignment.center,
+        child: CircleAvatar(
+          backgroundColor: const Color.fromARGB(255, 119, 221, 119),
+          child: widget.icon,
+        ),
+      ),
+      trailing: Container(
+        width: 20,
+        height: 48,
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        alignment: Alignment.center,
+        child: Icon(
+          Icons.arrow_forward_ios,
+          color: Colors.grey.shade700,
+          size: 20,
+        ),
+      ),
+      title: Text(
+        widget.name,
+        style: GoogleFonts.openSans(
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      dense: false,
     );
   }
 }

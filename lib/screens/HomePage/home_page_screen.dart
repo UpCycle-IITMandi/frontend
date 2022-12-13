@@ -68,14 +68,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(campus,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                            style: GoogleFonts.openSans(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                                 color: Colors.black)),
                         Text(roomNo,
-                            style: const TextStyle(
+                            style: GoogleFonts.openSans(
                                 fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w400,
                                 color: Color(0xFF5F5F5F))),
                       ],
                     );
@@ -93,7 +93,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const myAccount(),
+                    builder: (context) => const MyAccount(),
                   ),
                 );
               },
@@ -107,7 +107,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ),
         ],
         iconTheme: const IconThemeData(color: Colors.black),
-        // title: const Text('Upcycle',
+        // title: const Text('Village Square',
         //     style: TextStyle(
         //       color: Colors.black,
         //     )),
@@ -127,28 +127,25 @@ class _HomePageScreenState extends State<HomePageScreen> {
               child: Stack(
                 children: <Widget>[
                   TextField(
+                    cursorColor: const Color(0xFF5F5F5F),
                     controller: searchController,
                     style: GoogleFonts.openSans(
                         fontSize: 12,
                         color: Colors.black,
-                        fontWeight: FontWeight.w600),
+                        fontWeight: FontWeight.w400),
                     decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.only(
-                            left: 10, right: 50, bottom: 15),
-                        border: InputBorder.none,
-                        hintText: 'Search for restaurant..',
-                        hintStyle: GoogleFonts.openSans(
-                          fontSize: 13,
-                          color: const Color(0xFF5F5F5F),
-                          fontWeight: FontWeight.w600,
-                        )),
-                  ),
-                  const Positioned(
-                    top: 5,
-                    right: 5,
-                    child: Icon(
-                      Icons.search_outlined,
-                      color: Color(0xFF5F5F5F),
+                      contentPadding: const EdgeInsets.only(left: 7),
+                      border: InputBorder.none,
+                      hintText: 'Search for restaurant..',
+                      hintStyle: GoogleFonts.openSans(
+                        fontSize: 12,
+                        color: const Color(0xFF5F5F5F),
+                        fontWeight: FontWeight.w400,
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.search_outlined,
+                        color: Color(0xFF5F5F5F),
+                      ),
                     ),
                   ),
                 ],

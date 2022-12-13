@@ -45,8 +45,7 @@ class _VendorListState extends State<VendorList> {
             print(snapshot.error);
             return const Text("Error");
           } else {
-            return ListView(
-                children: const [ListTile(leading: CircularProgressIndicator())]);
+            return const Center(child: CircularProgressIndicator());
           }
         });
   }

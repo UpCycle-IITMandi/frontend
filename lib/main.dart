@@ -15,7 +15,7 @@ import 'package:redux/redux.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: 'UpCycle',
+    name: 'Village Square',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // final persistor = Persistor<AppState>(
@@ -32,7 +32,7 @@ Future<void> main() async {
     store: store,
     child: MaterialApp(
       home: MyApp(store: store),
-      title: 'Upcycle',
+      title: 'Village Square',
       debugShowCheckedModeBanner: true,
       theme: ThemeData(
         textTheme: GoogleFonts.robotoTextTheme(),

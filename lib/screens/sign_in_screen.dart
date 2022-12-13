@@ -13,7 +13,7 @@ import 'package:http/http.dart';
 import '../../services/remote_service.dart';
 
 class CenterHorizontal extends StatelessWidget {
-  const CenterHorizontal({required this.child});
+  const CenterHorizontal({super.key, required this.child});
   final Widget child;
 
   @override
@@ -22,6 +22,8 @@ class CenterHorizontal extends StatelessWidget {
 }
 
 class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
+
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }

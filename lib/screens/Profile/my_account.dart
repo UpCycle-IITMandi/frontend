@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/profile/edit_profile.dart';
-import 'package:frontend/screens/profile/orders_screen.dart';
+import 'package:frontend/screens/Profile/edit_profile.dart';
+import 'package:frontend/screens/Profile/orders_screen.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/utils/authentication.dart';
 
@@ -83,7 +83,7 @@ class _MyAccountState extends State<MyAccount> {
                             ),
                             Text(
                               username,
-                              style: GoogleFonts.openSans(
+                              style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
@@ -91,7 +91,7 @@ class _MyAccountState extends State<MyAccount> {
                             ),
                             Text(
                               email,
-                              style: GoogleFonts.openSans(
+                              style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.grey.shade500,
@@ -128,7 +128,7 @@ class _MyAccountState extends State<MyAccount> {
                     child: Center(
                       child: Text(
                         'Edit Profile',
-                        style: GoogleFonts.openSans(
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -219,7 +219,7 @@ class _ListItemState extends State<ListItem> {
       ),
       title: Text(
         widget.name,
-        style: GoogleFonts.openSans(
+        style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),

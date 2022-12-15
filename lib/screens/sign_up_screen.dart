@@ -131,7 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "USER NAME",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -146,7 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: firstname,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -167,7 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -197,7 +197,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "PHONE NUMBER",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -212,7 +212,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: phno,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -233,7 +233,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -263,7 +263,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "UPI ID",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -278,7 +278,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: upiId,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -299,7 +299,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -329,7 +329,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "EMAIL",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -356,7 +356,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 1,
                                           ),
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -386,7 +386,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "CAMPUS",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -401,7 +401,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: campus,
                                       cursorHeight: 18,
                                       readOnly: true,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -453,8 +453,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                   left: 20),
                                                           child: Text(
                                                             "Select Campus",
-                                                            style: GoogleFonts
-                                                                .openSans(
+                                                            style: TextStyle(
                                                               fontSize: 20,
                                                               fontWeight:
                                                                   FontWeight
@@ -547,8 +546,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             child: Center(
                                                               child: Text(
                                                                 "Save",
-                                                                style: GoogleFonts
-                                                                    .openSans(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 18,
                                                                   fontWeight:
                                                                       FontWeight
@@ -582,7 +581,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           Icons.arrow_drop_down_rounded,
                                           color: Colors.black,
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -610,7 +609,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       isLecturer ? "BUILDING" : "HOSTEL",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -625,7 +624,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: hostel,
                                       cursorHeight: 18,
                                       readOnly: true,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -684,8 +683,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             isLecturer
                                                                 ? "Select Building"
                                                                 : "Select Hostel",
-                                                            style: GoogleFonts
-                                                                .openSans(
+                                                            style: TextStyle(
                                                               fontSize: 20,
                                                               fontWeight:
                                                                   FontWeight
@@ -786,8 +784,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             child: Center(
                                                               child: Text(
                                                                 "Save",
-                                                                style: GoogleFonts
-                                                                    .openSans(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 18,
                                                                   fontWeight:
                                                                       FontWeight
@@ -821,7 +819,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           Icons.arrow_drop_down_rounded,
                                           color: Colors.black,
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -851,7 +849,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       isLecturer
                                           ? "HOUSE NUMBER"
                                           : "ROOM NUMBER",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -866,7 +864,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: roomNo,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -887,7 +885,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,

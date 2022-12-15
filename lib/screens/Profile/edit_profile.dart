@@ -140,7 +140,7 @@ class _EditProfileState extends State<EditProfile> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "USER NAME",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -155,7 +155,7 @@ class _EditProfileState extends State<EditProfile> {
                                       controller: firstname,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -176,7 +176,7 @@ class _EditProfileState extends State<EditProfile> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -206,7 +206,7 @@ class _EditProfileState extends State<EditProfile> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "UPI ID",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -221,7 +221,7 @@ class _EditProfileState extends State<EditProfile> {
                                       controller: upiId,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -242,7 +242,7 @@ class _EditProfileState extends State<EditProfile> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -272,7 +272,7 @@ class _EditProfileState extends State<EditProfile> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "EMAIL",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -296,7 +296,7 @@ class _EditProfileState extends State<EditProfile> {
                                             width: 1,
                                           ),
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -326,7 +326,7 @@ class _EditProfileState extends State<EditProfile> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "CAMPUS",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -341,7 +341,7 @@ class _EditProfileState extends State<EditProfile> {
                                       controller: campus,
                                       cursorHeight: 18,
                                       readOnly: true,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -393,8 +393,7 @@ class _EditProfileState extends State<EditProfile> {
                                                                   left: 20),
                                                           child: Text(
                                                             "Select Campus",
-                                                            style: GoogleFonts
-                                                                .openSans(
+                                                            style: TextStyle(
                                                               fontSize: 20,
                                                               fontWeight:
                                                                   FontWeight
@@ -487,8 +486,8 @@ class _EditProfileState extends State<EditProfile> {
                                                             child: Center(
                                                               child: Text(
                                                                 "Save",
-                                                                style: GoogleFonts
-                                                                    .openSans(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 18,
                                                                   fontWeight:
                                                                       FontWeight
@@ -522,7 +521,7 @@ class _EditProfileState extends State<EditProfile> {
                                           Icons.arrow_drop_down_rounded,
                                           color: Colors.black,
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -550,7 +549,7 @@ class _EditProfileState extends State<EditProfile> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       isLecturer ? "BUILDING" : "HOSTEL",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -565,7 +564,7 @@ class _EditProfileState extends State<EditProfile> {
                                       controller: hostel,
                                       cursorHeight: 18,
                                       readOnly: true,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -624,8 +623,7 @@ class _EditProfileState extends State<EditProfile> {
                                                             isLecturer
                                                                 ? "Select Building"
                                                                 : "Select Hostel",
-                                                            style: GoogleFonts
-                                                                .openSans(
+                                                            style: TextStyle(
                                                               fontSize: 20,
                                                               fontWeight:
                                                                   FontWeight
@@ -726,8 +724,8 @@ class _EditProfileState extends State<EditProfile> {
                                                             child: Center(
                                                               child: Text(
                                                                 "Save",
-                                                                style: GoogleFonts
-                                                                    .openSans(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 18,
                                                                   fontWeight:
                                                                       FontWeight
@@ -761,7 +759,7 @@ class _EditProfileState extends State<EditProfile> {
                                           Icons.arrow_drop_down_rounded,
                                           color: Colors.black,
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -791,7 +789,7 @@ class _EditProfileState extends State<EditProfile> {
                                       isLecturer
                                           ? "HOUSE NUMBER"
                                           : "ROOM NUMBER",
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -806,7 +804,7 @@ class _EditProfileState extends State<EditProfile> {
                                       controller: roomNo,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -827,7 +825,7 @@ class _EditProfileState extends State<EditProfile> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: GoogleFonts.openSans(
+                                        hintStyle: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,

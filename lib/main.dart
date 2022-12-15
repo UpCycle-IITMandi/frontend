@@ -35,9 +35,9 @@ Future<void> main() async {
       title: 'Village Square',
       debugShowCheckedModeBanner: true,
       theme: ThemeData(
-        textTheme: GoogleFonts.robotoTextTheme(),
+        textTheme: GoogleFonts.sourceSans3TextTheme(),
         primaryColor: Colors.white,
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
       ),
     ),
   ));

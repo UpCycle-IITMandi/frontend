@@ -1,5 +1,3 @@
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/actions/actions.dart';
@@ -21,7 +19,6 @@ class _ProductListItemState extends State<ProductListItem> {
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
     final Inventory product = widget.product;
-    final CarouselController controller = CarouselController();
 
     // final List<Widget> imageSliders = product.imageUrl
     //     .map((item) => ClipRRect(

@@ -52,8 +52,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       itemBuilder: (context, index) {
                         return Container(
                           margin: const EdgeInsets.only(bottom: 10),
-                          padding:
-                              const EdgeInsets.only(bottom: 5, right: 5, left: 5),
+                          padding: const EdgeInsets.only(
+                              bottom: 5, right: 5, left: 5),
                           height: 190 +
                               (order_details.vendors[index].orderDescription
                                           .length -
@@ -75,7 +75,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                     Text(
                                       DateFormat().format(order_details
                                           .vendors[index].createdAt),
-                                      style: GoogleFonts.openSans(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
@@ -89,7 +89,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                     left: 10, right: 10, top: 5, bottom: 5),
                                 child: Text(
                                   "Total Cost: ${order_details.vendors[index].cost}₹",
-                                  style: GoogleFonts.openSans(
+                                  style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600,
@@ -100,7 +100,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.only(left: 5, right: 5),
+                                    margin: const EdgeInsets.only(
+                                        left: 5, right: 5),
                                     height: 25,
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
@@ -112,7 +113,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           order_details.vendors[index].vendorId,
-                                          style: GoogleFonts.openSans(
+                                          style: TextStyle(
                                             fontSize: 13,
                                             color: Colors.black,
                                             fontWeight: FontWeight.w600,
@@ -125,7 +126,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                     height: 5,
                                   ),
                                   ListView.builder(
-                                      physics: const NeverScrollableScrollPhysics(),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: order_details.vendors[index]
                                           .orderDescription.length,
@@ -137,7 +139,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(5)),
                                           child: Container(
-                                            margin: const EdgeInsets.only(right: 10),
+                                            margin: const EdgeInsets.only(
+                                                right: 10),
                                             height: 80,
                                             child: Row(
                                               children: [
@@ -155,7 +158,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(5),
-                                                        image: const DecorationImage(
+                                                        image:
+                                                            const DecorationImage(
                                                           image: NetworkImage(
                                                               "cart.get_item(index).image"),
                                                           fit: BoxFit.fill,
@@ -180,8 +184,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                             .vendors[index]
                                                             .orderDescription[0]
                                                             .id,
-                                                        style: GoogleFonts
-                                                            .openSans(
+                                                        style: TextStyle(
                                                           fontSize: 13,
                                                           color: Colors.black,
                                                           fontWeight:
@@ -197,7 +200,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                       //           .toString() +
                                                       //       "₹",
                                                       //   style:
-                                                      //       GoogleFonts.openSans(
+                                                      //       TextStyle(
                                                       //     fontSize: 12,
                                                       //     fontWeight:
                                                       //         FontWeight.w500,
@@ -206,13 +209,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                       // ),
                                                       // Spacer(),
                                                       Text(
-                                                        "Quantity: ${order_details
-                                                                .vendors[index]
-                                                                .orderDescription[
-                                                                    index]
-                                                                .quantity}",
-                                                        style: GoogleFonts
-                                                            .openSans(
+                                                        "Quantity: ${order_details.vendors[index].orderDescription[index].quantity}",
+                                                        style: TextStyle(
                                                           fontSize: 12,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -221,11 +219,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                       ),
                                                       // Spacer(),
                                                       Text(
-                                                        "Instruction: ${order_details
-                                                                .vendors[index]
-                                                                .buyerMessage}",
-                                                        style: GoogleFonts
-                                                            .openSans(
+                                                        "Instruction: ${order_details.vendors[index].buyerMessage}",
+                                                        style: TextStyle(
                                                           fontSize: 12,
                                                           fontWeight:
                                                               FontWeight.w500,

@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/models/Vendor.dart';
 import 'package:frontend/screens/Products/product_screen.dart';
-import 'package:flutter/src/widgets/image.dart' as ImageModule;
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/src/widgets/image.dart' as image_module;
 
 class VendorListItem extends StatefulWidget {
   final Vendor vendor;
@@ -15,8 +15,6 @@ class VendorListItem extends StatefulWidget {
 }
 
 class _VendorListItemState extends State<VendorListItem> {
-  final CarouselController _controller = CarouselController();
-
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
@@ -25,7 +23,7 @@ class _VendorListItemState extends State<VendorListItem> {
     final List<Widget> imageSliders = vendor.images
         .map((item) => ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(15)),
-            child: ImageModule.Image.network(item.pictureUrl,
+            child: image_module.Image.network(item.pictureUrl,
                 height: 150, width: double.infinity, fit: BoxFit.cover)))
         .toList();
 
@@ -70,25 +68,54 @@ class _VendorListItemState extends State<VendorListItem> {
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(9, 1, 1, 1),
                       alignment: Alignment.centerLeft,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              vendor.shopName,
-                              style: GoogleFonts.openSans(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              vendor.category,
-                              style: GoogleFonts.openSans(
-                                  color: Colors.grey.shade500,
-                                  fontSize: 9,
-                                  fontWeight: FontWeight.w400),
-                            )
-                          ]),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  vendor.shopName,
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  vendor.category,
+                                  style: const TextStyle(
+                                      color: Constants.grey2,
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.w400),
+                                )
+                              ]),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Text(
+                                "15 Min",
+                                style: TextStyle(
+                                    color: Constants.grey2,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w300),
+                              ),
+                              Divider(
+                                height: 5,
+                                thickness: 10,
+                                color: Constants.grey2,
+                              ),
+                              Text("₹ 200 for two",
+                                  style: TextStyle(
+                                      color: Constants.grey2,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w300)),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],

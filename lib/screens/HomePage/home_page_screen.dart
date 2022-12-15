@@ -1,11 +1,12 @@
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/screens/Vendors/vendor_list_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:frontend/screens/Cart/cart_screen.dart';
-import 'package:frontend/screens/profile/my_account.dart';
+import 'package:frontend/screens/Profile/my_account.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,21 +19,6 @@ class HomePageScreen extends StatefulWidget {
 
 class _HomePageScreenState extends State<HomePageScreen> {
   TextEditingController searchController = TextEditingController();
-
-  // int _selectedIndex = 0;
-
-  // static const TextStyle optionStyle =
-  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  // static const List<Widget> _widgetOptions = <Widget>[
-  //   VendorList(),
-  //   myAccount(),
-  // ];
-
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }
   late String campus;
   late String roomNo;
 
@@ -44,9 +30,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var primaryColorSelector = Theme.of(context).primaryColor;
     return Scaffold(
-      backgroundColor: primaryColorSelector,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: false,
         title: Row(
@@ -54,10 +39,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
             const Icon(
               Icons.location_on,
               size: 50,
-              color: Color(0xFF77DD77),
+              color: Constants.green1,
             ),
             const SizedBox(
-              width: 10,
+              width: 5,
             ),
             FutureBuilder(
                 future: getData(),
@@ -67,16 +52,16 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(campus,
-                            style: GoogleFonts.openSans(
+                        Text(campus.toUpperCase(),
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black)),
                         Text(roomNo,
-                            style: GoogleFonts.openSans(
+                            style: const TextStyle(
                                 fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFF5F5F5F))),
+                                fontWeight: FontWeight.w800,
+                                color: Constants.grey3)),
                       ],
                     );
                   } else {
@@ -112,39 +97,40 @@ class _HomePageScreenState extends State<HomePageScreen> {
         //       color: Colors.black,
         //     )),
         elevation: 0,
-        backgroundColor: primaryColorSelector,
+        backgroundColor: Colors.white,
       ),
       body: Center(
         child: Column(
           children: [
             Container(
               height: 35,
-              margin: const EdgeInsets.only(left: 15, right: 15, top: 10),
+              margin: const EdgeInsets.only(left: 15, right: 15, top: 15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFFF5F5F5),
+                color: Constants.grey4,
               ),
               child: Stack(
                 children: <Widget>[
                   TextField(
-                    cursorColor: const Color(0xFF5F5F5F),
+                    cursorColor: Constants.grey3,
                     controller: searchController,
-                    style: GoogleFonts.openSans(
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
                         fontSize: 12,
                         color: Colors.black,
                         fontWeight: FontWeight.w400),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.only(left: 7),
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 7, bottom: 3),
                       border: InputBorder.none,
                       hintText: 'Search for restaurant..',
-                      hintStyle: GoogleFonts.openSans(
+                      hintStyle: TextStyle(
                         fontSize: 12,
-                        color: const Color(0xFF5F5F5F),
+                        color: Constants.grey3,
                         fontWeight: FontWeight.w400,
                       ),
-                      suffixIcon: const Icon(
+                      suffixIcon: Icon(
                         Icons.search_outlined,
-                        color: Color(0xFF5F5F5F),
+                        color: Constants.grey3,
                       ),
                     ),
                   ),
@@ -158,42 +144,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ],
         ),
       ),
-      // drawer: Drawer(
-      //   backgroundColor: primaryColorSelector,
-      //   child: ListView(
-      //     padding: const EdgeInsets.fromLTRB(5, 40, 5, 40),
-      //     children: [
-      //       ListTile(
-      //         title: const Text(
-      //           'Logout',
-      //           style: TextStyle(
-      //             color: Colors.black,
-      //           ),
-      //         ),
-      //         onTap: () {
-      //           Authentication.signOut(context: context);
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: primaryColorSelector,
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: 'Profile',
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: Colors.orangeAccent.shade200,
-      //   unselectedItemColor: Colors.black,
-      //   onTap: _onItemTapped,
-      // ),
     );
   }
 }

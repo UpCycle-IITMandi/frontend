@@ -63,7 +63,6 @@ class _ProductScreenState extends State<ProductScreen> {
                               MyAction(null, CartActions.ClearCartAction));
                           Navigator.of(context).pop(true);
                         },
-                        //return true when click on "Yes"
                         child:
                             const Text('Yes', style: TextStyle(fontSize: 10)),
                       ),
@@ -74,6 +73,11 @@ class _ProductScreenState extends State<ProductScreen> {
       child: Scaffold(
         backgroundColor: Constants.grey6,
         appBar: AppBar(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25),
+            bottomRight: Radius.circular(25),
+          )),
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back_ios,
@@ -105,10 +109,6 @@ class _ProductScreenState extends State<ProductScreen> {
             ),
           ],
           iconTheme: const IconThemeData(color: Colors.black),
-          // title: const Text('Village Square',
-          //     style: TextStyle(
-          //       color: Colors.black,
-          //     )),
           elevation: 0,
           backgroundColor: Colors.grey.shade400,
           bottom: PreferredSize(

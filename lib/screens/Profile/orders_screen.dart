@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/orders.dart';
 import 'package:frontend/services/remote_service.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -75,7 +74,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                     Text(
                                       DateFormat().format(order_details
                                           .vendors[index].createdAt),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 13,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
@@ -89,7 +88,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                     left: 10, right: 10, top: 5, bottom: 5),
                                 child: Text(
                                   "Total Cost: ${order_details.vendors[index].cost}₹",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600,
@@ -113,7 +112,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           order_details.vendors[index].vendorId,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 13,
                                             color: Colors.black,
                                             fontWeight: FontWeight.w600,
@@ -184,7 +183,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                             .vendors[index]
                                                             .orderDescription[0]
                                                             .id,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontSize: 13,
                                                           color: Colors.black,
                                                           fontWeight:
@@ -210,7 +209,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                       // Spacer(),
                                                       Text(
                                                         "Quantity: ${order_details.vendors[index].orderDescription[index].quantity}",
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontSize: 12,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -220,7 +219,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                       // Spacer(),
                                                       Text(
                                                         "Instruction: ${order_details.vendors[index].buyerMessage}",
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontSize: 12,
                                                           fontWeight:
                                                               FontWeight.w500,

@@ -6,7 +6,6 @@ import 'package:frontend/services/remote_service.dart';
 import 'package:http/http.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 File file = File("");
 
@@ -126,8 +125,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "USER NAME",
@@ -146,7 +145,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: firstname,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -167,7 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -192,8 +191,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "PHONE NUMBER",
@@ -212,7 +211,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: phno,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -233,7 +232,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -258,8 +257,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "UPI ID",
@@ -278,7 +277,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: upiId,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -299,7 +298,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -324,8 +323,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "EMAIL",
@@ -356,7 +355,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 1,
                                           ),
                                         ),
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -381,8 +380,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                         left: 5, bottom: 5),
                                     child: Text(
                                       "CAMPUS",
@@ -401,7 +400,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: campus,
                                       cursorHeight: 18,
                                       readOnly: true,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -446,9 +445,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                             8))),
                                                           ),
                                                         ),
-                                                        Padding(
+                                                        const Padding(
                                                           padding:
-                                                              const EdgeInsets
+                                                              EdgeInsets
                                                                       .only(
                                                                   left: 20),
                                                           child: Text(
@@ -543,7 +542,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                     .all(Radius
                                                                         .circular(
                                                                             10))),
-                                                            child: Center(
+                                                            child: const Center(
                                                               child: Text(
                                                                 "Save",
                                                                 style:
@@ -581,7 +580,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           Icons.arrow_drop_down_rounded,
                                           color: Colors.black,
                                         ),
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -609,7 +608,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         left: 5, bottom: 5),
                                     child: Text(
                                       isLecturer ? "BUILDING" : "HOSTEL",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -624,7 +623,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: hostel,
                                       cursorHeight: 18,
                                       readOnly: true,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -683,7 +682,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             isLecturer
                                                                 ? "Select Building"
                                                                 : "Select Hostel",
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                               fontSize: 20,
                                                               fontWeight:
                                                                   FontWeight
@@ -781,7 +780,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                                     .all(Radius
                                                                         .circular(
                                                                             10))),
-                                                            child: Center(
+                                                            child: const Center(
                                                               child: Text(
                                                                 "Save",
                                                                 style:
@@ -819,7 +818,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           Icons.arrow_drop_down_rounded,
                                           color: Colors.black,
                                         ),
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,
@@ -849,7 +848,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       isLecturer
                                           ? "HOUSE NUMBER"
                                           : "ROOM NUMBER",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -864,7 +863,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       controller: roomNo,
                                       cursorHeight: 18,
                                       cursorColor: Colors.blue,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
@@ -885,7 +884,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             width: 2,
                                           ),
                                         ),
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.grey,

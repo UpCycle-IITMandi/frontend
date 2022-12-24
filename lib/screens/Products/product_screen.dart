@@ -73,7 +73,7 @@ class _ProductScreenState extends State<ProductScreen> {
       child: Scaffold(
         backgroundColor: Constants.grey6,
         appBar: AppBar(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(25),
             bottomRight: Radius.circular(25),
@@ -112,30 +112,151 @@ class _ProductScreenState extends State<ProductScreen> {
           elevation: 0,
           backgroundColor: Colors.grey.shade400,
           bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(200),
             child: VendorDetails(vendor: vendor),
-            preferredSize: Size.fromHeight(200),
           ),
         ),
-        body: Column(children: [
-          Expanded(
-              child: ListView.builder(
-                  padding: const EdgeInsets.all(0),
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        const SizedBox(height: 5),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 5),
-                            child: ProductListItem(product: products[index])),
-                        const SizedBox(height: 5),
-                      ],
-                    );
-                  })),
-        ]),
+        body: MenuWidget(products: products),
       ),
     );
+  }
+}
+
+class MenuWidget extends StatefulWidget {
+  const MenuWidget({
+    Key? key,
+    required this.products,
+  }) : super(key: key);
+
+  final List<Inventory> products;
+
+  @override
+  State<MenuWidget> createState() => _MenuWidgetState();
+}
+
+class _MenuWidgetState extends State<MenuWidget> {
+  var productsState = <Inventory>[];
+  var searchState = "";
+  bool vegState = true;
+
+  @override
+  initState() {
+    super.initState();
+    productsState = widget.products;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      const Text(
+        "MENU",
+        style: TextStyle(color: Constants.grey3),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(12),
+        child: TextField(
+          onChanged: (value) {
+            setState(() {
+              searchState = value;
+            });
+          },
+          decoration: InputDecoration(
+            hintText: "Search for dishes",
+            hintStyle: const TextStyle(color: Constants.grey3, fontSize: 12),
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                setState(() {
+                  productsState = widget.products
+                      .where((element) => element.name
+                          .toLowerCase()
+                          .contains(searchState.toLowerCase()))
+                      .toList();
+                });
+              },
+              color: Constants.grey3,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Constants.grey3),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Constants.grey3),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(height: 10),
+      // Row(
+      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //   children: [
+      //     Text(
+      //       "Veg",
+      //       style: TextStyle(color: Constants.grey3),
+      //     ),
+      //     Switch(
+      //       value: vegState,
+      //       onChanged: (value) {
+      //         setState(() {
+      //           vegState = value;
+      //           if (value) {
+      //             productsState = widget.products
+      //                 .where((element) => element.isVeg)
+      //                 .toList();
+      //           } else {
+      //             productsState = widget.products;
+      //           }
+      //         });
+      //       },
+      //       activeTrackColor: Colors.lightGreenAccent,
+      //       activeColor: Colors.green,
+      //     ),
+      //     Text(
+      //       "Non-Veg",
+      //       style: TextStyle(color: Constants.grey3),
+      //     ),
+      //   ],
+      // ),
+      Expanded(
+          child: ListView.builder(
+              padding: const EdgeInsets.all(0),
+              itemCount: productsState.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 5),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 5),
+                        child: ProductListItem(product: productsState[index])),
+                    const SizedBox(height: 5),
+                  ],
+                );
+              })),
+      // connect to store
+      Positioned(
+        bottom: 0,
+        child: Container(
+          height: 50,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [
+              Text(
+                "View Cart",
+                style: TextStyle(color: Constants.grey3),
+              ),
+              Text(
+                "₹ 0",
+                style: TextStyle(color: Constants.grey3),
+              ),
+            ],
+          ),
+        ),
+      )
+    ]);
   }
 }
 

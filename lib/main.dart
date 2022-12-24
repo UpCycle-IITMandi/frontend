@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:frontend/screens/HomePage/home_page_screen.dart';
-import 'package:frontend/screens/sign_up_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'screens/sign_in_screen.dart';
@@ -35,6 +33,7 @@ Future<void> main() async {
       title: 'Village Square',
       debugShowCheckedModeBanner: true,
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         textTheme: GoogleFonts.sourceSans3TextTheme(),
         primaryColor: Colors.white,
         brightness: Brightness.light,
@@ -73,7 +72,7 @@ class _MyAppState extends State<MyApp> {
           } else if (snapshot.hasData) {
             return const HomePageScreen();
           } else {
-            return SignInScreen();
+            return const SignInScreen();
           }
         });
   }

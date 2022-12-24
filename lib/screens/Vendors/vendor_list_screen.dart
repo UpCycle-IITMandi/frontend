@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/config/constants.dart';
 import 'package:frontend/models/Vendor.dart';
 import './vendor_list_item.dart';
 import 'package:frontend/services/remote_service.dart';

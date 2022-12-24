@@ -8,7 +8,6 @@ import 'package:frontend/models/app_state.dart';
 import 'package:frontend/screens/Cart/cart_screen.dart';
 import 'package:frontend/screens/Profile/my_account.dart';
 import 'package:frontend/services/local_save.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({Key? key}) : super(key: key);

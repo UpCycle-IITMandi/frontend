@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/constants.dart';
 import 'package:frontend/models/Vendor.dart';
@@ -103,8 +102,8 @@ class _VendorListItemState extends State<VendorListItem> {
                                     fontWeight: FontWeight.w300),
                               ),
                               Divider(
-                                height: 5,
-                                thickness: 10,
+                                height: 10,
+                                thickness: 5,
                                 color: Constants.grey2,
                               ),
                               Text("₹ 200 for two",

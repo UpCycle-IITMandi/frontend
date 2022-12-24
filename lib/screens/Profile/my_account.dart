@@ -4,7 +4,6 @@ import 'package:frontend/screens/Profile/orders_screen.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/utils/authentication.dart';
 
-import 'package:google_fonts/google_fonts.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({Key? key}) : super(key: key);
@@ -83,7 +82,7 @@ class _MyAccountState extends State<MyAccount> {
                             ),
                             Text(
                               username,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
@@ -125,7 +124,7 @@ class _MyAccountState extends State<MyAccount> {
                         left: 0, right: 0, bottom: 10, top: 5),
                     width: 150,
                     height: 30,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Edit Profile',
                         style: TextStyle(
@@ -146,11 +145,11 @@ class _MyAccountState extends State<MyAccount> {
                 ),
                 ListItem(
                     name: "Settings",
-                    icon: Icon(Icons.settings, color: Colors.white),
+                    icon: const Icon(Icons.settings, color: Colors.white),
                     onTap: () {}),
                 ListItem(
                     name: "Previous Orders",
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.fast_rewind,
                       color: Colors.white,
                     ),
@@ -164,11 +163,11 @@ class _MyAccountState extends State<MyAccount> {
                 ),
                 ListItem(
                     name: "About Us",
-                    icon: Icon(Icons.info, color: Colors.white),
+                    icon: const Icon(Icons.info, color: Colors.white),
                     onTap: () {}),
                 ListItem(
                     name: "Logout",
-                    icon: Icon(Icons.logout_rounded, color: Colors.white),
+                    icon: const Icon(Icons.logout_rounded, color: Colors.white),
                     onTap: () async {
                       await Authentication.signOut(context: context);
                       Navigator.of(context).pop();
@@ -219,7 +218,7 @@ class _ListItemState extends State<ListItem> {
       ),
       title: Text(
         widget.name,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),

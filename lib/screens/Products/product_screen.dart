@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as ImageModule;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/actions/actions.dart';
 import 'package:frontend/config/constants.dart';
@@ -87,7 +90,14 @@ class _ProductScreenState extends State<ProductScreen> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           centerTitle: false,
-          title: null,
+          title: Text(
+            vendor.shopName,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           actions: [
             Container(
               margin: const EdgeInsets.only(right: 15),
@@ -112,7 +122,7 @@ class _ProductScreenState extends State<ProductScreen> {
           elevation: 0,
           backgroundColor: Colors.grey.shade400,
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(200),
+            preferredSize: const Size.fromHeight(100),
             child: VendorDetails(vendor: vendor),
           ),
         ),
@@ -153,14 +163,19 @@ class _MenuWidgetState extends State<MenuWidget> {
         style: TextStyle(color: Constants.grey3),
       ),
       Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
         child: TextField(
           onChanged: (value) {
             setState(() {
               searchState = value;
             });
           },
+          cursorColor: Constants.grey3,
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+              fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400),
           decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 7, bottom: 3),
             hintText: "Search for dishes",
             hintStyle: const TextStyle(color: Constants.grey3, fontSize: 12),
             suffixIcon: IconButton(
@@ -281,111 +296,87 @@ class VendorDetails extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25), color: Colors.white),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        width: 200,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            image: NetworkImage(vendor.images[0].pictureUrl),
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                      // Text(vendor.address,
-                      //     textAlign: TextAlign.center,
-                      //     overflow: TextOverflow.ellipsis,
-                      //     style: TextStyle(
-                      //       color: Colors.grey.shade300,
-                      //       fontWeight: FontWeight.w400,
-                      //       fontSize: 12,
-                      //     )),
-                      Text(
-                        vendor.category,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Constants.grey2,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: const [
-                              Text("OPEN NOW",
-                                  style: TextStyle(
-                                    color: Constants.green1,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14,
-                                  )),
-                              Text("11:30 am - 1:00 am (Today)",
-                                  style: TextStyle(
-                                    color: Constants.grey7,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 8,
-                                  )),
-                            ],
-                          ),
-                          Divider(
-                            color: Colors.grey.shade200,
-                            thickness: 10,
-                          ),
-                          Column(
-                            children: const [
-                              Text("₹ 250",
-                                  style: TextStyle(
-                                    color: Constants.grey3,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 10,
-                                  )),
-                              Text("Cost for two",
-                                  style: TextStyle(
-                                    color: Constants.grey7,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10,
-                                  )),
-                            ],
-                          ),
-                          Divider(
-                            color: Colors.grey.shade200,
-                            thickness: 10,
-                          ),
-                          Column(
-                            children: const [
-                              Text("15 min",
-                                  style: TextStyle(
-                                    color: Constants.grey3,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 10,
-                                  )),
-                              Text(
-                                "Delivery Time",
-                                style: TextStyle(
-                                  color: Constants.grey7,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
+              Text(
+                vendor.category,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Constants.grey2,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: const [
+                        Text("OPEN NOW",
+                            style: TextStyle(
+                              color: Constants.green1,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 10,
+                            )),
+                        Text("11:30 am - 1:00 am (Today)",
+                            style: TextStyle(
+                              color: Constants.grey7,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 8,
+                            )),
+                      ],
+                    ),
+                    VerticalDivider(
+                      color: Colors.grey.shade200,
+                      thickness: 2,
+                    ),
+                    Column(
+                      children: const [
+                        Text("₹ 250",
+                            style: TextStyle(
+                              color: Constants.grey3,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 8,
+                            )),
+                        Text("Cost for two",
+                            style: TextStyle(
+                              color: Constants.grey7,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 8,
+                            )),
+                      ],
+                    ),
+                    VerticalDivider(
+                      color: Colors.grey.shade200,
+                      thickness: 2,
+                    ),
+                    Column(
+                      children: const [
+                        Text("15 min",
+                            style: TextStyle(
+                              color: Constants.grey3,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 8,
+                            )),
+                        Text(
+                          "Delivery Time",
+                          style: TextStyle(
+                            color: Constants.grey7,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 8,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

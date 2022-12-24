@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/actions/actions.dart';
@@ -39,27 +38,30 @@ class _ProductListItemState extends State<ProductListItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Text(
-                    //   product.veg ? "Veg" : "Nonveg",
-                    // ),
-                    Text(
-                      product.name,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      currency.format(product.cost),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      product.description,
-                      style: const TextStyle(fontSize: 9),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    )
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Text(
+                      //   product.veg ? "Veg" : "Nonveg",
+                      // ),
+                      Text(
+                        product.name,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        currency.format(product.cost),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        product.description,
+                        style: const TextStyle(fontSize: 9),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 6,
+                      )
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -69,7 +71,7 @@ class _ProductListItemState extends State<ProductListItem> {
                     color: Colors.white,
                     border: Border.all(
                       color: Colors.black,
-                      width: 1,
+                      width: 0.1,
                     ),
                     boxShadow: const [
                       BoxShadow(
@@ -83,34 +85,32 @@ class _ProductListItemState extends State<ProductListItem> {
                   child: SizedBox(
                     width: 150,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 125,
-                          width: 125,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(product.imageUrl),
-                              fit: BoxFit.cover,
+                        ClipRRect(
+                          child: Container(
+                            height: 125,
+                            constraints: BoxConstraints(),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(product.imageUrl),
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            (isAdded
-                                ? ModifyQuantity(
+                        (isAdded
+                            ? ModifyQuantity(
+                                productId: product.id,
+                              )
+                            : AddToCart(
+                                product: Product(
                                     productId: product.id,
-                                  )
-                                : AddToCart(
-                                    product: Product(
-                                        productId: product.id,
-                                        productName: product.name,
-                                        price: product.cost,
-                                        veg: true,
-                                        stars: 4,
-                                        images: [product.imageUrl]))),
-                          ],
-                        )
+                                    productName: product.name,
+                                    price: product.cost,
+                                    veg: true,
+                                    stars: 4,
+                                    images: [product.imageUrl])))
                       ],
                     ),
                   ),
@@ -136,39 +136,43 @@ class ModifyQuantity extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, Tuple2<int, void Function({bool inc})>>(
         builder: (context, vm) {
-      return SizedBox(
-        height: 48,
-        child: Container(
-          height: 20,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: Constants.green1),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IconButton(
-                  constraints: const BoxConstraints(maxHeight: 19),
-                  onPressed: () => vm.item2(inc: false),
-                  icon: const Icon(
-                    Icons.remove,
-                    color: Colors.white,
-                    size: 16,
-                  )),
-              Text(
-                vm.item1.toString(),
-                style: const TextStyle(
-                    fontSize: 9,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-              IconButton(
-                  constraints: const BoxConstraints(maxHeight: 19),
-                  onPressed: () => vm.item2(inc: true),
-                  icon: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 16,
-                  )),
-            ],
+      return Padding(
+        padding: const EdgeInsets.all(0),
+        child: SizedBox(
+          height: 48,
+          child: Container(
+            // height: 20,
+            width: 72,
+            margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+            decoration: const ShapeDecoration(
+                shape: StadiumBorder(), color: Constants.green1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                    onTap: () => vm.item2(inc: false),
+                    child: const Icon(
+                      Icons.remove,
+                      color: Colors.white,
+                      size: 14,
+                    )),
+                Text(
+                  vm.item1.toString(),
+                  style: const TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                GestureDetector(
+                    onTap: () => vm.item2(inc: true),
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 14,
+                    )),
+              ],
+            ),
           ),
         ),
       );

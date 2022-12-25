@@ -8,8 +8,10 @@ import 'package:frontend/actions/actions.dart';
 import 'package:frontend/config/constants.dart';
 import 'package:frontend/models/Vendor.dart';
 import 'package:frontend/models/app_state.dart';
+import 'package:frontend/screens/Cart/cart_screen.dart';
 import 'package:frontend/screens/Products/product_item.dart';
 import 'package:frontend/screens/Profile/my_account.dart';
+import 'package:intl/intl.dart';
 
 class ProductScreen extends StatefulWidget {
   final Vendor vendor;
@@ -74,7 +76,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 ));
       },
       child: Scaffold(
-        backgroundColor: Constants.grey6,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -120,7 +122,7 @@ class _ProductScreenState extends State<ProductScreen> {
           ],
           iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
-          backgroundColor: Colors.grey.shade400,
+          backgroundColor: Constants.grey8,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(100),
             child: VendorDetails(vendor: vendor),
@@ -148,6 +150,8 @@ class _MenuWidgetState extends State<MenuWidget> {
   var productsState = <Inventory>[];
   var searchState = "";
   bool vegState = true;
+  final currency = NumberFormat.simpleCurrency(
+      locale: 'en_IN', name: 'INR', decimalDigits: 2);
 
   @override
   initState() {
@@ -158,46 +162,60 @@ class _MenuWidgetState extends State<MenuWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      SizedBox(
+        height: 5,
+      ),
       const Text(
         "MENU",
         style: TextStyle(color: Constants.grey3),
       ),
+      SizedBox(
+        height: 5,
+      ),
       Padding(
         padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
-        child: TextField(
-          onChanged: (value) {
-            setState(() {
-              searchState = value;
-            });
-          },
-          cursorColor: Constants.grey3,
-          textAlign: TextAlign.left,
-          style: const TextStyle(
-              fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400),
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(left: 7, bottom: 3),
-            hintText: "Search for dishes",
-            hintStyle: const TextStyle(color: Constants.grey3, fontSize: 12),
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                setState(() {
-                  productsState = widget.products
-                      .where((element) => element.name
-                          .toLowerCase()
-                          .contains(searchState.toLowerCase()))
-                      .toList();
-                });
-              },
-              color: Constants.grey3,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Constants.grey3),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Constants.grey3),
-              borderRadius: BorderRadius.circular(10),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Constants.grey4,
+          ),
+          child: TextField(
+            onChanged: (value) {
+              setState(() {
+                searchState = value;
+              });
+            },
+            cursorColor: Constants.grey3,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+                fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400),
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 7, bottom: 3),
+              hintText: "Search for dishes",
+              hintStyle: const TextStyle(color: Constants.grey3, fontSize: 12),
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  setState(() {
+                    productsState = widget.products
+                        .where((element) => element.name
+                            .toLowerCase()
+                            .contains(searchState.toLowerCase()))
+                        .toList();
+                  });
+                },
+                color: Constants.grey3,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: Constants.grey3, width: 0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: Constants.grey3, width: 0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
           ),
         ),
@@ -252,23 +270,46 @@ class _MenuWidgetState extends State<MenuWidget> {
       // connect to store
       Positioned(
         bottom: 0,
-        child: Container(
-          height: 50,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
-              Text(
-                "View Cart",
-                style: TextStyle(color: Constants.grey3),
+        child: StoreConnector<AppState, List<CartItem>>(
+          converter: (store) => store.state.cartItems,
+          builder: (context, cartItems) {
+            final int total = cartItems.fold(
+                0,
+                (previousValue, element) =>
+                    previousValue + (element.quantity * element.product.price));
+            return Container(
+              margin: EdgeInsets.fromLTRB(5, 0, 5, 5),
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: Constants.green1,
+                borderRadius: BorderRadius.circular(10),
               ),
-              Text(
-                "₹ 0",
-                style: TextStyle(color: Constants.grey3),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Text(
+                    "View Cart",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w700),
+                  ),
+                  Text(
+                    currency.format(total),
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w700),
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        MaterialPageRoute route = MaterialPageRoute(
+                            builder: (context) => CartScreen());
+                        Navigator.push(context, route);
+                      },
+                      child:
+                          Icon(Icons.arrow_forward_ios, color: Colors.white)),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       )
     ]);
@@ -321,7 +362,7 @@ class VendorDetails extends StatelessWidget {
                         Text("OPEN NOW",
                             style: TextStyle(
                               color: Constants.green1,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w800,
                               fontSize: 10,
                             )),
                         Text("11:30 am - 1:00 am (Today)",
@@ -337,11 +378,12 @@ class VendorDetails extends StatelessWidget {
                       thickness: 2,
                     ),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: const [
                         Text("₹ 250",
                             style: TextStyle(
                               color: Constants.grey3,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
                               fontSize: 8,
                             )),
                         Text("Cost for two",
@@ -357,11 +399,12 @@ class VendorDetails extends StatelessWidget {
                       thickness: 2,
                     ),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: const [
                         Text("15 min",
                             style: TextStyle(
                               color: Constants.grey3,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
                               fontSize: 8,
                             )),
                         Text(

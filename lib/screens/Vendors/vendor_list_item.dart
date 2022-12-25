@@ -90,28 +90,30 @@ class _VendorListItemState extends State<VendorListItem> {
                                       fontWeight: FontWeight.w400),
                                 )
                               ]),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: const [
-                              Text(
-                                "15 Min",
-                                style: TextStyle(
-                                    color: Constants.grey2,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w300),
-                              ),
-                              Divider(
-                                height: 10,
-                                thickness: 5,
-                                color: Constants.grey2,
-                              ),
-                              Text("₹ 200 for two",
+                          IntrinsicWidth(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  "15 Min",
                                   style: TextStyle(
                                       color: Constants.grey2,
                                       fontSize: 10,
-                                      fontWeight: FontWeight.w300)),
-                            ],
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                Divider(
+                                  height: 0.5,
+                                  thickness: 0.5,
+                                  color: Constants.grey3,
+                                ),
+                                Text("₹ 200 for two",
+                                    style: TextStyle(
+                                        color: Constants.grey2,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w300)),
+                              ],
+                            ),
                           )
                         ],
                       ),

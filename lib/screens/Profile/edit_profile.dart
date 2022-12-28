@@ -135,8 +135,8 @@ class _EditProfileState extends State<EditProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 5, bottom: 5),
+                                    padding:
+                                        EdgeInsets.only(left: 5, bottom: 5),
                                     child: Text(
                                       "USER NAME",
                                       style: TextStyle(
@@ -201,8 +201,8 @@ class _EditProfileState extends State<EditProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 5, bottom: 5),
+                                    padding:
+                                        EdgeInsets.only(left: 5, bottom: 5),
                                     child: Text(
                                       "UPI ID",
                                       style: TextStyle(
@@ -267,8 +267,8 @@ class _EditProfileState extends State<EditProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 5, bottom: 5),
+                                    padding:
+                                        EdgeInsets.only(left: 5, bottom: 5),
                                     child: Text(
                                       "EMAIL",
                                       style: TextStyle(
@@ -321,8 +321,8 @@ class _EditProfileState extends State<EditProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 5, bottom: 5),
+                                    padding:
+                                        EdgeInsets.only(left: 5, bottom: 5),
                                     child: Text(
                                       "CAMPUS",
                                       style: TextStyle(
@@ -387,8 +387,7 @@ class _EditProfileState extends State<EditProfile> {
                                                         ),
                                                         const Padding(
                                                           padding:
-                                                              EdgeInsets
-                                                                      .only(
+                                                              EdgeInsets.only(
                                                                   left: 20),
                                                           child: Text(
                                                             "Select Campus",
@@ -622,7 +621,8 @@ class _EditProfileState extends State<EditProfile> {
                                                             isLecturer
                                                                 ? "Select Building"
                                                                 : "Select Hostel",
-                                                            style: const TextStyle(
+                                                            style:
+                                                                const TextStyle(
                                                               fontSize: 20,
                                                               fontWeight:
                                                                   FontWeight

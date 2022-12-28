@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/models/orders.dart';
 import 'package:frontend/services/remote_service.dart';
 import 'package:intl/intl.dart';
@@ -12,12 +13,11 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  late OrderLoad order_details;
+  late OrderLoad orderDetails;
 
   Future<bool> getData() async {
     String authtoken = await FirebaseAuth.instance.currentUser!.getIdToken();
-    // RemoteService().addOrder(authtoken);
-    order_details = await RemoteService().getOrders(authtoken);
+    orderDetails = await RemoteService().getOrders(authtoken);
     return true;
   }
 
@@ -42,235 +42,115 @@ class _OrdersScreenState extends State<OrdersScreen> {
               if (snapshot.hasData) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 10, left: 10),
-                  child: ListView.builder(
-                      // padding:
-                      //     EdgeInsets.only(top: 15, left: 15, right: 15),
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: order_details.vendors.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          padding: const EdgeInsets.only(
-                              bottom: 5, right: 5, left: 5),
-                          height: 190 +
-                              (order_details.vendors[index].orderDescription
-                                          .length -
-                                      1) *
-                                  85,
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 190, 190, 190),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Expanded(
+                    child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: orderDetails.orders.length,
+                        itemBuilder: (context, index) {
+                          final order = orderDetails.orders[index];
+                          return Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10, top: 10),
-                                child: Row(
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 7,
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(order_details.vendors[index].status),
-                                    const Spacer(),
-                                    Text(
-                                      DateFormat().format(order_details
-                                          .vendors[index].createdAt),
-                                      style: const TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          order.vendorId,
+                                          style: const TextStyle(
+                                            color: Constants.grey3,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Text(order.createdAt.toString(),
+                                            style: const TextStyle(
+                                              color: Constants.grey3,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                            )),
+                                        Text(
+                                          "Total: ${order.cost}",
+                                          style: const TextStyle(
+                                            color: Constants.grey3,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const Text(
+                                          "Chilli Potato, Chilli Chicken, Mushroom-do-pyaaza ...  more",
+                                          style: TextStyle(
+                                            color: Constants.grey3,
+                                            fontSize: 9,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    StatusButton(
+                                      status: order.status,
                                     ),
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10, top: 5, bottom: 5),
-                                child: Text(
-                                  "Total Cost: ${order_details.vendors[index].cost}₹",
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 5, right: 5),
-                                    height: 25,
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: Colors.white),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 5),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          order_details.vendors[index].vendorId,
-                                          style: const TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: order_details.vendors[index]
-                                          .orderDescription.length,
-                                      itemBuilder: (context, index) {
-                                        return Card(
-                                          color: Colors.white,
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          child: Container(
-                                            margin: const EdgeInsets.only(
-                                                right: 10),
-                                            height: 80,
-                                            child: Row(
-                                              children: [
-                                                Card(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                  ),
-                                                  elevation: 0,
-                                                  child: Container(
-                                                    height: 80,
-                                                    width: 60,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                        image:
-                                                            const DecorationImage(
-                                                          image: NetworkImage(
-                                                              "cart.get_item(index).image"),
-                                                          fit: BoxFit.fill,
-                                                        )),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      120,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      const Spacer(),
-                                                      Text(
-                                                        order_details
-                                                            .vendors[index]
-                                                            .orderDescription[0]
-                                                            .id,
-                                                        style: const TextStyle(
-                                                          fontSize: 13,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                      // Spacer(),
-                                                      // Text(
-                                                      //   "Cost: " +
-                                                      //       order_details
-                                                      //           .vendors[index]
-                                                      //           .cost
-                                                      //           .toString() +
-                                                      //       "₹",
-                                                      //   style:
-                                                      //       TextStyle(
-                                                      //     fontSize: 12,
-                                                      //     fontWeight:
-                                                      //         FontWeight.w500,
-                                                      //     color: Colors.black,
-                                                      //   ),
-                                                      // ),
-                                                      // Spacer(),
-                                                      Text(
-                                                        "Quantity: ${order_details.vendors[index].orderDescription[index].quantity}",
-                                                        style: const TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                      // Spacer(),
-                                                      Text(
-                                                        "Instruction: ${order_details.vendors[index].buyerMessage}",
-                                                        style: const TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                      const Spacer(),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const Spacer(),
-                                                // GestureDetector(
-                                                //   onTap: () {
-                                                //     setState(() {
-                                                //       if (cart.contains(
-                                                //           cart.get_item(index))) {
-                                                //         cart.remove(
-                                                //             cart.get_item(index));
-                                                //       } else {
-                                                //         cart.add_item(
-                                                //             cart.get_item(index));
-                                                //       }
-                                                //     });
-                                                //   },
-                                                //   child: Icon(
-                                                //     cart.contains(
-                                                //             cart.get_item(index))
-                                                //         ? Icons.remove_circle
-                                                //         : Icons.remove_circle,
-                                                //     color: cart.contains(
-                                                //             cart.get_item(index))
-                                                //         ? Colors.white
-                                                //         : null,
-                                                //   ),
-                                                // ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      }),
-                                ],
-                              ),
                             ],
-                          ),
-                        );
-                      }),
+                          );
+                        }),
+                  ),
                 );
-              } else {
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
+              } else {
+                return const Text("Error");
               }
             }),
+      ),
+    );
+  }
+}
+
+class StatusButton extends StatelessWidget {
+  final String status;
+  const StatusButton({super.key, required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: (status == "pending"
+            ? const Color(0xFFEDED52)
+            : status == "accepted"
+                ? Constants.green1
+                : const Color(0xFFE43B4F)),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+      child: Text(
+        "Status: ${status.toUpperCase()}",
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

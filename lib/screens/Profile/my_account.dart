@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/screens/Profile/edit_profile.dart';
 import 'package:frontend/screens/Profile/orders_screen.dart';
 import 'package:frontend/services/local_save.dart';
 import 'package:frontend/utils/authentication.dart';
-
 
 class MyAccount extends StatefulWidget {
   const MyAccount({Key? key}) : super(key: key);
@@ -63,8 +63,7 @@ class _MyAccountState extends State<MyAccount> {
                                 children: [
                                   CircleAvatar(
                                     radius: 76,
-                                    backgroundColor: const Color.fromARGB(
-                                        255, 119, 221, 119),
+                                    backgroundColor: Constants.green1,
                                     child: CircleAvatar(
                                       radius: 72,
                                       backgroundColor: Colors.white,
@@ -113,8 +112,8 @@ class _MyAccountState extends State<MyAccount> {
                         builder: (context) => const EditProfile()));
                   },
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 119, 221, 119)),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Constants.green1),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
@@ -140,7 +139,7 @@ class _MyAccountState extends State<MyAccount> {
                   height: 20,
                 ),
                 const Divider(
-                  color: Color.fromARGB(255, 95, 95, 95),
+                  color: Constants.grey3,
                   height: 1,
                 ),
                 ListItem(
@@ -158,7 +157,7 @@ class _MyAccountState extends State<MyAccount> {
                           builder: (context) => const OrdersScreen()));
                     }),
                 const Divider(
-                  color: Color.fromARGB(255, 95, 95, 95),
+                  color: Constants.grey3,
                   height: 1,
                 ),
                 ListItem(
@@ -168,9 +167,9 @@ class _MyAccountState extends State<MyAccount> {
                 ListItem(
                     name: "Logout",
                     icon: const Icon(Icons.logout_rounded, color: Colors.white),
-                    onTap: () async {
-                      await Authentication.signOut(context: context);
-                      Navigator.of(context).pop();
+                    onTap: () {
+                      Authentication.signOut(context: context)
+                          .then((value) => Navigator.of(context).pop());
                     }),
               ]),
         ),
@@ -201,7 +200,7 @@ class _ListItemState extends State<ListItem> {
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         alignment: Alignment.center,
         child: CircleAvatar(
-          backgroundColor: const Color.fromARGB(255, 119, 221, 119),
+          backgroundColor: Constants.green1,
           child: widget.icon,
         ),
       ),
@@ -210,9 +209,9 @@ class _ListItemState extends State<ListItem> {
         height: 48,
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         alignment: Alignment.center,
-        child: Icon(
+        child: const Icon(
           Icons.arrow_forward_ios,
-          color: Colors.grey.shade700,
+          color: Constants.grey3,
           size: 20,
         ),
       ),

@@ -1,8 +1,6 @@
-import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as ImageModule;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/actions/actions.dart';
 import 'package:frontend/config/constants.dart';
@@ -162,14 +160,14 @@ class _MenuWidgetState extends State<MenuWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      SizedBox(
+      const SizedBox(
         height: 5,
       ),
       const Text(
         "MENU",
         style: TextStyle(color: Constants.grey3),
       ),
-      SizedBox(
+      const SizedBox(
         height: 5,
       ),
       Padding(
@@ -190,7 +188,7 @@ class _MenuWidgetState extends State<MenuWidget> {
             style: const TextStyle(
                 fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400),
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 7, bottom: 3),
+              contentPadding: const EdgeInsets.only(left: 7, bottom: 3),
               hintText: "Search for dishes",
               hintStyle: const TextStyle(color: Constants.grey3, fontSize: 12),
               suffixIcon: IconButton(
@@ -278,7 +276,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                 (previousValue, element) =>
                     previousValue + (element.quantity * element.product.price));
             return Container(
-              margin: EdgeInsets.fromLTRB(5, 0, 5, 5),
+              margin: const EdgeInsets.fromLTRB(5, 0, 5, 5),
               height: 50,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
@@ -295,17 +293,17 @@ class _MenuWidgetState extends State<MenuWidget> {
                   ),
                   Text(
                     currency.format(total),
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.w700),
                   ),
                   GestureDetector(
                       onTap: () {
                         MaterialPageRoute route = MaterialPageRoute(
-                            builder: (context) => CartScreen());
+                            builder: (context) => const CartScreen());
                         Navigator.push(context, route);
                       },
                       child:
-                          Icon(Icons.arrow_forward_ios, color: Colors.white)),
+                          const Icon(Icons.arrow_forward_ios, color: Colors.white)),
                 ],
               ),
             );

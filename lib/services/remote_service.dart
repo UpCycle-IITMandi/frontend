@@ -33,21 +33,14 @@ class RemoteService {
   }
 
   Future<OrderLoad> getOrders(String authToken) async {
-    print("1");
-
-    print(authToken);
-    var response = await http.get(
+    var response = await client.post(
       Uri.parse('$baseUrl/api/v1/order/getAll'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'authtoken': authToken,
+        'Authorization': authToken,
       },
     );
-    print("2");
     if (response.statusCode == 200) {
-      print("4");
-      // String body = json.decode(response.body);
-      // print("object");
       return orderLoadFromJson(response.body);
     } else {
       print("5");
@@ -60,10 +53,8 @@ class RemoteService {
     var response = await client.get(uri);
     if (response.statusCode == 200) {
       var res = response.body;
-
       var body = json.decode(res);
       var vendors = body["vendors"];
-      print(vendors);
       return List<Vendor>.from(vendors.map((x) => Vendor.fromJson(x)));
     } else {
       throw ErrorDescription("cannot get");

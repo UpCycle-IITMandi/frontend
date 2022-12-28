@@ -11,24 +11,24 @@ String orderLoadToJson(OrderLoad data) => json.encode(data.toJson());
 class OrderLoad {
   OrderLoad({
     required this.success,
-    required this.vendors,
+    required this.orders,
     required this.message,
   });
 
   bool success;
-  List<OrderVendor> vendors;
+  List<OrderVendor> orders;
   String message;
 
   factory OrderLoad.fromJson(Map<String, dynamic> json) => OrderLoad(
         success: json["success"],
-        vendors: List<OrderVendor>.from(
-            json["vendors"].map((x) => OrderVendor.fromJson(x))),
+        orders: List<OrderVendor>.from(
+            json["orders"].map((x) => OrderVendor.fromJson(x))),
         message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
         "success": success,
-        "vendors": List<dynamic>.from(vendors.map((x) => x.toJson())),
+        "orders": List<dynamic>.from(orders.map((x) => x.toJson())),
         "message": message,
       };
 }

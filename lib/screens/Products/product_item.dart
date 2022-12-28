@@ -90,7 +90,7 @@ class _ProductListItemState extends State<ProductListItem> {
                         ClipRRect(
                           child: Container(
                             height: 125,
-                            constraints: BoxConstraints(),
+                            constraints: const BoxConstraints(),
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: NetworkImage(product.imageUrl),

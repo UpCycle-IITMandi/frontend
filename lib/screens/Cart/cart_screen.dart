@@ -34,30 +34,48 @@ class _CartScreenState extends State<CartScreen> {
               )),
           backgroundColor: primaryColorSelector,
         ),
-        body: Column(children: [
-          const SizedBox(height: 10),
-          StoreConnector<AppState, List<CartItem>>(
-              converter: (store) => store.state.cartItems,
-              builder: (context, vm) {
-                final cartItems = vm;
-                if (cartItems.isEmpty) {
-                  return const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Empty Cart.",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  );
-                }
-                return Column(children: [
-                  Expanded(
-                    child: CartItemWidget(),
+        body: StoreConnector<AppState, List<CartItem>>(
+            converter: (store) => store.state.cartItems,
+            builder: (context, vm) {
+              final cartItems = vm;
+              if (cartItems.isEmpty) {
+                return const Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Empty Cart.",
+                    style: TextStyle(fontSize: 16),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Column(
-                      children: [
-                        TextField(
+                );
+              }
+              return Column(children: [
+                Expanded(
+                  child: CartItemWidget(),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 5, right: 5, top: 5, bottom: 5),
+                        margin: const EdgeInsets.only(left: 10, right: 10),
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Constants.grey1,
+                          border:
+                              Border.all(color: Constants.grey3, width: 0.5),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: TextField(
+                            maxLines: 5,
                             cursorColor: Constants.grey3,
                             controller: messageController,
                             textAlign: TextAlign.left,
@@ -72,22 +90,25 @@ class _CartScreenState extends State<CartScreen> {
                               hintText: 'Add a message for the restaurant..',
                               hintStyle: TextStyle(
                                 fontSize: 12,
-                                color: Colors.black,
+                                color: Constants.grey3,
                                 fontWeight: FontWeight.w400,
                               ),
                             )),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CheckoutButton(
-                          messageController: messageController,
-                        ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CheckoutButton(
+                        messageController: messageController,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
                   ),
-                ]);
-              })
-        ]));
+                ),
+              ]);
+            }));
   }
 }
 
@@ -130,8 +151,17 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                 order!.then((value) {
                   if (value.statusCode == 200) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Order Placed Successfully'),
+                      backgroundColor: Constants.green1,
+                      padding: EdgeInsets.all(10),
+                      content: Text('Order Placed Successfully',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600)),
                     ));
+                    StoreProvider.of<AppState>(context)
+                        .dispatch(MyAction(null, CartActions.clearCartAction));
+                    StoreProvider.of<AppState>(context).dispatch(
+                        MyAction(null, VendorActions.editVendorAction));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Order Failed'),
@@ -149,7 +179,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
       child: Text(
           "${currency.format(cartItems.fold<int>(0, (previousValue, element) => previousValue + element.product.price * element.quantity))} | Proceed to Checkout",
           style: const TextStyle(
-              fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
+              fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white)),
     );
   }
 }
@@ -163,7 +193,14 @@ class CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartItems = StoreProvider.of<AppState>(context).state.cartItems;
-    return ListView.builder(
+    return ListView.separated(
+        separatorBuilder: (context, index) => const Divider(
+              height: 2,
+              thickness: 2,
+              indent: 8,
+              endIndent: 8,
+              color: Constants.grey3,
+            ),
         shrinkWrap: true,
         itemCount: cartItems.length,
         itemBuilder: (context, index) {

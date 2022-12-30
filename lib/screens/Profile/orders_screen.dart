@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/config/constants.dart';
 import 'package:frontend/models/orders.dart';
 import 'package:frontend/services/remote_service.dart';
+import 'package:intl/intl.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({Key? key}) : super(key: key);
@@ -15,8 +16,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   late OrderLoad orderDetails;
 
   Future<bool> getData() async {
-    String authtoken = await FirebaseAuth.instance.currentUser!.getIdToken();
-    orderDetails = await RemoteService().getOrders(authtoken);
+    orderDetails = await RemoteService().getOrders();
     return true;
   }
 
@@ -34,87 +34,84 @@ class _OrdersScreenState extends State<OrdersScreen> {
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
         child: FutureBuilder(
             future: getData(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 10, left: 10),
-                  child: Expanded(
-                    child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: orderDetails.orders.length,
-                        itemBuilder: (context, index) {
-                          final order = orderDetails.orders[index];
-                          return Column(
-                            children: [
-                              const SizedBox(
-                                height: 10,
+                  child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: orderDetails.orders.length,
+                      itemBuilder: (context, index) {
+                        final order = orderDetails.orders[index];
+                        return Column(
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 7,
+                                  ),
+                                ],
                               ),
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 7,
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          order.vendorId,
-                                          style: const TextStyle(
-                                            color: Constants.grey3,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        order.vendorId,
+                                        style: const TextStyle(
+                                          color: Constants.grey3,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                        Text(order.createdAt.toString(),
-                                            style: const TextStyle(
-                                              color: Constants.grey3,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                            )),
-                                        Text(
-                                          "Total: ${order.cost}",
+                                      ),
+                                      Text(DateFormat().format(order.createdAt),
                                           style: const TextStyle(
                                             color: Constants.grey3,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
-                                          ),
+                                          )),
+                                      Text(
+                                        "Total: ${order.cost}",
+                                        style: const TextStyle(
+                                          color: Constants.grey3,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                        const Text(
-                                          "Chilli Potato, Chilli Chicken, Mushroom-do-pyaaza ...  more",
-                                          style: TextStyle(
-                                            color: Constants.grey3,
-                                            fontSize: 9,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    StatusButton(
-                                      status: order.status,
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                      const Text(
+                                        "Chilli Potato, Chilli Chicken, Mushroom-do-pyaaza ...  more",
+                                        style: TextStyle(
+                                          color: Constants.grey3,
+                                          fontSize: 9,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  StatusButton(
+                                    status: order.status,
+                                  ),
+                                ],
                               ),
-                            ],
-                          );
-                        }),
-                  ),
+                            ),
+                          ],
+                        );
+                      }),
                 );
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());

@@ -877,13 +877,8 @@ class _EditProfileState extends State<EditProfile> {
               }
 
               if (authToken != null) {
-                Response res = await RemoteService().updateUser(
-                    authToken,
-                    base64Image,
-                    firstname.text,
-                    upiId.text,
-                    campus.text,
-                    hostel.text);
+                Response res = await RemoteService().updateUser(base64Image,
+                    firstname.text, upiId.text, campus.text, hostel.text);
                 print(res.body);
                 // Navigator.of(context)
                 //     .push(MaterialPageRoute(builder: (context) => myAccount()));

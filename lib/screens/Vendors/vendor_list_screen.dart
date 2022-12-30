@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/models/vendor.dart';
 import './vendor_list_item.dart';
 import 'package:frontend/services/remote_service.dart';
@@ -32,22 +33,30 @@ class _VendorListState extends State<VendorList> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20))),
-              child: ListView.builder(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  itemCount: snapshot.data?.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        const SizedBox(height: 5),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 5),
-                            child:
-                                VendorListItem(vendor: snapshot.data![index])),
-                        const SizedBox(height: 5),
-                      ],
-                    );
-                  }),
+              child: RefreshIndicator(
+                strokeWidth: 3,
+                color: Constants.green1,
+                backgroundColor: Colors.white,
+                onRefresh: () async {
+                  vendors = RemoteService().getVendors();
+                },
+                child: ListView.builder(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    itemCount: snapshot.data?.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          const SizedBox(height: 5),
+                          Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 5),
+                              child: VendorListItem(
+                                  vendor: snapshot.data![index])),
+                          const SizedBox(height: 5),
+                        ],
+                      );
+                    }),
+              ),
             );
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());

@@ -126,8 +126,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 5, bottom: 5),
+                                    padding:
+                                        EdgeInsets.only(left: 5, bottom: 5),
                                     child: Text(
                                       "USER NAME",
                                       style: TextStyle(
@@ -192,8 +192,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 5, bottom: 5),
+                                    padding:
+                                        EdgeInsets.only(left: 5, bottom: 5),
                                     child: Text(
                                       "PHONE NUMBER",
                                       style: TextStyle(
@@ -258,8 +258,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 5, bottom: 5),
+                                    padding:
+                                        EdgeInsets.only(left: 5, bottom: 5),
                                     child: Text(
                                       "UPI ID",
                                       style: TextStyle(
@@ -324,8 +324,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 5, bottom: 5),
+                                    padding:
+                                        EdgeInsets.only(left: 5, bottom: 5),
                                     child: Text(
                                       "EMAIL",
                                       style: TextStyle(
@@ -381,8 +381,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 5, bottom: 5),
+                                    padding:
+                                        EdgeInsets.only(left: 5, bottom: 5),
                                     child: Text(
                                       "CAMPUS",
                                       style: TextStyle(
@@ -447,8 +447,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                         ),
                                                         const Padding(
                                                           padding:
-                                                              EdgeInsets
-                                                                      .only(
+                                                              EdgeInsets.only(
                                                                   left: 20),
                                                           child: Text(
                                                             "Select Campus",
@@ -682,7 +681,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             isLecturer
                                                                 ? "Select Building"
                                                                 : "Select Hostel",
-                                                            style: const TextStyle(
+                                                            style:
+                                                                const TextStyle(
                                                               fontSize: 20,
                                                               fontWeight:
                                                                   FontWeight
@@ -929,8 +929,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: ElevatedButton(
             onPressed: () async {
               FirebaseAuth auth = FirebaseAuth.instance;
-              String? authToken = await auth.currentUser?.getIdToken();
-              Response res = await RemoteService().createUser(authToken!,
+              Response res = await RemoteService().createUser(
                   firstname.text, upiId.text, upiId.text, hostel.text);
 
               if (res.statusCode == 200) {

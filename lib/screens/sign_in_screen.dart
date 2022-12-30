@@ -81,8 +81,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     return;
                   }
 
-                  Response res =
-                      await RemoteService().getUser(authToken, userEmail);
+                  Response res = await RemoteService().getUser(userEmail);
                   print(res.body);
                   var user = json.decode(res.body);
                   bool userExists = user["userExists"];

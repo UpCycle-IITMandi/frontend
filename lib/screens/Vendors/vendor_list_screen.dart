@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/Vendor.dart';
+import 'package:frontend/models/vendor.dart';
 import './vendor_list_item.dart';
 import 'package:frontend/services/remote_service.dart';
 

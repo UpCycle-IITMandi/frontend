@@ -25,7 +25,6 @@ class Authentication {
   static Future<GoogleSignInAccount?> signInWithGoogle(
       {required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
 
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -51,10 +50,7 @@ class Authentication {
       );
 
       try {
-        final UserCredential userCredential =
-            await auth.signInWithCredential(credential);
-
-        user = userCredential.user;
+        await auth.signInWithCredential(credential);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           ScaffoldMessenger.of(context).showSnackBar(

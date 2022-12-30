@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/constants.dart';
-import 'package:frontend/models/Vendor.dart';
+import 'package:frontend/models/vendor.dart';
 import 'package:frontend/screens/Products/product_screen.dart';
 import 'package:flutter/src/widgets/image.dart' as image_module;
 

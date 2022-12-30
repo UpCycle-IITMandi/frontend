@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/actions/actions.dart';
 import 'package:frontend/config/constants.dart';
-import 'package:frontend/models/Product.dart';
-import 'package:frontend/models/Vendor.dart';
+import 'package:frontend/models/product.dart';
+import 'package:frontend/models/vendor.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
@@ -185,7 +185,7 @@ class ModifyQuantity extends StatelessWidget {
           store.dispatch(MyAction(
               CartItem(store.state.cartItems[index].product,
                   store.state.cartItems[index].quantity + (inc ? 1 : -1)),
-              CartActions.EditCartAction));
+              CartActions.editCartAction));
         }
       ]);
     });
@@ -222,7 +222,7 @@ class AddToCart extends StatelessWidget {
     }, converter: (store) {
       return () {
         store.dispatch(
-            MyAction(CartItem(product, 1), CartActions.AddItemAction));
+            MyAction(CartItem(product, 1), CartActions.addItemAction));
       };
     });
   }

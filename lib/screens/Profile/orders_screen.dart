@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:frontend/config/constants.dart';
 import 'package:frontend/models/orders.dart';
 import 'package:frontend/services/remote_service.dart';
-import 'package:intl/intl.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({Key? key}) : super(key: key);

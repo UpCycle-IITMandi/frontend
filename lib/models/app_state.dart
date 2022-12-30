@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:frontend/models/Product.dart';
+import 'package:frontend/models/product.dart';
 
 class MyAction<A, B> {
   final A value;
@@ -17,6 +17,7 @@ class CartItem {
 @immutable
 class AppState {
   final List<CartItem> cartItems;
+  final String? vendorId;
 
-  const AppState({this.cartItems = const []});
+  const AppState({this.cartItems = const [], this.vendorId});
 }

@@ -1,10 +1,9 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/actions/actions.dart';
 import 'package:frontend/config/constants.dart';
-import 'package:frontend/models/Vendor.dart';
+import 'package:frontend/models/vendor.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:frontend/screens/Cart/cart_screen.dart';
 import 'package:frontend/screens/Products/product_item.dart';
@@ -63,7 +62,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 Colors.orangeAccent.shade200)),
                         onPressed: () {
                           StoreProvider.of<AppState>(context).dispatch(
-                              MyAction(null, CartActions.ClearCartAction));
+                              MyAction(null, CartActions.clearCartAction));
                           Navigator.of(context).pop(true);
                         },
                         child:
@@ -126,7 +125,12 @@ class _ProductScreenState extends State<ProductScreen> {
             child: VendorDetails(vendor: vendor),
           ),
         ),
-        body: MenuWidget(products: products),
+        body: StoreConnector<AppState, void>(
+          onInit: ((store) => store.dispatch(
+              MyAction(vendor.vendorId, VendorActions.editVendorAction))),
+          builder: (context, vm) => MenuWidget(products: products),
+          converter: (store) => () {},
+        ),
       ),
     );
   }
@@ -266,8 +270,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                 );
               })),
       // connect to store
-      Positioned(
-        bottom: 0,
+      Align(
+        alignment: Alignment.bottomCenter,
         child: StoreConnector<AppState, List<CartItem>>(
           converter: (store) => store.state.cartItems,
           builder: (context, cartItems) {
@@ -283,33 +287,32 @@ class _MenuWidgetState extends State<MenuWidget> {
                 color: Constants.green1,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Text(
-                    "View Cart",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w700),
-                  ),
-                  Text(
-                    currency.format(total),
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w700),
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        MaterialPageRoute route = MaterialPageRoute(
-                            builder: (context) => const CartScreen());
-                        Navigator.push(context, route);
-                      },
-                      child:
-                          const Icon(Icons.arrow_forward_ios, color: Colors.white)),
-                ],
-              ),
+              child: TextButton(
+                  onPressed: () {
+                    MaterialPageRoute route = MaterialPageRoute(
+                        builder: (context) => const CartScreen());
+                    Navigator.push(context, route);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text(
+                        "View Cart",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        currency.format(total),
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w700),
+                      ),
+                      const Icon(Icons.arrow_forward_ios, color: Colors.white),
+                    ],
+                  )),
             );
           },
         ),
-      )
+      ),
     ]);
   }
 }

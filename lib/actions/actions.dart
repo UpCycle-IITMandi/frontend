@@ -1,1 +1,3 @@
-enum CartActions { AddItemAction, ClearCartAction, EditCartAction }
+enum CartActions { addItemAction, clearCartAction, editCartAction }
+
+enum VendorActions { editVendorAction }

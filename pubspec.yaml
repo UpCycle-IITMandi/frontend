@@ -41,14 +41,16 @@ dependencies:
     shared_preferences: ^2.0.15
     flutter_redux: ^0.10.0
     badges: ^2.0.3
+    redux: ^5.0.0
     redux_persist_flutter: ^0.9.0
     redux_persist: ^0.9.0
     google_fonts: ^3.0.1
     intl: ^0.17.0
-    # flutter_signin_button: ^2.0.0
 
     # State Management
     provider: ^6.0.4
+    file_picker: ^5.2.2
+    tuple: ^2.0.1
 
 dev_dependencies:
     flutter_test:

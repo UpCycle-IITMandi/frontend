@@ -1,14 +1,13 @@
 import 'package:badges/badges.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/services/local_save.dart';
-import 'package:frontend/screens/Auth/my_account.dart';
-import 'package:frontend/screens/Auth/sign_in_screen.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/screens/Vendors/vendor_list_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:frontend/models/app_state.dart';
 import 'package:frontend/screens/Cart/cart_screen.dart';
-import 'package:frontend/screens/Vendors/vendor_list_screen.dart';
-import 'package:frontend/utils/authentication.dart';
+import 'package:frontend/screens/Profile/my_account.dart';
+import 'package:frontend/services/local_save.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({Key? key}) : super(key: key);
@@ -18,89 +17,131 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  int _selectedIndex = 0;
+  TextEditingController searchController = TextEditingController();
+  late String campus;
+  late String roomNo;
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    VendorList(),
-    myAccount(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  Future<bool> getData() async {
+    campus = await localGet("campus") ?? "none";
+    roomNo = await localGet("roomNo") ?? "B-17, 209";
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    var primaryColorSelector = Theme.of(context).primaryColor;
     return Scaffold(
-      backgroundColor: primaryColorSelector,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        actions: const [
-          CartAppBarWidget(),
-        ],
-        iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text('Upcycle',
-            style: TextStyle(
-              color: Colors.black,
-            )),
-        backgroundColor: primaryColorSelector,
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      drawer: Drawer(
-        backgroundColor: primaryColorSelector,
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(5, 40, 5, 40),
+        centerTitle: false,
+        title: Row(
           children: [
-            ListTile(
-              title: const Text(
-                'Logout',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              onTap: () {
-                Authentication.signOut(context: context);
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                    builder: ((context) => SignInScreen())), (route) => false);
-              },
+            const Icon(
+              Icons.location_on,
+              size: 50,
+              color: Constants.green1,
             ),
-            ListTile(
-              title: const Text(
-                'Print userDetails in console',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              onTap: () async{
-                var user = await getUser();
-                print(user);
-              },
+            const SizedBox(
+              width: 5,
             ),
+            FutureBuilder(
+                future: getData(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(campus.toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black)),
+                        Text(roomNo,
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800,
+                                color: Constants.grey3)),
+                      ],
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                }),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: primaryColorSelector,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+        actions: [
+          // CartAppBarWidget(),
+          Container(
+            margin: const EdgeInsets.only(right: 15),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const MyAccount(),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                backgroundColor: Colors.cyan[900],
+                foregroundImage: NetworkImage(FirebaseAuth
+                        .instance.currentUser!.photoURL ??
+                    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+              ),
+            ),
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.orangeAccent.shade200,
-        unselectedItemColor: Colors.black,
-        onTap: _onItemTapped,
+        iconTheme: const IconThemeData(color: Colors.black),
+        // title: const Text('Village Square',
+        //     style: TextStyle(
+        //       color: Colors.black,
+        //     )),
+        elevation: 0,
+        backgroundColor: Colors.white,
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Container(
+              height: 35,
+              margin: const EdgeInsets.only(left: 15, right: 15, top: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Constants.grey4,
+              ),
+              child: Stack(
+                children: <Widget>[
+                  TextField(
+                    cursorColor: Constants.grey3,
+                    controller: searchController,
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400),
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 7, bottom: 3),
+                      border: InputBorder.none,
+                      hintText: 'Search for restaurant..',
+                      hintStyle: TextStyle(
+                        fontSize: 12,
+                        color: Constants.grey3,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      suffixIcon: Icon(
+                        Icons.search_outlined,
+                        color: Constants.grey3,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Expanded(child: VendorList()),
+          ],
+        ),
       ),
     );
   }
@@ -131,7 +172,7 @@ class CartAppBarWidget extends StatelessWidget {
           tooltip: 'Open shopping cart',
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: ((context) => CartScreen())));
+                MaterialPageRoute(builder: ((context) => const CartScreen())));
           }),
     );
   }

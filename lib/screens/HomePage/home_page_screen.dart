@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as BadgesModule;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/constants.dart';
@@ -154,10 +154,10 @@ class CartAppBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Badge(
-      position: BadgePosition.topEnd(top: 0, end: 3),
+    return BadgesModule.Badge(
+      position: BadgesModule.BadgePosition.topEnd(top: 0, end: 3),
       animationDuration: const Duration(milliseconds: 300),
-      animationType: BadgeAnimationType.scale,
+      animationType: BadgesModule.BadgeAnimationType.scale,
       badgeColor: Colors.orangeAccent.shade200,
       badgeContent: StoreConnector<AppState, String>(
         converter: (store) => store.state.cartItems.length.toString(),
